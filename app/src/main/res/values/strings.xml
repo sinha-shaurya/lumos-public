@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Lumos</string>
+    <string name="sample_time">7:00PM</string>
+    <string name="sample_date">15 Aug</string>
+    <string name="event_poster_desc">Event poster</string>
+    <string name="event_time_logo">Time Vector Asset</string>
+    <string name="sample_event_title">Summer School 2020</string>
+    <string name="sample_question_text">What is the purpose of this app? You have to tell me all about it</string>
+    <string name="top_stories_dec">Image for top stories</string>
+    <string name="placeholder_text">lorem ipsum</string>
+    <string name="sample_blog_title">This is the name which boring</string>
+    <string name="sample_blog_image">Sample Blog Image</string>
+    <string name="sample_author">Shaurya Sinha</string>
+    <string name="sample_readtime">5 min</string>
+    <string name="question_background">question background</string>
 </resources>
