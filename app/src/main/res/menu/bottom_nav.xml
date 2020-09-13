@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/blogFragment"
+        android:icon="@drawable/blog_nav"
+        android:title="@string/blog" />
+
+    <item
+        android:id="@+id/eventFragment"
+        android:icon="@drawable/events_nav"
+        android:title="@string/events" />
+    <item
+        android:id="@+id/questionFragment"
+        android:icon="@drawable/interview_nav"
+        android:title="@string/practice" />
+
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/user_account"
+        android:title="@string/account" />
+</menu>
