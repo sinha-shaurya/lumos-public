@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@android:color/holo_blue_dark"
         app:cardCornerRadius="8dp">
 
         <FrameLayout
@@ -19,9 +20,9 @@
             <ImageView
                 android:id="@+id/question_image"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:src="@android:color/holo_blue_dark"
-                android:contentDescription="@string/question_background"/>
+                android:layout_height="match_parent"
+                android:contentDescription="@string/question_background"
+                android:src="@android:color/holo_blue_dark" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
