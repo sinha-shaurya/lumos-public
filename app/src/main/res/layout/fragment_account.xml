@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,11 +12,31 @@
         android:layout_height="match_parent"
         tools:context=".screens.AccountFragment">
 
-
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/account" />
+            android:id="@+id/user_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Username" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logout_buton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_text"
+            app:cornerRadius="6dp"
+            app:layout_constraintWidth_percent="0.6" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
