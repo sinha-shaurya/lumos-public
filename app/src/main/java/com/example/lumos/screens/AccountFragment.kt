@@ -12,6 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
+import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
@@ -19,9 +20,13 @@ import com.example.lumos.viewmodel.LoginViewModel
 
 class AccountFragment : Fragment() {
 
-    private val viewModel: LoginViewModel by activityViewModels<LoginViewModel>({
-        LoginViewModelFactory(NetworkRepository())
-    })
+    private val viewModel: LoginViewModel by activityViewModels<LoginViewModel> {
+        LoginViewModelFactory(
+            NetworkRepository(
+                UserDatabase.getDatabase(requireActivity()).userDao()
+            )
+        )
+    }
     private lateinit var binding: FragmentAccountBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +48,10 @@ class AccountFragment : Fragment() {
         viewModel.loginState.observe(viewLifecycleOwner, Observer {
             //user has/is logged in
             if (it == true) {
-                binding.userNameText.text = viewModel.userCurrent.value?.userName ?: ""
+                viewModel.getUserData()
+                viewModel.localData.observe(viewLifecycleOwner, Observer { localUser ->
+                    binding.userNameText.text = localUser.userName.toString()
+                })
             }
             //user has not logged in
             else {
@@ -51,8 +59,7 @@ class AccountFragment : Fragment() {
             }
         })
         binding.logoutButon.setOnClickListener {
-            viewModel.loginState.value=false
-            viewModel.userCurrent.value=null
+            viewModel.logoutUser()
             navController.navigate(R.id.loginFragment)
         }
     }
