@@ -55,12 +55,12 @@ class AccountFragment : Fragment() {
             }
             //user has not logged in
             else {
-                navController.navigate(R.id.loginFragment)
+                navController.navigate(R.id.loginFragment)//change to login fragment
             }
         })
         binding.logoutButon.setOnClickListener {
             viewModel.logoutUser()
-            navController.navigate(R.id.loginFragment)
+            navController.navigate(R.id.loginFragment)//change to login fragment
         }
     }
 

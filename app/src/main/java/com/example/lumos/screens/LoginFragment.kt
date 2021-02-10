@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        
+
         return binding.root
     }
 
@@ -61,6 +61,27 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragmentFirst()
             findNavController().navigate(action)
         }
+
+        binding.loginUiButton.setOnClickListener {
+            binding.apply {
+                usernameInput.visibility = View.VISIBLE
+                passwordInput.visibility = View.VISIBLE
+                loginButton.visibility = View.VISIBLE
+                loginUiButton.visibility = View.GONE
+                registerButton.visibility = View.GONE
+                virtualBackButton.visibility = View.VISIBLE
+            }
+        }
+        binding.virtualBackButton.setOnClickListener {
+            binding.apply {
+                usernameInput.visibility = View.GONE
+                passwordInput.visibility = View.GONE
+                loginButton.visibility = View.GONE
+                loginUiButton.visibility = View.VISIBLE
+                registerButton.visibility = View.VISIBLE
+                virtualBackButton.visibility = View.GONE
+            }
+        }
     }
 
     private fun login(username: String, password: String) {
@@ -80,4 +101,6 @@ class LoginFragment : Fragment() {
     fun displayLoginError(error: String, context: Context) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
+
+
 }
