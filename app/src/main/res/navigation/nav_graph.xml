@@ -25,5 +25,27 @@
         android:id="@+id/loginFragment"
         android:name="com.example.lumos.screens.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragmentFirst"
+            app:destination="@id/registrationFragmentFirst" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragmentFirst"
+        android:name="com.example.lumos.screens.registration.RegistrationFragmentFirst"
+        android:label="RegistrationFragmentFirst" >
+        <action
+            android:id="@+id/action_registrationFragmentFirst_to_registrationFragmentSecond"
+            app:destination="@id/registrationFragmentSecond" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragmentSecond"
+        android:name="com.example.lumos.screens.registration.RegistrationFragmentSecond"
+        android:label="RegistrationFragmentSecond" >
+        <action
+            android:id="@+id/action_registrationFragmentSecond_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

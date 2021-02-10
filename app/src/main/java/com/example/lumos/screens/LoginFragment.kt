@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        
         return binding.root
     }
 
@@ -54,6 +55,11 @@ class LoginFragment : Fragment() {
             val username = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
             login(username, password)
+        }
+
+        binding.registerButton.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragmentFirst()
+            findNavController().navigate(action)
         }
     }
 

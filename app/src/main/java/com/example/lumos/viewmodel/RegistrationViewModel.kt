@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lumos.network.dataclasses.RegistrationData
+import com.example.lumos.network.dataclasses.RegistrationResponseData
 import com.example.lumos.repository.NetworkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,14 +17,18 @@ class RegistrationViewModel(private val repository: NetworkRepository) : ViewMod
     private lateinit var password: String
     private lateinit var passwordConfirm: String
     private lateinit var username: String
+    val level = MutableLiveData<Int>()
+    val registrationResponseData = MutableLiveData<RegistrationResponseData>()
 
-    private lateinit var registrationData: RegistrationData
 
     val loginState = MutableLiveData<Boolean>()
 
     init {
         Log.i(RTAG, "RegistrationViewModel Created")
         loginState.value = false
+        registrationResponseData.value =
+            RegistrationResponseData(registrationStatus = "unsuccessful")
+        level.value = INITIAL
     }
 
     //for first step
@@ -39,21 +44,29 @@ class RegistrationViewModel(private val repository: NetworkRepository) : ViewMod
         passwordConfirm = password2
     }
 
-    fun Register() {
-        registrationData =
+    fun register() {
+        val registrationData =
             RegistrationData(username, email, password, passwordConfirm, firstName, lastName)
+        //initiate network call
         viewModelScope.launch(Dispatchers.IO) {
-            val registrationResponseData = repository.registerUser(registrationData)
-            //write token to database or datastore
-            if (registrationResponseData.registrationStatus.equals("success")) {
-                loginState.postValue(true)
-            } else {
-                loginState.postValue(false)
+            val registrationResponse = repository.registerUser(registrationData)
+            registrationResponseData.postValue(registrationResponse)
+            if (registrationResponse.registrationStatus.equals("successful", ignoreCase = true)){
+                //this means we have successfully registered new users
+                level.postValue(REGISTER_SUCCESS)
+            }
+            else if(registrationResponse.registrationStatus.equals("error",ignoreCase = true)){
+                //registration has failed
+                level.postValue(REGISTER_FAILURE)
             }
         }
+
     }
 
     companion object {
         const val RTAG = "RegistrationViewModel"
+        const val REGISTER_SUCCESS = 1
+        const val REGISTER_FAILURE = -1
+        const val INITIAL = 0
     }
 }

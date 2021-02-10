@@ -21,4 +21,5 @@ class NetworkRepository(private val userDao: UserDao) {
     suspend fun logoutUser(localUser: LocalUser) = userDao.logoutUser(localUser)
 
     suspend fun addUser(localUser: LocalUser) = userDao.addUser(localUser)
+
 }

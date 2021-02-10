@@ -7,46 +7,55 @@
 
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".screens.LoginFragment">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username_input"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
 
-            android:autofillHints="username"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_input"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:autofillHints="username"
+                app:layout_constraintBottom_toTopOf="@id/password_input"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.6" />
 
-            app:layout_constraintBottom_toTopOf="@id/password_input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_input"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:contentDescription="Password"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toTopOf="@id/login_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.6" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_input"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="textPassword"
-            android:contentDescription="Password"
-            app:layout_constraintBottom_toTopOf="@id/login_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="Login"
+                app:layout_constraintBottom_toTopOf="@id/register_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.6" />
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="0dp"
-            android:layout_marginBottom="40dp"
-            android:layout_height="50dp"
-            android:text="Login"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.6" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
