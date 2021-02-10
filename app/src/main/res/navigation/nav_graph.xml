@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/blogFragment">
 
@@ -20,4 +21,31 @@
         android:id="@+id/blogFragment"
         android:name="com.example.lumos.screens.BlogFragment"
         android:label="BlogFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.lumos.screens.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragmentFirst"
+            app:destination="@id/registrationFragmentFirst" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragmentFirst"
+        android:name="com.example.lumos.screens.registration.RegistrationFragmentFirst"
+        android:label="RegistrationFragmentFirst" >
+        <action
+            android:id="@+id/action_registrationFragmentFirst_to_registrationFragmentSecond"
+            app:destination="@id/registrationFragmentSecond" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragmentSecond"
+        android:name="com.example.lumos.screens.registration.RegistrationFragmentSecond"
+        android:label="RegistrationFragmentSecond" >
+        <action
+            android:id="@+id/action_registrationFragmentSecond_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
