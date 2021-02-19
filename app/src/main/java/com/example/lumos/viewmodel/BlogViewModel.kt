@@ -9,6 +9,7 @@ import com.example.lumos.repository.BlogRepository
 class BlogViewModel(private val repository: BlogRepository) : ViewModel() {
     val blogPost = repository.getBlogPosts().cachedIn(viewModelScope)
 
+
     init {
         Log.i(TAG, "BlogViewModel created")
     }

@@ -9,6 +9,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +26,11 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
     private var _binding: FragmentBlogBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: BlogViewModel
+
+
+    private val viewModel:BlogViewModel by activityViewModels<BlogViewModel>{
+        BlogViewModelFactory(BlogRepository())
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +43,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             false
         )
         val viewModelFactory = BlogViewModelFactory(BlogRepository())
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(BlogViewModel::class.java)
+
         return binding.root
     }
 
