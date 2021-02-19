@@ -42,7 +42,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             container,
             false
         )
-        val viewModelFactory = BlogViewModelFactory(BlogRepository())
+        BlogViewModelFactory(BlogRepository())
 
         return binding.root
     }
@@ -72,6 +72,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
                 blogList.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
                 retryButtonBlog.isVisible = combinedLoadStates.source.refresh is LoadState.Error
                 errorTextBlogList.isVisible = combinedLoadStates.source.refresh is LoadState.Error
+                //latestStoriesText.isVisible=combinedLoadStates.source.refresh is LoadState.NotLoading
 
                 if (errorTextBlogList.isVisible)
                     errorTextBlogList.text = "An error occured"

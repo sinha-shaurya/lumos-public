@@ -10,13 +10,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.BlogFragment">
+        tools:context=".screens.BlogFragment"
+        >
+
+
+        <TextView
+            android:id="@+id/latest_stories_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Latest Stories"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/blog_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/blog_post_item" />
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/latest_stories_text"
+            tools:listitem="@layout/blog_post_item"
+            />
 
         <ProgressBar
             android:id="@+id/blog_progress"

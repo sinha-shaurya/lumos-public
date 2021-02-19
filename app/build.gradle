@@ -63,7 +63,7 @@ dependencies {
     def version_retrofit="2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
 
     //OkHTTP Logging interceptor
@@ -92,4 +92,7 @@ dependencies {
     //Paging 3 dependency, change to stable if available at release
     def paging_version = "3.0.0-beta01"
     implementation "androidx.paging:paging-runtime:$paging_version"
+
+    //moshi codegen annotation processor
+    kapt"com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
 }
