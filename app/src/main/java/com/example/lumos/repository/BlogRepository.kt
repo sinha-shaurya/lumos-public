@@ -8,9 +8,14 @@ import com.example.lumos.network.paging.BlogPagingSource
 
 class BlogRepository() {
     fun getBlogPosts() = Pager(
-        config = PagingConfig(pageSize = 5, maxSize = 100, enablePlaceholders = false),
+        config = PagingConfig(pageSize = BLOG_PAGE_SIZE, maxSize = 100, enablePlaceholders = false,initialLoadSize = BLOG_PAGE_SIZE),
         pagingSourceFactory = {
             BlogPagingSource(BlogPostNetworkInstance.blogApi)
         }
     ).liveData
+
+    //Blog Fetches 10 posts at a time
+    companion object{
+        private const val BLOG_PAGE_SIZE=10
+    }
 }

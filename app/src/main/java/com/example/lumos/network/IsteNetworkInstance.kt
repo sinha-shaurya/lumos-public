@@ -27,7 +27,7 @@ object IsteNetworkInstance {
 
     //set level for logging Interceptor
     init {
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        interceptor.level = HttpLoggingInterceptor.Level.BASIC
     }
 
 }

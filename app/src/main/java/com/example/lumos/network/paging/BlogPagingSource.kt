@@ -19,7 +19,7 @@ class BlogPagingSource(private val blogApi: BlogApi) : PagingSource<Int, BlogPos
         //take 1 as starting page if no key is available
         val position = params.key ?: BLOG_START_PAGE
         return try {
-            val response = blogApi.getPost(position)
+            val response = blogApi.getPost(position,params.loadSize)
             LoadResult.Page(
                 data = response,
                 prevKey = if (position == BLOG_START_PAGE) null else position - 1,

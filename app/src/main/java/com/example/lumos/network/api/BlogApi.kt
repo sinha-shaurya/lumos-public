@@ -7,5 +7,5 @@ import retrofit2.http.Query
 interface BlogApi {
 
     @GET("blogPosts")
-    suspend fun getPost(@Query(value = "page") page: Int): List<BlogPost>
+    suspend fun getPost(@Query(value = "page") page: Int,@Query(value = "size") pageSize:Int): List<BlogPost>
 }
