@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -69,19 +71,27 @@ class LoginFragment : Fragment() {
                 loginButton.visibility = View.VISIBLE
                 loginUiButton.visibility = View.GONE
                 registerButton.visibility = View.GONE
-                virtualBackButton.visibility = View.VISIBLE
+
             }
         }
-        binding.virtualBackButton.setOnClickListener {
-            binding.apply {
-                usernameInput.visibility = View.GONE
-                passwordInput.visibility = View.GONE
-                loginButton.visibility = View.GONE
-                loginUiButton.visibility = View.VISIBLE
-                registerButton.visibility = View.VISIBLE
-                virtualBackButton.visibility = View.GONE
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,object:OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(binding.usernameInput.isVisible) {
+                    binding.apply {
+                        usernameInput.visibility = View.GONE
+                        passwordInput.visibility = View.GONE
+                        loginButton.visibility = View.GONE
+                        loginUiButton.visibility = View.VISIBLE
+                        registerButton.visibility = View.VISIBLE
+                    }
+                } else{
+                    isEnabled=false
+                    activity?.onBackPressed()
+                }
             }
-        }
+
+        })
     }
 
     private fun login(username: String, password: String) {
