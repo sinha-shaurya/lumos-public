@@ -10,13 +10,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentBlogBinding
-import com.example.lumos.network.paging.BlogDataAdapter
-import com.example.lumos.network.paging.BlogLoadStateAdapter
+import com.example.lumos.network.adapters.BlogDataAdapter
+import com.example.lumos.network.adapters.BlogLoadStateAdapter
 import com.example.lumos.repository.BlogRepository
 import com.example.lumos.utils.BlogViewModelFactory
 import com.example.lumos.viewmodel.BlogViewModel

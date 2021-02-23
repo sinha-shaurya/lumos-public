@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lumos.network.dataclasses.RegistrationData
+import com.example.lumos.network.dataclasses.registration.RegistrationData
 import com.example.lumos.network.dataclasses.RegistrationResponseData
 import com.example.lumos.repository.NetworkRepository
 import kotlinx.coroutines.Dispatchers

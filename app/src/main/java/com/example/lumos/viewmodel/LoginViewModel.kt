@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lumos.local.LocalUser
-import com.example.lumos.network.dataclasses.LoginUserData
-import com.example.lumos.network.dataclasses.UserData
+import com.example.lumos.network.dataclasses.login.LoginUserData
+import com.example.lumos.network.dataclasses.login.UserData
 import com.example.lumos.repository.NetworkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

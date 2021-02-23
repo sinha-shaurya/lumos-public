@@ -1,4 +1,4 @@
-package com.example.lumos.network.paging
+package com.example.lumos.network.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

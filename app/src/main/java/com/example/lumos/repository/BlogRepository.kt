@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.lumos.network.BlogPostNetworkInstance
-import com.example.lumos.network.paging.BlogPagingSource
+import com.example.lumos.network.adapters.BlogPagingSource
 
 class BlogRepository() {
     fun getBlogPosts() = Pager(
