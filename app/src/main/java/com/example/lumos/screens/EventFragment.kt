@@ -57,18 +57,19 @@ class EventFragment : Fragment() {
             categoryList.layoutManager = LinearLayoutManager(requireActivity())
 
         }
+        //setup observer for loading status
         viewModel.loadingStatus.observe(viewLifecycleOwner) {
             when (it) {
+                //When request is successful display the category list
                 LoadingStatus.SUCCESS -> {
-                    Toast.makeText(requireActivity(), "Successfully loaded", Toast.LENGTH_SHORT)
-                        .show()
                     adapter.submitList(viewModel.categoryList.value?.activeCategory ?: emptyList())
                     binding.apply {
                         eventLoadingProgress.isVisible = false
                         retryButtonEvents.isVisible = false
-                        categoryList.isVisible=true
+                        categoryList.isVisible = true
                     }
                 }
+                //when request has failed, show the retry button
                 LoadingStatus.FAILURE -> {
                     //handle failure
                     Toast.makeText(
@@ -83,6 +84,7 @@ class EventFragment : Fragment() {
                         categoryList.isVisible = false
                     }
                 }
+                //when request is being processed , display the progress bar
                 LoadingStatus.LOADING -> {
                     binding.apply {
                         eventLoadingProgress.isVisible = true
@@ -91,6 +93,7 @@ class EventFragment : Fragment() {
                     }
                 }
             }
+            //setup on click listener for retry button
             binding.retryButtonEvents.setOnClickListener {
                 viewModel.resetToLoading()
                 viewModel.getList()

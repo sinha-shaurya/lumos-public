@@ -55,7 +55,6 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BlogDataAdapter(this)
         binding.apply {
-            blogList.setHasFixedSize(true)
             blogList.adapter =
                 adapter.withLoadStateFooter(footer = BlogLoadStateAdapter { adapter.retry() })
             blogList.layoutManager = LinearLayoutManager(requireActivity())

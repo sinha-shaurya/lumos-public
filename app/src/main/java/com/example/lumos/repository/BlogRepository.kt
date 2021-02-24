@@ -16,6 +16,6 @@ class BlogRepository() {
 
     //Blog Fetches 10 posts at a time
     companion object{
-        private const val BLOG_PAGE_SIZE=10
+        private const val BLOG_PAGE_SIZE=8
     }
 }

@@ -95,4 +95,9 @@ dependencies {
 
     //moshi codegen annotation processor
     kapt"com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
+
+    //asynchronous loading of layouts
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
