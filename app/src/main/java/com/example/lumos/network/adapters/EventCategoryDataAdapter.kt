@@ -8,11 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lumos.databinding.CategoryItemBinding
 import com.example.lumos.network.dataclasses.events.Category
 
-class EventCategoryDataAdapter :
+class EventCategoryDataAdapter(private val listener:onCategoryItemClickListener) :
     ListAdapter<Category, EventCategoryDataAdapter.EventCategoryViewHolder>(EventCategoryDiffUtilCallBack()) {
 
     inner class EventCategoryViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                val position=bindingAdapterPosition
+                if(position!=RecyclerView.NO_POSITION){
+                    val item=getItem(position)
+                    if(item!=null)
+                        listener.onItemClick(position)
+                }
+            }
+        }
         fun bind(item: Category) {
             binding.apply {
                 categoryItemName.text=item.name
@@ -30,8 +40,14 @@ class EventCategoryDataAdapter :
         val item = getItem(position)
         holder.bind(item)
     }
+
+    //interface to handle onClicks
+    interface onCategoryItemClickListener{
+        fun onItemClick(id:Int)
+    }
 }
 
+//DiffUtil class to calculate difference between the items appearing on screen
 class EventCategoryDiffUtilCallBack : DiffUtil.ItemCallback<Category>() {
     override fun areItemsTheSame(oldItem: Category, newItem: Category) =
         (oldItem.nameSlug == newItem.nameSlug)

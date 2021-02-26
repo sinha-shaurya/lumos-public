@@ -5,9 +5,11 @@ import com.example.lumos.network.dataclasses.events.Category
 import com.example.lumos.network.dataclasses.events.CategoryResponse
 import com.example.lumos.network.dataclasses.login.LoginUserData
 import com.example.lumos.network.dataclasses.login.UserData
+import com.example.lumos.network.dataclasses.practice.QuestionResponse
 import com.example.lumos.network.dataclasses.registration.RegistrationData
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 
 interface IsteApi {
@@ -19,4 +21,7 @@ interface IsteApi {
 
     @GET("api/category")
     suspend fun getCategory(): CategoryResponse
+
+    @GET("api/interview/questions")
+    suspend fun getQuestions(@HeaderMap headers:Map<String,String?>):QuestionResponse
 }

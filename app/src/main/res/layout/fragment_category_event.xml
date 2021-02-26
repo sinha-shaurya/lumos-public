@@ -11,6 +11,10 @@
         android:layout_height="match_parent"
         tools:context=".screens.CategoryEventFragment">
 
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/event_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/event_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

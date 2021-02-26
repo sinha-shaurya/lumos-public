@@ -25,4 +25,9 @@ class NetworkRepository(private val userDao: UserDao) {
     //get category
     suspend fun getCategory() = IsteNetworkInstance.api.getCategory()
 
+    suspend fun getAuthToken() = userDao.getAuthToken()
+
+    suspend fun getQuestions(headers: MutableMap<String, String?>) =
+        IsteNetworkInstance.api.getQuestions(headers)
+
 }

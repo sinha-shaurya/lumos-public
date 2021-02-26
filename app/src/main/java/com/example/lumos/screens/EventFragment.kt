@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentEventBinding
@@ -19,7 +20,7 @@ import com.example.lumos.utils.CategoryViewModelFactory
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.viewmodel.CategoryViewModel
 
-class EventFragment : Fragment() {
+class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickListener {
 
     private var _binding: FragmentEventBinding? = null
     val binding get() = _binding!!
@@ -49,7 +50,7 @@ class EventFragment : Fragment() {
     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = EventCategoryDataAdapter()
+        val adapter = EventCategoryDataAdapter(this)
         //setup recyclerview
         binding.apply {
             categoryList.setHasFixedSize(true)
@@ -99,6 +100,12 @@ class EventFragment : Fragment() {
                 viewModel.getList()
             }
         }
+    }
+
+    override fun onItemClick(id: Int) {
+        Toast.makeText(requireActivity(), id.toString(), Toast.LENGTH_SHORT).show()
+        val action=EventFragmentDirections.actionEventFragmentToCategoryEventFragment(id)
+        findNavController().navigate(action)
     }
 
 }

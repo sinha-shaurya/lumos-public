@@ -19,7 +19,8 @@
         android:label="EventFragment" >
         <action
             android:id="@+id/action_eventFragment_to_categoryEventFragment"
-            app:destination="@id/categoryEventFragment" />
+            app:destination="@id/categoryEventFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/blogFragment"
@@ -55,5 +56,9 @@
     <fragment
         android:id="@+id/categoryEventFragment"
         android:name="com.example.lumos.screens.CategoryEventFragment"
-        android:label="CategoryEventFragment" />
+        android:label="CategoryEventFragment" >
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -30,6 +30,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
     private val viewModel:BlogViewModel by activityViewModels<BlogViewModel>{
         BlogViewModelFactory(BlogRepository())
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,16 +40,13 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             inflater,
             R.layout.fragment_blog,
             container,
-            false
-        )
-        BlogViewModelFactory(BlogRepository())
-
+            false)
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //_binding = null
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,6 +85,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         val url = BLOG_BASE_URL + id
         val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
+
         customTabsIntent.launchUrl(requireActivity(), Uri.parse(url))
     }
 

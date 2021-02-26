@@ -52,6 +52,7 @@ class AccountFragment : Fragment() {
                 viewModel.localData.observe(viewLifecycleOwner, Observer { localUser ->
                     binding.userNameText.text = localUser.userName.toString()
                 })
+
             }
             //user has not logged in
             else {
