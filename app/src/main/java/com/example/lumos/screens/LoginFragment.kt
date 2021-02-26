@@ -24,7 +24,7 @@ import com.example.lumos.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by activityViewModels<LoginViewModel> {
+    private val viewModel: LoginViewModel by activityViewModels {
         LoginViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
@@ -75,23 +75,24 @@ class LoginFragment : Fragment() {
             }
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,object:OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if(binding.usernameInput.isVisible) {
-                    binding.apply {
-                        usernameInput.visibility = View.GONE
-                        passwordInput.visibility = View.GONE
-                        loginButton.visibility = View.GONE
-                        loginUiButton.visibility = View.VISIBLE
-                        registerButton.visibility = View.VISIBLE
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.usernameInput.isVisible) {
+                        binding.apply {
+                            usernameInput.visibility = View.GONE
+                            passwordInput.visibility = View.GONE
+                            loginButton.visibility = View.GONE
+                            loginUiButton.visibility = View.VISIBLE
+                            registerButton.visibility = View.VISIBLE
+                        }
+                    } else {
+                        isEnabled = false
+                        activity?.onBackPressed()
                     }
-                } else{
-                    isEnabled=false
-                    activity?.onBackPressed()
                 }
-            }
 
-        })
+            })
     }
 
     private fun login(username: String, password: String) {

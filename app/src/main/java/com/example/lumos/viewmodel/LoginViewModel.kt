@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.lumos.local.LocalUser
 import com.example.lumos.network.dataclasses.login.LoginUserData
 import com.example.lumos.network.dataclasses.login.UserData
+import com.example.lumos.network.dataclasses.practice.QuestionResponse
 import com.example.lumos.repository.NetworkRepository
+import com.example.lumos.utils.LoginStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -18,7 +20,8 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
     val loginLevel = MutableLiveData<Int>()
     val localData = MutableLiveData<UserData>()
     val localUserLoggedIn = MutableLiveData<LocalUser>()
-
+    val loginStatus = MutableLiveData<LoginStatus>()
+    val questionResponse = MutableLiveData<QuestionResponse>()
 
     init {
         Log.i(TAG, "LoginViewModel created")
@@ -26,6 +29,8 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
         loginLevel.value = 0
         localData.value = UserData(status = "unsuccessful")
         localUserLoggedIn.value = null
+        loginStatus.value = LoginStatus.LOADING
+        questionResponse.value = null
         getUserDataCount()
     }
 
@@ -42,6 +47,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
                 loginState.postValue(true)
                 userCurrent.postValue(receivedUser)
                 loginLevel.postValue(1)
+                loginStatus.postValue(LoginStatus.SUCCESS)
                 //also trigger database call or preference datastore storage
                 val localUser = LocalUser(
                     0,
@@ -92,8 +98,10 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             val users = repository.getUserDataCount()
             if (users >= 1) {
                 loginState.postValue(true)
+                loginStatus.postValue(LoginStatus.SUCCESS)
             } else {
                 loginState.postValue(false)
+                loginStatus.postValue(LoginStatus.NOT_LOGGED_IN)
             }
         }
     }
@@ -114,6 +122,35 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             }.await()
             loginLevel.postValue(0)
             loginState.postValue(false)
+            loginStatus.postValue(LoginStatus.NOT_LOGGED_IN)
+        }
+    }
+
+    //get questions
+    fun getQuestions() {
+        viewModelScope.launch {
+            //handle HTTP Errors
+            val headerMap = mutableMapOf<String, String?>()
+            headerMap["Authorization"] = async {
+                val token = repository.getAuthToken()
+                if (token == null)
+                    null
+                else
+                    "Token " + token
+            }.await()
+            if (headerMap["Authorization"] != null) {
+                val response =
+                    async {
+                        try {
+                            repository.getQuestions(headerMap)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            QuestionResponse()
+                            loginStatus.postValue(LoginStatus.FAILURE)
+                        }
+                    }.await()
+
+            }
         }
     }
 }

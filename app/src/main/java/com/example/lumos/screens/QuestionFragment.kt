@@ -14,12 +14,15 @@ import com.example.lumos.databinding.FragmentQuestionBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
+import com.example.lumos.utils.LoginStatus
+import com.example.lumos.utils.LoginViewModelFactory
 import com.example.lumos.utils.QuestionViewModelFactory
+import com.example.lumos.viewmodel.LoginViewModel
 import com.example.lumos.viewmodel.QuestionViewModel
 
 class QuestionFragment : Fragment() {
-    private val viewModel: QuestionViewModel by activityViewModels {
-        QuestionViewModelFactory(
+    private val viewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
             )
@@ -50,19 +53,12 @@ class QuestionFragment : Fragment() {
     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadingStatus.observe(viewLifecycleOwner){
+        viewModel.loginStatus.observe(viewLifecycleOwner){
             when(it){
-                LoadingStatus.SUCCESS-> {
-                    Toast.makeText(requireActivity(),"Loaded",Toast.LENGTH_SHORT).show()
-                    binding.retryButtonQuestion.isVisible=false
-                }
-                LoadingStatus.FAILURE->{
-                    Toast.makeText(requireActivity(),"failed",Toast.LENGTH_SHORT).show()
-                    binding.retryButtonQuestion.isVisible=true
-                }
-                LoadingStatus.LOADING->{
-                    binding.retryButtonQuestion.isVisible=false
-                }
+                LoginStatus.LOADING->binding.retryButtonQuestion.isVisible=false
+                LoginStatus.SUCCESS->viewModel.getQuestions()
+                LoginStatus.FAILURE->binding.retryButtonQuestion.isVisible=true
+                LoginStatus.NOT_LOGGED_IN->Toast.makeText(requireActivity(),"Not logged in",Toast.LENGTH_SHORT).show()
             }
         }
         binding.retryButtonQuestion.setOnClickListener {
