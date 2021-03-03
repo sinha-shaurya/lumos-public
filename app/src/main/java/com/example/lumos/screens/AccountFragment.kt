@@ -34,7 +34,7 @@ class AccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentAccountBinding>(
             inflater,
@@ -79,11 +79,14 @@ class AccountFragment : Fragment() {
                     navController.navigate(R.id.loginFragment)
                 }
                 LoginStatus.LOADING -> binding.logoutButon.isVisible = false
-                LoginStatus.FAILURE -> Toast.makeText(
-                    requireActivity(),
-                    "An error occurred",
-                    Toast.LENGTH_SHORT
-                ).show()
+                LoginStatus.FAILURE -> {
+                    Toast.makeText(
+                        requireActivity(),
+                        "An error occurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navController.navigate(R.id.loginFragment)
+                }
             }
         }
         binding.logoutButon.setOnClickListener {
@@ -98,7 +101,7 @@ class AccountFragment : Fragment() {
         val currentBackStackEntry = navController.currentBackStackEntry!!
         val savedStateHandle = currentBackStackEntry.savedStateHandle
         savedStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL)
-            .observe(currentBackStackEntry, Observer { success ->
+            .observe(currentBackStackEntry, { success ->
                 if (!success) {
                     val startDestination = navController.graph.startDestination
                     val navOptions = NavOptions.Builder().setPopUpTo(startDestination, true)
