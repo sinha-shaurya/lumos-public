@@ -64,7 +64,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             } else if (receivedUser.status.equals("unsuccessful")) {
                 Log.i(TAG, "Login failed")
                 userCurrent.postValue(receivedUser)
-                loginStatus.postValue(LoginStatus.FAILURE)
+                loginStatus.postValue(LoginStatus.NOT_LOGGED_IN)
                 error.postValue(null)
 
             }

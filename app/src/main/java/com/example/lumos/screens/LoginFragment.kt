@@ -97,6 +97,7 @@ class LoginFragment : Fragment() {
     private fun login(username: String, password: String) {
         //login user
         viewModel.loginUser(username, password)
+        viewModel.loginStatus.value=LoginStatus.LOADING
         //observe loginStatus for changes
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
             //check for different status changes
@@ -133,12 +134,16 @@ class LoginFragment : Fragment() {
                         passwordInput.isEnabled=false
                     }
                 }
-                LoginStatus.NOT_LOGGED_IN->{
-                    //do nothing
+                LoginStatus.NOT_LOGGED_IN->binding.apply {
+                    //show toast for failed login
+                    Toast.makeText(requireContext(),"Incorrect username or password",Toast.LENGTH_SHORT).show()
+                    loginButton.isClickable=true
+                    usernameInput.isEnabled=true
+                    passwordInput.isEnabled=true
                 }
             }
         }
-        viewModel.loginStatus.value = LoginStatus.NOT_LOGGED_IN
+        //viewModel.loginStatus.value = LoginStatus.NOT_LOGGED_IN
     }
 
 
