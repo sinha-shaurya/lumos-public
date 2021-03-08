@@ -5,6 +5,7 @@ import com.example.lumos.local.UserDao
 import com.example.lumos.network.IsteNetworkInstance
 import com.example.lumos.network.dataclasses.RegistrationResponseData
 import com.example.lumos.network.dataclasses.login.LoginUserData
+import com.example.lumos.network.dataclasses.practice.Answer
 import com.example.lumos.network.dataclasses.registration.RegistrationData
 
 class NetworkRepository(private val userDao: UserDao) {
@@ -30,4 +31,8 @@ class NetworkRepository(private val userDao: UserDao) {
     suspend fun getQuestions(headers: MutableMap<String, String?>) =
         IsteNetworkInstance.api.getQuestions(headers)
 
+    suspend fun submitAnswer(headers: MutableMap<String, String>, answer: Answer) =
+        IsteNetworkInstance.api.submitAnswer(headers,answer = answer)
+
+    //suspend fun submitAnswer(headers: MutableMap<String, String>, answer: Answer) =IsteNetworkInstance.api.submitAnswer(headers,answer.answer,answer.primaryKey)
 }

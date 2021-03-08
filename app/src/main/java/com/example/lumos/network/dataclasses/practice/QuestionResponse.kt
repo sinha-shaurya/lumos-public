@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class QuestionResponse(
-    @Json(name = "questions") val questionList: List<Question>? = null,
+    @Json(name = "questions") val questionList: MutableList<Question>? = null,
     @Json(name = "status") val questionStatus: String = "unsuccessful",
     @Json(name = "detail") val errorDetails: String? = null
 )

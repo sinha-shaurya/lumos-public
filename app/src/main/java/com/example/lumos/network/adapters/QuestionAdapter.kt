@@ -9,11 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lumos.databinding.QuestionItemBinding
 import com.example.lumos.network.dataclasses.practice.Question
 
-class QuestionAdapter :
+class QuestionAdapter(private val listener:onQuestionItemClickListener) :
     ListAdapter<Question, QuestionAdapter.QuestionViewHolder>(QuestionDiffUtilCallback()) {
     inner class QuestionViewHolder(private val binding: QuestionItemBinding) :
         RecyclerView.ViewHolder(binding.root){
 
+            init {
+                binding.root.setOnClickListener {
+                    val position=bindingAdapterPosition
+                    if(position!=RecyclerView.NO_POSITION){
+                        val item=getItem(position)
+                        if(item!=null)
+                            listener.onQuestionItemClick(item,position)
+                    }
+                }
+            }
             fun bind(item:Question){
                 binding.questionText.text=item.question
             }
@@ -28,9 +38,14 @@ class QuestionAdapter :
         val item=getItem(position)
         holder.bind(item)
     }
+
+    interface onQuestionItemClickListener{
+        fun onQuestionItemClick(item:Question,position: Int)
+    }
+
 }
 
-class QuestionDiffUtilCallback : DiffUtil.ItemCallback<Question>() {
+class QuestionDiffUtilCallback() : DiffUtil.ItemCallback<Question>() {
     override fun areItemsTheSame(oldItem: Question, newItem: Question) =
         oldItem.primaryKey == newItem.primaryKey
 

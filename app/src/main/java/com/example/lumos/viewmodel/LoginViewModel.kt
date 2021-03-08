@@ -2,12 +2,16 @@ package com.example.lumos.viewmodel
 
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lumos.local.LocalUser
 import com.example.lumos.network.dataclasses.login.LoginUserData
 import com.example.lumos.network.dataclasses.login.UserData
+import com.example.lumos.network.dataclasses.practice.Answer
+import com.example.lumos.network.dataclasses.practice.AnswerResponse
+import com.example.lumos.network.dataclasses.practice.Question
 import com.example.lumos.network.dataclasses.practice.QuestionResponse
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
@@ -15,30 +19,60 @@ import com.example.lumos.utils.LoginStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
     val userCurrent = MutableLiveData<UserData>()
     val localData = MutableLiveData<UserData>()
     val loginStatus = MutableLiveData<LoginStatus>()
-    val questionResponse = MutableLiveData<QuestionResponse>()
-    val error = MutableLiveData<Exception>()
-    val questionStatus=MutableLiveData<LoadingStatus>()
 
+    val error = MutableLiveData<Exception>()
+    val questionStatus = MutableLiveData<LoadingStatus>()
+    val questionError = MutableLiveData<Exception>()
+
+    private val _questionResponse = MutableLiveData<QuestionResponse>()
+    val questionResponse: LiveData<QuestionResponse> get() = _questionResponse
+
+
+    //setup livedata wrapper on _questionList so that fragment cannot make changes
+    private val _questionList = MutableLiveData<List<Question>>()
+    val questionList: LiveData<List<Question>> get() = _questionList
+
+    //livedata wrapper on answer status
+    private val _answerStatus = MutableLiveData<LoadingStatus>()
+    val answerStatus: LiveData<LoadingStatus> get() = _answerStatus
+
+    //livedata wrapper on answer response
+    private val _answerResponse = MutableLiveData<AnswerResponse>()
+    val answerResponse: LiveData<AnswerResponse> get() = _answerResponse
+
+    //initialise viewmodel variables
     init {
         Log.i(TAG, "LoginViewModel created")
+
+        //loading status variables
+        loginStatus.value = LoginStatus.LOADING
+        questionStatus.value = LoadingStatus.LOADING
+
         userCurrent.value = null
         localData.value = UserData(status = "unsuccessful")
-        loginStatus.value = LoginStatus.LOADING
-        questionResponse.value = null
+
+        _questionResponse.value = QuestionResponse(questionList = null, errorDetails = "init")
         error.value = null
-        questionStatus.value=LoadingStatus.LOADING
+
+        questionError.value = null
+        _questionList.value = emptyList()
+
+
         getUserDataCount()
     }
 
+
+    //Function definition for Login and account fragments
     //function to login user using API
     fun loginUser(username: String, password: String) {
         val loginUserData = LoginUserData(username, password)
-        loginStatus.value=LoginStatus.LOADING
+        loginStatus.value = LoginStatus.LOADING
         //run coroutine on IO Dispatcher
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -56,7 +90,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             }.await()
             //user has successfully logged in
             if (receivedUser.status.equals("successful")) {
-                //change login status
+                //change login status to success
                 userCurrent.postValue(receivedUser)
                 loginStatus.postValue(LoginStatus.SUCCESS)
                 //also trigger database call
@@ -69,11 +103,6 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
 
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.i(TAG, "LoginViewModel destroyed")
     }
 
     //get details of user stored if any
@@ -105,7 +134,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
     }
 
     //call repository function to add new user to database
-    fun addUser(localUser: LocalUser) {
+    private fun addUser(localUser: LocalUser) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addUser(localUser)
         }
@@ -121,7 +150,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
                 repository.logoutUser(localUser)
             }.await()
             loginStatus.postValue(LoginStatus.NOT_LOGGED_IN)
-            questionResponse.postValue(null)
+            _questionResponse.postValue(null)
             questionStatus.postValue(LoadingStatus.LOADING)
         }
     }
@@ -140,23 +169,26 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
         addUser(localUser)
     }
 
+
+    //Function definitions for QuestionFragment
     //get questions
     fun getQuestions() {
         //check if questions are previously loaded
-        if(questionResponse.value?.questionList?.size ?:-1 >0){
-            questionStatus.value=LoadingStatus.SUCCESS
-        }
-        else{
+        if (_questionResponse.value?.questionList?.size ?: -1 >= 0) {
+            questionStatus.value = LoadingStatus.SUCCESS
+        } else {
             viewModelScope.launch {
                 //handle HTTP Errors
                 val headerMap = mutableMapOf<String, String?>()
                 headerMap["Authorization"] = async {
+                    //can be replaced with localData value of token for faster access
                     val token = repository.getAuthToken()
                     if (token == null)
                         null
                     else
-                        "Token " + token
+                        "Token $token"
                 }.await()
+                //do not perform network request if auth token is not available
                 if (headerMap["Authorization"] != null) {
                     val response =
                         async {
@@ -165,22 +197,66 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 questionStatus.postValue(LoadingStatus.FAILURE)
+                                questionError.postValue(e)
                                 QuestionResponse()
                             }
                         }.await()
-                    questionResponse.postValue(response)
+                    _questionResponse.postValue(response)
+                    _questionList.postValue(response.questionList)
                     //check if response has not failed
-                    if(response.questionList!=null)
+                    if (response.questionList != null)
                         questionStatus.postValue(LoadingStatus.SUCCESS)
                     else
                         questionStatus.postValue(LoadingStatus.FAILURE)
                 }
+                //in case authorization token is not available
                 else
                     questionStatus.postValue(LoadingStatus.FAILURE)
             }
         }
     }
 
+
+    //Function definitions for Answer Fragment
+    fun removeItem(item: Question) =
+        viewModelScope.launch(Dispatchers.Default) {
+            val list = _questionList.value!!.toCollection(mutableListOf())
+            list.remove(item)
+            _questionList.postValue(list)
+        }
+
+    fun submitAnswer(item: Answer) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _answerStatus.postValue(LoadingStatus.LOADING)
+            val token =
+                repository.getAuthToken()
+
+            if (token != null){
+                val headerMap= mutableMapOf<String,String>()
+                headerMap["Authorization"]= "Token $token"
+                val response=try{
+                    Log.i(TAG,"headervalue ${headerMap} answer ${item}")
+                    repository.submitAnswer(headerMap,item)
+                }
+                catch (e:Exception){
+                    AnswerResponse()
+                }
+                if(response.status.equals("successful",ignoreCase = true)){
+                    //set loading status to successful
+                    _answerStatus.postValue(LoadingStatus.SUCCESS)
+                }
+                else
+                    _answerStatus.postValue(LoadingStatus.FAILURE)
+            }
+            else
+                _answerStatus.postValue(LoadingStatus.FAILURE)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i(TAG, "LoginViewModel destroyed")
+    }
 
     companion object {
         const val TAG = "LoginViewModel"

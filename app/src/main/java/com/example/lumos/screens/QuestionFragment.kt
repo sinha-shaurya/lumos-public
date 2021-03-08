@@ -1,6 +1,7 @@
 package com.example.lumos.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +10,20 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentQuestionBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.QuestionAdapter
+import com.example.lumos.network.dataclasses.practice.Question
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.LoginViewModelFactory
-import com.example.lumos.utils.QuestionViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
-import com.example.lumos.viewmodel.QuestionViewModel
 
-class QuestionFragment : Fragment() {
+class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener {
     private val viewModel: LoginViewModel by activityViewModels {
         LoginViewModelFactory(
             NetworkRepository(
@@ -30,6 +31,7 @@ class QuestionFragment : Fragment() {
             )
         )
     }
+    val adapter = QuestionAdapter(this)
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -55,68 +57,86 @@ class QuestionFragment : Fragment() {
     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loginStatus.observe(viewLifecycleOwner){status->
-            when(status){
+
+        binding.apply {
+            questionList.layoutManager = LinearLayoutManager(requireActivity())
+            questionList.adapter = adapter
+        }
+
+
+        viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
                 //only attempt loading questions when user is logged in
-                LoginStatus.SUCCESS->{
+                LoginStatus.SUCCESS -> {
                     viewModel.getQuestions()
                     //observe for changes in question status
                     questionStatusObserver()
                 }
                 //display loading status when login status is being fetched
-                LoginStatus.LOADING-> binding.apply {
-                        questionLoadingProgress.isVisible=true
-                        binding.retryButtonQuestion.isVisible=false
-                        binding.questionList.isVisible=false
-                    }
+                LoginStatus.LOADING -> binding.apply {
+                    questionLoadingProgress.isVisible = true
+                    binding.retryButtonQuestion.isVisible = false
+                    binding.questionList.isVisible = false
+                }
 
-                else->{
+                else -> {
                     binding.apply {
-                        questionLoadingProgress.isVisible=false
-                        retryButtonQuestion.isVisible=false
-                        questionList.isVisible=false
-                        Toast.makeText(requireActivity(),"try loggin in",Toast.LENGTH_SHORT).show()
+                        questionLoadingProgress.isVisible = false
+                        retryButtonQuestion.isVisible = false
+                        questionList.isVisible = false
+                        Toast.makeText(requireActivity(), "try loggin in", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
         }
         binding.retryButtonQuestion.setOnClickListener {
             viewModel.getQuestions()
-            viewModel.questionStatus.value=LoadingStatus.LOADING
+            viewModel.questionStatus.value = LoadingStatus.LOADING
         }
+
+
     }
 
-    private fun questionStatusObserver(){
-        viewModel.questionStatus.observe(viewLifecycleOwner){
-            when(it){
-                LoadingStatus.SUCCESS->{
-                    //setup recyclerview
-                    recyclerViewSetup()
-                    Toast.makeText(requireActivity(),"${viewModel.questionResponse.value!!.questionList!!.size} loaded",Toast.LENGTH_SHORT).show()
-                    binding.questionList.isVisible=true
-                    binding.questionLoadingProgress.isVisible=false
-                    binding.retryButtonQuestion.isVisible=false
+    private fun questionStatusObserver() {
+        viewModel.questionStatus.observe(viewLifecycleOwner) { it ->
+            when (it) {
+                LoadingStatus.SUCCESS -> {
+
+                    viewModel.questionList.observe(viewLifecycleOwner) {
+                        Log.i("QuestionFragment","Size of list received ${it.size}")
+                        adapter.submitList(it)
+                    }
+                    binding.questionList.isVisible = true
+                    binding.questionLoadingProgress.isVisible = false
+                    binding.retryButtonQuestion.isVisible = false
+
+
                 }
-                LoadingStatus.LOADING->binding.apply {
-                    questionLoadingProgress.isVisible=true
-                    retryButtonQuestion.isVisible=false
+                LoadingStatus.LOADING -> binding.apply {
+                    questionLoadingProgress.isVisible = true
+                    retryButtonQuestion.isVisible = false
                 }
-                LoadingStatus.FAILURE-> binding.apply {
-                    retryButtonQuestion.isVisible=true
-                    questionLoadingProgress.isVisible=false
+                LoadingStatus.FAILURE -> binding.apply {
+                    Log.i("QuestionFragment", "Exception occurred")
+                    retryButtonQuestion.isVisible = true
+                    questionLoadingProgress.isVisible = false
+                    val error = viewModel.questionError.value
+                    if (error != null)
+                        Log.i("QuestionFragment", error.message ?: "Default exception")
                 }
             }
         }
     }
 
-    private fun recyclerViewSetup(){
-        val adapter=QuestionAdapter()
-        binding.apply {
-            questionList.layoutManager=LinearLayoutManager(requireActivity())
-            questionList.adapter=adapter
-        }
-        val list=viewModel.questionResponse.value?.questionList
-        adapter.submitList(list)
+    override fun onQuestionItemClick(item: Question, position: Int) {
+        Log.i(
+            "QuestionFragment",
+            "Size of list ${viewModel.questionResponse.value?.questionList?.size}"
+        )
+        //trigger answer request
+        val action=QuestionFragmentDirections.actionQuestionFragmentToAnswerFragment(item)
+        findNavController().navigate(action)
     }
 
 }
