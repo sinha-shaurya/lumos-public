@@ -7,12 +7,15 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 object BlogPostNetworkInstance {
     private val moshi = Moshi.Builder().build()
     private val interceptor = HttpLoggingInterceptor()
-    val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    val client = OkHttpClient.Builder()
+        .callTimeout(10,TimeUnit.SECONDS)
+        .addInterceptor(interceptor).build()
     private val retrofit by lazy {
         Retrofit.Builder().baseUrl(Constants.BLOG_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(client).build()

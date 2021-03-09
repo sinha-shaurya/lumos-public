@@ -3,6 +3,7 @@ package com.example.lumos.network.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
             circularProgressDrawable.apply {
                 centerRadius=30f
                 strokeWidth=5f
+                setColorSchemeColors(ContextCompat.getColor(context,R.color.colorAccent))
             }
             circularProgressDrawable.start()
 
