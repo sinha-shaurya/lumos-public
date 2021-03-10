@@ -26,6 +26,11 @@ class QuestionAdapter(private val listener:onQuestionItemClickListener) :
             }
             fun bind(item:Question){
                 binding.questionText.text=item.question
+                binding.apply {
+                    questionText.text=item.question
+                    questionAuthorName.text=item.mentor.name
+                    questionAuthorCompany.text=item.mentor.company
+                }
             }
         }
 

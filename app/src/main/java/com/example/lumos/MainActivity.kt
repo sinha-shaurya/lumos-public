@@ -1,8 +1,10 @@
 package com.example.lumos
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         val navController=findNavController(R.id.fragment)
 
         binding.bottomNav.setupWithNavController(navController)
-
 
         //setup action bar with navController with appbar configuration
         val appBarConfiguration= AppBarConfiguration(topLevelDestinationIds = setOf(

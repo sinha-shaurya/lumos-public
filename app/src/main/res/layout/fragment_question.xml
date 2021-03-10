@@ -29,7 +29,8 @@
             android:id="@+id/question_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/question_item" />
+            tools:listitem="@layout/question_item"
+            android:padding="10dp"/>
 
         <ProgressBar
             android:id="@+id/question_loading_progress"
