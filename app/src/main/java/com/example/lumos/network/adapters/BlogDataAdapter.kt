@@ -1,22 +1,27 @@
-package com.example.lumos.network.paging
+package com.example.lumos.network.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.lumos.R
 import com.example.lumos.databinding.BlogPostItemBinding
 import com.example.lumos.network.dataclasses.blog.BlogPost
+import com.squareup.picasso.Picasso
 
 class BlogDataAdapter(private val listener: onItemClickListener) :
     PagingDataAdapter<BlogPost, BlogDataAdapter.BlogItemViewHolder>(
         POST_COMPARATOR
     ) {
 
-    inner class BlogItemViewHolder(private val binding: BlogPostItemBinding) :
+    inner class BlogItemViewHolder(
+        private val binding: BlogPostItemBinding,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         //setup itemclicks on the entire card
@@ -33,13 +38,22 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
         }
 
         fun bind(item: BlogPost) {
+            val circularProgressDrawable=CircularProgressDrawable(context)
+            circularProgressDrawable.apply {
+                centerRadius=30f
+                strokeWidth=5f
+                setColorSchemeColors(ContextCompat.getColor(context,R.color.colorAccent))
+            }
+            circularProgressDrawable.start()
+
             binding.apply {
                 blogPostName.text = item.title
                 blogPostAuthor.text = item.author
-                Glide.with(itemView).load(generateImageUrl(item.imageUrl)).centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.blog_image_placeholder)
+                Picasso.get().load(generateImageUrl(item.imageUrl))
+                    .placeholder(circularProgressDrawable)
                     .error(R.drawable.blog_image_error)
+                    .fit()
+                    .centerCrop()
                     .into(blogPostImage)
                 blogPostTime.text =
                     if (item.readTime == 1) "1 min" else item.readTime.toString() + " min"
@@ -50,6 +64,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
             val baseUrl = "https://blog.istemanipal.com/mobile/"
             return baseUrl + imageUrl
         }
+
     }
 
     override fun onBindViewHolder(holder: BlogItemViewHolder, position: Int) {
@@ -62,7 +77,8 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlogItemViewHolder {
         val binding =
             BlogPostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BlogItemViewHolder(binding)
+        //asynchronously try to inflate the view
+        return BlogItemViewHolder(binding, parent.context)
     }
 
     companion object {
@@ -73,6 +89,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
             override fun areContentsTheSame(oldItem: BlogPost, newItem: BlogPost) =
                 (oldItem == newItem)
         }
+
     }
 
     //interface to handle on clicks

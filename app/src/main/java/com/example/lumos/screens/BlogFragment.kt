@@ -10,13 +10,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentBlogBinding
-import com.example.lumos.network.paging.BlogDataAdapter
-import com.example.lumos.network.paging.BlogLoadStateAdapter
+import com.example.lumos.network.adapters.BlogDataAdapter
+import com.example.lumos.network.adapters.BlogLoadStateAdapter
 import com.example.lumos.repository.BlogRepository
 import com.example.lumos.utils.BlogViewModelFactory
 import com.example.lumos.viewmodel.BlogViewModel
@@ -31,6 +30,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
     private val viewModel:BlogViewModel by activityViewModels<BlogViewModel>{
         BlogViewModelFactory(BlogRepository())
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,23 +40,19 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             inflater,
             R.layout.fragment_blog,
             container,
-            false
-        )
-        BlogViewModelFactory(BlogRepository())
-
+            false)
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //_binding = null
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BlogDataAdapter(this)
         binding.apply {
-            blogList.setHasFixedSize(true)
             blogList.adapter =
                 adapter.withLoadStateFooter(footer = BlogLoadStateAdapter { adapter.retry() })
             blogList.layoutManager = LinearLayoutManager(requireActivity())
@@ -89,6 +85,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         val url = BLOG_BASE_URL + id
         val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
+
         customTabsIntent.launchUrl(requireActivity(), Uri.parse(url))
     }
 

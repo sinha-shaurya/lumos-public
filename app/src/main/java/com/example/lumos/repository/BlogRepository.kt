@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.lumos.network.BlogPostNetworkInstance
-import com.example.lumos.network.paging.BlogPagingSource
+import com.example.lumos.network.adapters.BlogPagingSource
 
 class BlogRepository() {
     fun getBlogPosts() = Pager(
@@ -16,6 +16,6 @@ class BlogRepository() {
 
     //Blog Fetches 10 posts at a time
     companion object{
-        private const val BLOG_PAGE_SIZE=10
+        private const val BLOG_PAGE_SIZE=8
     }
 }

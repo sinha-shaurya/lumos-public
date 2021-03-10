@@ -16,4 +16,7 @@ interface UserDao {
 
     @Delete
     suspend fun logoutUser(localUser: LocalUser)
+
+    @Query("SELECT token from user_data ORDER BY id LIMIT 1")
+    suspend fun getAuthToken(): String?
 }

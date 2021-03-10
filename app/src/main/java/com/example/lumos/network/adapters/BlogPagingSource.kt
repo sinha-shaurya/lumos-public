@@ -1,4 +1,4 @@
-package com.example.lumos.network.paging
+package com.example.lumos.network.adapters
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

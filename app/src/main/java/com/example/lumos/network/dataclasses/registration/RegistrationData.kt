@@ -1,4 +1,4 @@
-package com.example.lumos.network.dataclasses
+package com.example.lumos.network.dataclasses.registration
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

@@ -1,6 +1,5 @@
 package com.example.lumos.screens
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +10,21 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentLoginBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
+import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
 
 class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by activityViewModels<LoginViewModel> {
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: LoginViewModel by activityViewModels {
         LoginViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
@@ -35,17 +35,15 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         return binding.root
     }
 
-    companion object {
-        const val LOGIN_SUCCESSFUL: String = "LOGIN_SUCCESSFUL"
-        const val TAG: String = "LoginFragment"
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,41 +73,82 @@ class LoginFragment : Fragment() {
             }
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,object:OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if(binding.usernameInput.isVisible) {
-                    binding.apply {
-                        usernameInput.visibility = View.GONE
-                        passwordInput.visibility = View.GONE
-                        loginButton.visibility = View.GONE
-                        loginUiButton.visibility = View.VISIBLE
-                        registerButton.visibility = View.VISIBLE
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.usernameInput.isVisible) {
+                        binding.apply {
+                            usernameInput.visibility = View.GONE
+                            passwordInput.visibility = View.GONE
+                            loginButton.visibility = View.GONE
+                            loginUiButton.visibility = View.VISIBLE
+                            registerButton.visibility = View.VISIBLE
+                        }
+                    } else {
+                        isEnabled = false
+                        activity?.onBackPressed()
                     }
-                } else{
-                    isEnabled=false
-                    activity?.onBackPressed()
+                }
+
+            })
+    }
+
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+    private fun login(username: String, password: String) {
+        //login user
+        viewModel.loginUser(username, password)
+        viewModel.loginStatus.value=LoginStatus.LOADING
+        //observe loginStatus for changes
+        viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
+            //check for different status changes
+            when (status) {
+                LoginStatus.SUCCESS -> {
+                    savedStateHandle.set(LOGIN_SUCCESSFUL, true)
+                    val navController = findNavController()
+                    println(navController)
+                    navController.popBackStack(R.id.accountFragment, false)
+                }
+
+                LoginStatus.FAILURE -> {
+                    //This means an API error or network issue has occurred
+                    binding.loginButton.isClickable = true
+                    binding.apply {
+                        usernameInput.isEnabled=true
+                        passwordInput.isEnabled=true
+                    }
+                    val errorMessage = viewModel.error.value
+                    if (errorMessage != null)
+                        Toast.makeText(requireActivity(), errorMessage.message, Toast.LENGTH_SHORT)
+                            .show()
+                    else
+                        Toast.makeText(
+                            requireActivity(), "Incorrect username or password", Toast.LENGTH_SHORT)
+                            .show()
+                }
+
+                LoginStatus.LOADING -> {
+                    //prevent user clicks when network request is being performed
+                    binding.loginButton.isClickable = false
+                    binding.apply {
+                        usernameInput.isEnabled=false
+                        passwordInput.isEnabled=false
+                    }
+                }
+                LoginStatus.NOT_LOGGED_IN->binding.apply {
+                    //show toast for failed login
+                    Toast.makeText(requireContext(),"Incorrect username or password",Toast.LENGTH_SHORT).show()
+                    loginButton.isClickable=true
+                    usernameInput.isEnabled=true
+                    passwordInput.isEnabled=true
                 }
             }
-
-        })
+        }
+        //viewModel.loginStatus.value = LoginStatus.NOT_LOGGED_IN
     }
 
-    private fun login(username: String, password: String) {
-        viewModel.loginUser(username, password)
-        viewModel.loginLevel.observe(viewLifecycleOwner, Observer { result ->
-            if (result == 1) {
-                savedStateHandle.set(LOGIN_SUCCESSFUL, true)
-                findNavController().popBackStack()
-                viewModel.loginLevel.value = 0
-            } else if (result == -1) {
-                viewModel.loginLevel.value = 0
-                displayLoginError("Incorrect Username or Password", requireActivity())
-            }
-        })
-    }
 
-    fun displayLoginError(error: String, context: Context) {
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+    companion object {
+        const val LOGIN_SUCCESSFUL: String = "LOGIN_SUCCESSFUL"
     }
 
 

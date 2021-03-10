@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,6 +16,7 @@ import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
+import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
@@ -31,7 +34,7 @@ class AccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentAccountBinding>(
             inflater,
@@ -45,19 +48,47 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
-        viewModel.loginState.observe(viewLifecycleOwner, Observer {
+        /*viewModel.loginState.observe(viewLifecycleOwner) {
             //user has/is logged in
             if (it == true) {
                 viewModel.getUserData()
                 viewModel.localData.observe(viewLifecycleOwner, Observer { localUser ->
                     binding.userNameText.text = localUser.userName.toString()
                 })
+
             }
             //user has not logged in
             else {
                 navController.navigate(R.id.loginFragment)//change to login fragment
             }
-        })
+            //setup new login logic
+
+        }*/
+        viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                //check for login status
+                //success
+                LoginStatus.SUCCESS -> {
+                    viewModel.getUserData()
+                    binding.logoutButon.isVisible = true
+                    viewModel.localData.observe(viewLifecycleOwner) {
+                        binding.userNameText.text = it.token
+                    }
+                }
+                LoginStatus.NOT_LOGGED_IN -> {
+                    navController.navigate(R.id.loginFragment)
+                }
+                LoginStatus.LOADING -> binding.logoutButon.isVisible = false
+                LoginStatus.FAILURE -> {
+                    Toast.makeText(
+                        requireActivity(),
+                        "An error occurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navController.navigate(R.id.loginFragment)
+                }
+            }
+        }
         binding.logoutButon.setOnClickListener {
             viewModel.logoutUser()
             navController.navigate(R.id.loginFragment)//change to login fragment
@@ -70,7 +101,7 @@ class AccountFragment : Fragment() {
         val currentBackStackEntry = navController.currentBackStackEntry!!
         val savedStateHandle = currentBackStackEntry.savedStateHandle
         savedStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL)
-            .observe(currentBackStackEntry, Observer { success ->
+            .observe(currentBackStackEntry, { success ->
                 if (!success) {
                     val startDestination = navController.graph.startDestination
                     val navOptions = NavOptions.Builder().setPopUpTo(startDestination, true)

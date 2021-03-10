@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".screens.AnswerFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/questionText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeMaxTextSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sample text" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer_text_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/questionText"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/answer_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="gravity"
+                android:gravity="top"
+                tools:text="This is a sample answer"
+                android:inputType="textMultiLine"
+                android:layout_marginTop="20dp"
+                android:minHeight="50dp"
+                android:maxHeight="300dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:text="submit"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_text_layout"
+            android:id="@+id/submit_button"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

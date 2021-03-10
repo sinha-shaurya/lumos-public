@@ -8,24 +8,35 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lumos.screens.AccountFragment"
-        android:label="AccountFragment" />
+        android:label="Account" />
     <fragment
         android:id="@+id/questionFragment"
         android:name="com.example.lumos.screens.QuestionFragment"
-        android:label="QuestionFragment" />
+        android:label="Practice">
+        <action
+            android:id="@+id/action_questionFragment_to_answerFragment"
+            app:destination="@id/answerFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
     <fragment
         android:id="@+id/eventFragment"
         android:name="com.example.lumos.screens.EventFragment"
-        android:label="EventFragment" />
+        android:label="Categories">
+        <action
+            android:id="@+id/action_eventFragment_to_categoryEventFragment"
+            app:destination="@id/categoryEventFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
     <fragment
         android:id="@+id/blogFragment"
         android:name="com.example.lumos.screens.BlogFragment"
-        android:label="BlogFragment" />
+        android:label="Blog" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.lumos.screens.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragmentFirst"
             app:destination="@id/registrationFragmentFirst" />
@@ -47,5 +58,21 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryEventFragment"
+        android:name="com.example.lumos.screens.CategoryEventFragment"
+        android:label="Events">
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerFragment"
+        android:name="com.example.lumos.screens.AnswerFragment"
+        android:label="Answer Submission">
+        <argument
+            android:name="questionItem"
+            app:argType="com.example.lumos.network.dataclasses.practice.Question" />
     </fragment>
 </navigation>
