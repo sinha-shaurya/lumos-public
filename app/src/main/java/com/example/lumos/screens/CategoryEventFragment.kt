@@ -14,7 +14,7 @@ import com.example.lumos.databinding.FragmentCategoryEventBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.EventListAdapter
 import com.example.lumos.repository.NetworkRepository
-import com.example.lumos.utils.CategoryViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
 
 class CategoryEventFragment : Fragment() {

@@ -22,12 +22,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.setupWithNavController(navController)
 
+        /*
         //setup action bar with navController with appbar configuration
         val appBarConfiguration= AppBarConfiguration(topLevelDestinationIds = setOf(
             R.id.blogFragment,R.id.eventFragment,R.id.categoryEventFragment,R.id.questionFragment,R.id.accountFragment,R.id.loginFragment
         ))
 
         setupActionBarWithNavController(navController,appBarConfiguration)
+
+         */
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

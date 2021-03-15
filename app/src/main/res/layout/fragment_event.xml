@@ -18,15 +18,14 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.8"
             tools:listitem="@layout/category_item" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/retry_button_events"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retry"
+            app:cornerRadius="20dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

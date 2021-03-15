@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
@@ -17,7 +16,7 @@ import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
-import com.example.lumos.utils.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
 

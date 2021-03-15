@@ -16,7 +16,7 @@ import com.example.lumos.databinding.FragmentEventBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.EventCategoryDataAdapter
 import com.example.lumos.repository.NetworkRepository
-import com.example.lumos.utils.CategoryViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.viewmodel.CategoryViewModel
 
@@ -100,6 +100,11 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                 viewModel.getList()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
     }
 
     override fun onItemClick(id: Int) {

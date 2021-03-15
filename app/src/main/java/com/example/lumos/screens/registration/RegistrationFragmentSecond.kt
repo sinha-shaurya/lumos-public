@@ -14,7 +14,7 @@ import com.example.lumos.R
 import com.example.lumos.databinding.FragmentRegistrationSecondBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
-import com.example.lumos.utils.RegistrationViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.RegistrationViewModelFactory
 import com.example.lumos.viewmodel.RegistrationViewModel
 
 class RegistrationFragmentSecond : Fragment() {

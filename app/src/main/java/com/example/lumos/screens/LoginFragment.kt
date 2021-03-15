@@ -17,7 +17,7 @@ import com.example.lumos.databinding.FragmentLoginBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
-import com.example.lumos.utils.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
 

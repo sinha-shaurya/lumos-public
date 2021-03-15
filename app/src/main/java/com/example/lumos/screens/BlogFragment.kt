@@ -11,13 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentBlogBinding
 import com.example.lumos.network.adapters.BlogDataAdapter
 import com.example.lumos.network.adapters.BlogLoadStateAdapter
 import com.example.lumos.repository.BlogRepository
-import com.example.lumos.utils.BlogViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.BlogViewModelFactory
 import com.example.lumos.viewmodel.BlogViewModel
 
 class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
@@ -52,10 +53,16 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BlogDataAdapter(this)
-        binding.apply {
-            blogList.adapter =
+
+        //val dividerItemDecoration=DividerItemDecoration(binding.blogList.context,)
+        binding.blogList.apply {
+            this.adapter =
                 adapter.withLoadStateFooter(footer = BlogLoadStateAdapter { adapter.retry() })
-            blogList.layoutManager = LinearLayoutManager(requireActivity())
+            val layoutManager=LinearLayoutManager(this.context)
+            this.layoutManager = layoutManager
+
+            val dividerItemDecoration=DividerItemDecoration(this.context,layoutManager.orientation)
+            this.addItemDecoration(dividerItemDecoration)
 
         }
         viewModel.blogPost.observe(viewLifecycleOwner) {

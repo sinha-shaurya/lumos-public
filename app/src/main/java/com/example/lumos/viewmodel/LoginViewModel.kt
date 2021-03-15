@@ -253,6 +253,9 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
         }
     }
 
+    fun setAnswerState(state:LoadingStatus){
+        _answerStatus.value=state
+    }
     override fun onCleared() {
         super.onCleared()
         Log.i(TAG, "LoginViewModel destroyed")

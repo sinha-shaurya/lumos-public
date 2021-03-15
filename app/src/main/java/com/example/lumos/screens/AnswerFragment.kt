@@ -6,21 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navOptions
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAnswerBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.dataclasses.practice.Answer
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
-import com.example.lumos.utils.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
 
@@ -70,18 +68,10 @@ class AnswerFragment : Fragment() {
                 val answer=Answer(answerText,primaryKey)
                 viewModel.submitAnswer(answer)
             }
+            viewModel.setAnswerState(LoadingStatus.LOADING)
             observeAnswerStatus()
-
         }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
-            object :OnBackPressedCallback(true){
-                override fun handleOnBackPressed() {
-                    findNavController().popBackStack(R.id.questionFragment,false)
-                }
-
-            }
-        )
     }
 
     private fun observeAnswerStatus(){
