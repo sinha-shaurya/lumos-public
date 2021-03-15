@@ -31,7 +31,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             )
         )
     }
-    val adapter = QuestionAdapter(this)
+    //var adapter:QuestionAdapter? = QuestionAdapter(this)
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -60,7 +60,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
         binding.apply {
             questionList.layoutManager = LinearLayoutManager(requireActivity())
-            questionList.adapter = adapter
+            //questionList.adapter = adapter
         }
 
 
@@ -69,6 +69,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                 //only attempt loading questions when user is logged in
                 LoginStatus.SUCCESS -> {
                     viewModel.getQuestions()
+                    binding.questionRefresh.isEnabled=true
                     //observe for changes in question status
                     questionStatusObserver()
                 }
@@ -81,6 +82,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
                 else -> {
                     binding.apply {
+                        questionRefresh.isEnabled=false
                         questionLoadingProgress.isVisible = false
                         retryButtonQuestion.isVisible = false
                         questionList.isVisible = false
@@ -95,22 +97,29 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             viewModel.questionStatus.value = LoadingStatus.LOADING
         }
 
-
+        binding.questionRefresh.setOnRefreshListener {
+            Log.i(TAG,"SwipeRefresh called")
+            viewModel.refreshQuestionList()
+        }
     }
 
     private fun questionStatusObserver() {
+        val adapter:QuestionAdapter = QuestionAdapter(this)
         viewModel.questionStatus.observe(viewLifecycleOwner) { it ->
             when (it) {
                 LoadingStatus.SUCCESS -> {
-
+                    binding.questionList.adapter=adapter
                     viewModel.questionList.observe(viewLifecycleOwner) {
                         Log.i("QuestionFragment","Size of list received ${it.size}")
                         adapter.submitList(it)
                     }
-                    binding.questionList.isVisible = true
-                    binding.questionLoadingProgress.isVisible = false
-                    binding.retryButtonQuestion.isVisible = false
 
+                    binding.apply {
+                        questionList.isVisible = true
+                        questionLoadingProgress.isVisible = false
+                        retryButtonQuestion.isVisible = false
+                        questionRefresh.isRefreshing=false
+                    }
 
                 }
                 LoadingStatus.LOADING -> binding.apply {
@@ -139,4 +148,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         findNavController().navigate(action)
     }
 
+    companion object{
+        private const val TAG="QuestionFragment"
+    }
 }

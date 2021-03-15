@@ -18,14 +18,20 @@
             android:orientation="vertical">
 
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/question_list"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="10dp"
-                tools:listitem="@layout/question_item" />
+                android:id="@+id/question_refresh">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/question_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    tools:listitem="@layout/question_item" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         </LinearLayout>
 
@@ -41,7 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
-
 
 
         <ProgressBar

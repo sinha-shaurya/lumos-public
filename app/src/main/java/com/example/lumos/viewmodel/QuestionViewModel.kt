@@ -63,7 +63,10 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
             _points.postValue(points)
         }
 
+
+
     companion object {
         private const val TAG = "QuestionViewModel"
     }
+
 }

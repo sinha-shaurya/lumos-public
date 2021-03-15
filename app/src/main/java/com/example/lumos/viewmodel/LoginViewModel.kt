@@ -256,6 +256,57 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
     fun setAnswerState(state:LoadingStatus){
         _answerStatus.value=state
     }
+
+
+    //refresh question list as called by swipe to refresh
+    fun refreshQuestionList(){
+        //launch coroutine in IO Dispatcher
+        viewModelScope.launch(Dispatchers.IO) {
+            //invalidate the list first
+            withContext(Dispatchers.Main){
+                //invalidate
+                _questionResponse.value = QuestionResponse(questionList = null, errorDetails = "init")
+                //_questionList.value= emptyList()
+                error.value = null
+                questionError.value = null
+            }
+
+            //get authentication token to receive response from server
+            val token=repository.getAuthToken()
+            //if token is present only then try to fetch questions
+            if(token!=null){
+                //now construct headermap so that auth token can be sent
+                val headerMap= mutableMapOf<String,String?>()
+                headerMap["Authorization"]="Token $token"
+
+                val response=try {
+                    repository.getQuestions(headerMap)
+                }
+                catch (e:Exception){
+                    //in case of any exception set loading status to failure
+                    questionStatus.postValue(LoadingStatus.FAILURE)
+                    questionError.postValue(e)
+                    QuestionResponse()
+                }
+
+                //set results for response status
+                if(response.questionStatus.equals("successful",ignoreCase = true)){
+                    _questionResponse.postValue(response)
+                    _questionList.postValue(response.questionList)
+                }
+                if (response.questionList != null)
+                    questionStatus.postValue(LoadingStatus.SUCCESS)
+                else
+                    questionStatus.postValue(LoadingStatus.FAILURE)
+            }
+            //in case of failure to get auth token set status to failed
+            else
+                questionStatus.postValue(LoadingStatus.FAILURE)
+
+        }
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         Log.i(TAG, "LoginViewModel destroyed")
