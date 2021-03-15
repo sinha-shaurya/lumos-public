@@ -19,13 +19,25 @@
             android:fontFamily="@font/montserrat"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.119"
             tools:text="Username" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/points"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintVertical_bias="0.119"
+            tools:text="0 Points"
+            android:textSize="24sp"
+            />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout_buton"
             android:layout_width="0dp"

@@ -6,6 +6,7 @@ import com.example.lumos.network.dataclasses.login.LoginUserData
 import com.example.lumos.network.dataclasses.login.UserData
 import com.example.lumos.network.dataclasses.practice.Answer
 import com.example.lumos.network.dataclasses.practice.AnswerResponse
+import com.example.lumos.network.dataclasses.practice.AnsweredQuestionResponse
 import com.example.lumos.network.dataclasses.practice.QuestionResponse
 import com.example.lumos.network.dataclasses.registration.RegistrationData
 import retrofit2.http.Body
@@ -44,5 +45,8 @@ interface IsteApi {
         @HeaderMap headers: Map<String, String>,
         @Body answer: Answer
     ): AnswerResponse
+
+    @GET("api/interview/submitted")
+    suspend fun getSubmittedAnswer(@HeaderMap header:Map<String,String>):AnsweredQuestionResponse
 
 }
