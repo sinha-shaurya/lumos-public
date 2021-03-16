@@ -25,9 +25,9 @@ class EventListAdapter :
         //setup all elements inside the item
 
         fun bind(item: Events) {
-            val date = DateTimeConverter(item.eventDates?.get(0)?.startDate!!)
-            val dateText = date.getDay() + " " + date.getMonth()
-            val timeText = date.getTime()
+            //val date = DateTimeConverter(item.eventDates?.get(0)?.startDate!!)
+            //val dateText = date.getDay() + " " + date.getMonth()
+            //val timeText = date.getTime()
             binding.apply {
                 eventName.text = item.eventName
                 eventDescription.text = item.description

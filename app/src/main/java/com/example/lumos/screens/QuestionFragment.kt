@@ -32,6 +32,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         )
     }
     //var adapter:QuestionAdapter? = QuestionAdapter(this)
+    lateinit var adapter: QuestionAdapter
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -46,6 +47,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             false
         )
         val view = binding.root
+        adapter=QuestionAdapter(this)
         return view
     }
 
@@ -60,7 +62,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
         binding.apply {
             questionList.layoutManager = LinearLayoutManager(requireActivity())
-            //questionList.adapter = adapter
+            questionList.adapter = adapter
         }
 
 
@@ -104,11 +106,11 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
     }
 
     private fun questionStatusObserver() {
-        val adapter:QuestionAdapter = QuestionAdapter(this)
+        //val adapter:QuestionAdapter = QuestionAdapter(this)
         viewModel.questionStatus.observe(viewLifecycleOwner) { it ->
             when (it) {
                 LoadingStatus.SUCCESS -> {
-                    binding.questionList.adapter=adapter
+                    //binding.questionList.adapter=adapter
                     viewModel.questionList.observe(viewLifecycleOwner) {
                         Log.i("QuestionFragment","Size of list received ${it.size}")
                         adapter.submitList(it)
@@ -130,6 +132,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                     Log.i("QuestionFragment", "Exception occurred")
                     retryButtonQuestion.isVisible = true
                     questionLoadingProgress.isVisible = false
+                    questionRefresh.isRefreshing=false
                     val error = viewModel.questionError.value
                     if (error != null)
                         Log.i("QuestionFragment", error.message ?: "Default exception")

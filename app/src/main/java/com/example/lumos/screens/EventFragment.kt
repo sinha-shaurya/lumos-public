@@ -68,6 +68,7 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                         eventLoadingProgress.isVisible = false
                         retryButtonEvents.isVisible = false
                         categoryList.isVisible = true
+                        categoryRefresh.isRefreshing=false
                     }
                 }
                 //when request has failed, show the retry button
@@ -100,6 +101,10 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                 viewModel.getList()
             }
         }
+
+        binding.categoryRefresh.setOnRefreshListener {
+            viewModel.getList()
+        }
     }
 
     override fun onDestroyView() {
@@ -108,7 +113,6 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
     }
 
     override fun onItemClick(id: Int) {
-        Toast.makeText(requireActivity(), id.toString(), Toast.LENGTH_SHORT).show()
         val action=EventFragmentDirections.actionEventFragmentToCategoryEventFragment(id)
         findNavController().navigate(action)
     }
