@@ -63,6 +63,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
         questionError.value = null
         _questionList.value = emptyList()
 
+        _answerResponse.value= AnswerResponse()
 
         getUserDataCount()
     }
@@ -231,16 +232,22 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             val token =
                 repository.getAuthToken()
 
+
+            //do not try to initiate network request if auth token is not found
             if (token != null){
+                //construct headers for POST request
                 val headerMap= mutableMapOf<String,String>()
                 headerMap["Authorization"]= "Token $token"
+
+                //set response value with appropriate error message if network request fails
                 val response=try{
-                    Log.i(TAG,"headervalue ${headerMap} answer ${item}")
+                    Log.i(TAG,"Header: $headerMap Answer $item")
                     repository.submitAnswer(headerMap,item)
                 }
                 catch (e:Exception){
-                    AnswerResponse()
+                    AnswerResponse(errors = e.message?:"Unknown error occurred")
                 }
+                _answerResponse.postValue(response)
                 if(response.status.equals("successful",ignoreCase = true)){
                     //set loading status to successful
                     _answerStatus.postValue(LoadingStatus.SUCCESS)
@@ -248,6 +255,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
                 else
                     _answerStatus.postValue(LoadingStatus.FAILURE)
             }
+            //set status to failed if auth token is not found
             else
                 _answerStatus.postValue(LoadingStatus.FAILURE)
         }

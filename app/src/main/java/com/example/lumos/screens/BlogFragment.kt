@@ -60,10 +60,6 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
                 adapter.withLoadStateFooter(footer = BlogLoadStateAdapter { adapter.retry() })
             val layoutManager=LinearLayoutManager(this.context)
             this.layoutManager = layoutManager
-
-            val dividerItemDecoration=DividerItemDecoration(this.context,layoutManager.orientation)
-            this.addItemDecoration(dividerItemDecoration)
-
         }
         viewModel.blogPost.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)

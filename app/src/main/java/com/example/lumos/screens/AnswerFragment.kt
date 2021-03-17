@@ -61,11 +61,11 @@ class AnswerFragment : Fragment() {
         }
 
         binding.submitButton.setOnClickListener {
-            Log.i("AnswerFragment","Submit button clicked")
-            val answerText=binding.answerText.text.toString()
-            val primaryKey=question.primaryKey
-            if(answerText.isNotEmpty()){
-                val answer=Answer(answerText,primaryKey)
+            Log.i("AnswerFragment", "Submit button clicked")
+            val answerText = binding.answerText.text.toString()
+            val primaryKey = question.primaryKey
+            if (answerText.isNotEmpty()) {
+                val answer = Answer(answerText, primaryKey)
                 viewModel.submitAnswer(answer)
             }
             viewModel.setAnswerState(LoadingStatus.LOADING)
@@ -74,19 +74,36 @@ class AnswerFragment : Fragment() {
 
     }
 
-    private fun observeAnswerStatus(){
-        viewModel.answerStatus.observe(viewLifecycleOwner){status->
-            when(status){
-                LoadingStatus.SUCCESS->{
+    private fun observeAnswerStatus() {
+        viewModel.answerStatus.observe(viewLifecycleOwner) { status ->
+            @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+            when (status) {
+                LoadingStatus.SUCCESS -> {
                     viewModel.removeItem(args.questionItem)
-                    val navOptionsBuilder=NavOptionsBuilder()
+                    val navOptionsBuilder = NavOptionsBuilder()
                     navOptionsBuilder.anim {
-                        exit=R.anim.fragment_fade_exit
+                        exit = R.anim.fragment_fade_exit
                     }
-                    findNavController().popBackStack(R.id.questionFragment,false)
+                    findNavController().popBackStack(R.id.questionFragment, false)
                 }
-                LoadingStatus.FAILURE-> Toast.makeText(requireActivity(),"An error occurred",Toast.LENGTH_SHORT).show()
-                LoadingStatus.LOADING->Toast.makeText(requireActivity(),"Loading",Toast.LENGTH_SHORT).show()
+                LoadingStatus.FAILURE -> {
+                    viewModel.answerResponse.observe(viewLifecycleOwner) {
+                        if(it.errors.equals("Cannot submit again",ignoreCase = true)){
+                            //user has already submitted
+                            viewModel.removeItem(args.questionItem)
+                            findNavController().popBackStack(R.id.questionFragment,false)
+                            Toast.makeText(requireActivity(),"You have already submitted this answer",Toast.LENGTH_SHORT).show()
+                        }
+                        else
+                            Toast.makeText(requireActivity(),it.errors,Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+                LoadingStatus.LOADING -> Toast.makeText(
+                    requireActivity(),
+                    "Submitting",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
