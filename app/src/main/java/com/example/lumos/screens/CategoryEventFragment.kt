@@ -7,14 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentCategoryEventBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.EventListAdapter
 import com.example.lumos.repository.NetworkRepository
-import com.example.lumos.utils.CategoryViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
 
 class CategoryEventFragment : Fragment() {

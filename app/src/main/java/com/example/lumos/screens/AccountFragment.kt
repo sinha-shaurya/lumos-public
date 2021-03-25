@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
@@ -17,14 +16,24 @@ import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
-import com.example.lumos.utils.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.QuestionViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
+import com.example.lumos.viewmodel.QuestionViewModel
 
 
 class AccountFragment : Fragment() {
 
     private val viewModel: LoginViewModel by activityViewModels<LoginViewModel> {
         LoginViewModelFactory(
+            NetworkRepository(
+                UserDatabase.getDatabase(requireActivity()).userDao()
+            )
+        )
+    }
+
+    private val questionViewModel: QuestionViewModel by activityViewModels<QuestionViewModel> {
+        QuestionViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
             )
@@ -72,8 +81,9 @@ class AccountFragment : Fragment() {
                     viewModel.getUserData()
                     binding.logoutButon.isVisible = true
                     viewModel.localData.observe(viewLifecycleOwner) {
-                        binding.userNameText.text = it.token
+                        binding.userNameText.text = it.userName
                     }
+                    retrieveQuestions()
                 }
                 LoginStatus.NOT_LOGGED_IN -> {
                     navController.navigate(R.id.loginFragment)
@@ -109,5 +119,13 @@ class AccountFragment : Fragment() {
                     navController.navigate(startDestination, null, navOptions)
                 }
             })
+    }
+
+    fun retrieveQuestions() {
+        questionViewModel.getSubmittedAnswer()
+        questionViewModel.points.observe(viewLifecycleOwner){currentPoints->
+            var pointText="${currentPoints} Points"
+            binding.points.text=pointText
+        }
     }
 }

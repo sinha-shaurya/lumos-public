@@ -63,6 +63,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
         questionError.value = null
         _questionList.value = emptyList()
 
+        _answerResponse.value= AnswerResponse()
 
         getUserDataCount()
     }
@@ -231,16 +232,22 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             val token =
                 repository.getAuthToken()
 
+
+            //do not try to initiate network request if auth token is not found
             if (token != null){
+                //construct headers for POST request
                 val headerMap= mutableMapOf<String,String>()
                 headerMap["Authorization"]= "Token $token"
+
+                //set response value with appropriate error message if network request fails
                 val response=try{
-                    Log.i(TAG,"headervalue ${headerMap} answer ${item}")
+                    Log.i(TAG,"Header: $headerMap Answer $item")
                     repository.submitAnswer(headerMap,item)
                 }
                 catch (e:Exception){
-                    AnswerResponse()
+                    AnswerResponse(errors = e.message?:"Unknown error occurred")
                 }
+                _answerResponse.postValue(response)
                 if(response.status.equals("successful",ignoreCase = true)){
                     //set loading status to successful
                     _answerStatus.postValue(LoadingStatus.SUCCESS)
@@ -248,10 +255,65 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
                 else
                     _answerStatus.postValue(LoadingStatus.FAILURE)
             }
+            //set status to failed if auth token is not found
             else
                 _answerStatus.postValue(LoadingStatus.FAILURE)
         }
     }
+
+    fun setAnswerState(state:LoadingStatus){
+        _answerStatus.value=state
+    }
+
+
+    //refresh question list as called by swipe to refresh
+    fun refreshQuestionList(){
+        //launch coroutine in IO Dispatcher
+        viewModelScope.launch(Dispatchers.IO) {
+            //invalidate the list first
+            withContext(Dispatchers.Main){
+                //invalidate
+                _questionResponse.value = QuestionResponse(questionList = null, errorDetails = "init")
+                //_questionList.value= emptyList()
+                error.value = null
+                questionError.value = null
+            }
+
+            //get authentication token to receive response from server
+            val token=repository.getAuthToken()
+            //if token is present only then try to fetch questions
+            if(token!=null){
+                //now construct headermap so that auth token can be sent
+                val headerMap= mutableMapOf<String,String?>()
+                headerMap["Authorization"]="Token $token"
+
+                val response=try {
+                    repository.getQuestions(headerMap)
+                }
+                catch (e:Exception){
+                    //in case of any exception set loading status to failure
+                    questionStatus.postValue(LoadingStatus.FAILURE)
+                    questionError.postValue(e)
+                    QuestionResponse()
+                }
+
+                //set results for response status
+                if(response.questionStatus.equals("successful",ignoreCase = true)){
+                    _questionResponse.postValue(response)
+                    _questionList.postValue(response.questionList)
+                }
+                if (response.questionList != null)
+                    questionStatus.postValue(LoadingStatus.SUCCESS)
+                else
+                    questionStatus.postValue(LoadingStatus.FAILURE)
+            }
+            //in case of failure to get auth token set status to failed
+            else
+                questionStatus.postValue(LoadingStatus.FAILURE)
+
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()

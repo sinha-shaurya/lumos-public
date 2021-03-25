@@ -8,9 +8,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.lumos.R
 import com.example.lumos.databinding.BlogPostItemBinding
 import com.example.lumos.network.dataclasses.blog.BlogPost
+import com.example.lumos.utils.GlideApp
 import com.squareup.picasso.Picasso
 
 class BlogDataAdapter(private val listener: onItemClickListener) :
@@ -49,11 +51,20 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
             binding.apply {
                 blogPostName.text = item.title
                 blogPostAuthor.text = item.author
+                /*
                 Picasso.get().load(generateImageUrl(item.imageUrl))
                     .placeholder(circularProgressDrawable)
                     .error(R.drawable.blog_image_error)
                     .fit()
                     .centerCrop()
+                    .into(blogPostImage)
+                 */
+                GlideApp.with(itemView)
+                    .load(generateImageUrl(item.imageUrl))
+                    .centerCrop()
+                    .placeholder(circularProgressDrawable)
+                    .error(R.drawable.blog_image_error)
+                    .transition(DrawableTransitionOptions().crossFade())
                     .into(blogPostImage)
                 blogPostTime.text =
                     if (item.readTime == 1) "1 min" else item.readTime.toString() + " min"

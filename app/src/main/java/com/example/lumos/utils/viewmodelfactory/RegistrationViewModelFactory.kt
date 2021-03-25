@@ -1,4 +1,4 @@
-package com.example.lumos.utils
+package com.example.lumos.utils.viewmodelfactory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

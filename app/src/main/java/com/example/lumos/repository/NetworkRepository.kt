@@ -35,4 +35,8 @@ class NetworkRepository(private val userDao: UserDao) {
         IsteNetworkInstance.api.submitAnswer(headers,answer = answer)
 
     //suspend fun submitAnswer(headers: MutableMap<String, String>, answer: Answer) =IsteNetworkInstance.api.submitAnswer(headers,answer.answer,answer.primaryKey)
+
+    suspend fun getSubmittedAnswer(headers:Map<String,String>)=IsteNetworkInstance.api.getSubmittedAnswer(headers)
+
+    suspend fun getEvents(categoryNameSlug:String) =IsteNetworkInstance.api.getEvent(categoryNameSlug)
 }

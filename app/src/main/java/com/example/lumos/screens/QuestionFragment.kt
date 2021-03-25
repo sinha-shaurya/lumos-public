@@ -20,7 +20,7 @@ import com.example.lumos.network.dataclasses.practice.Question
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.utils.LoginStatus
-import com.example.lumos.utils.LoginViewModelFactory
+import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 
 class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener {
@@ -31,7 +31,9 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             )
         )
     }
-    val adapter = QuestionAdapter(this)
+
+    //var adapter:QuestionAdapter? = QuestionAdapter(this)
+    lateinit var adapter: QuestionAdapter
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -46,6 +48,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             false
         )
         val view = binding.root
+        adapter = QuestionAdapter(this)
         return view
     }
 
@@ -69,6 +72,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                 //only attempt loading questions when user is logged in
                 LoginStatus.SUCCESS -> {
                     viewModel.getQuestions()
+                    binding.questionRefresh.isEnabled = true
                     //observe for changes in question status
                     questionStatusObserver()
                 }
@@ -81,6 +85,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
                 else -> {
                     binding.apply {
+                        questionRefresh.isEnabled = false
                         questionLoadingProgress.isVisible = false
                         retryButtonQuestion.isVisible = false
                         questionList.isVisible = false
@@ -95,22 +100,29 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             viewModel.questionStatus.value = LoadingStatus.LOADING
         }
 
-
+        binding.questionRefresh.setOnRefreshListener {
+            Log.i(TAG, "SwipeRefresh called")
+            viewModel.refreshQuestionList()
+        }
     }
 
     private fun questionStatusObserver() {
+        //val adapter:QuestionAdapter = QuestionAdapter(this)
         viewModel.questionStatus.observe(viewLifecycleOwner) { it ->
             when (it) {
                 LoadingStatus.SUCCESS -> {
-
+                    //binding.questionList.adapter=adapter
                     viewModel.questionList.observe(viewLifecycleOwner) {
-                        Log.i("QuestionFragment","Size of list received ${it.size}")
+                        Log.i("QuestionFragment", "Size of list received ${it.size}")
                         adapter.submitList(it)
                     }
-                    binding.questionList.isVisible = true
-                    binding.questionLoadingProgress.isVisible = false
-                    binding.retryButtonQuestion.isVisible = false
 
+                    binding.apply {
+                        questionList.isVisible = true
+                        questionLoadingProgress.isVisible = false
+                        retryButtonQuestion.isVisible = false
+                        questionRefresh.isRefreshing = false
+                    }
 
                 }
                 LoadingStatus.LOADING -> binding.apply {
@@ -121,6 +133,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                     Log.i("QuestionFragment", "Exception occurred")
                     retryButtonQuestion.isVisible = true
                     questionLoadingProgress.isVisible = false
+                    questionRefresh.isRefreshing = false
                     val error = viewModel.questionError.value
                     if (error != null)
                         Log.i("QuestionFragment", error.message ?: "Default exception")
@@ -135,8 +148,11 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             "Size of list ${viewModel.questionResponse.value?.questionList?.size}"
         )
         //trigger answer request
-        val action=QuestionFragmentDirections.actionQuestionFragmentToAnswerFragment(item)
+        val action = QuestionFragmentDirections.actionQuestionFragmentToAnswerFragment(item)
         findNavController().navigate(action)
     }
 
+    companion object {
+        private const val TAG = "QuestionFragment"
+    }
 }

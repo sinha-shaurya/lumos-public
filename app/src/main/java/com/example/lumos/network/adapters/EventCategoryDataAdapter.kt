@@ -1,32 +1,78 @@
 package com.example.lumos.network.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.TransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.lumos.R
 import com.example.lumos.databinding.CategoryItemBinding
 import com.example.lumos.network.dataclasses.events.Category
+import com.example.lumos.utils.GlideApp
 
-class EventCategoryDataAdapter(private val listener:onCategoryItemClickListener) :
-    ListAdapter<Category, EventCategoryDataAdapter.EventCategoryViewHolder>(EventCategoryDiffUtilCallBack()) {
+private const val ISTE_BASE_URL = "https://test.istemanipal.com"
+
+class EventCategoryDataAdapter(private val listener: onCategoryItemClickListener) :
+    ListAdapter<Category, EventCategoryDataAdapter.EventCategoryViewHolder>(
+        EventCategoryDiffUtilCallBack()
+    ) {
 
     inner class EventCategoryViewHolder(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                val position=bindingAdapterPosition
-                if(position!=RecyclerView.NO_POSITION){
-                    val item=getItem(position)
-                    if(item!=null)
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null)
                         listener.onItemClick(position)
                 }
             }
         }
+
         fun bind(item: Category) {
-            binding.apply {
-                categoryItemName.text=item.name
+            val circularProgressDrawable= CircularProgressDrawable(itemView.context)
+            circularProgressDrawable.apply {
+                centerRadius=30f
+                strokeWidth=5f
+                setColorSchemeColors(ContextCompat.getColor(itemView.context, R.color.colorAccent))
             }
+            circularProgressDrawable.start()
+            binding.apply {
+                categoryItemName.text = item.name
+                Log.i("EventCategoryDataAdapter", ISTE_BASE_URL + item.posterSlug)
+                val url = getImageUrl(item.posterSlug)
+                if (url != null) {
+                    GlideApp.with(itemView)
+                        .load(url)
+                        .centerCrop()
+                        .placeholder(circularProgressDrawable)
+                        .error(R.drawable.blog_image_error)
+                        .transition(DrawableTransitionOptions().crossFade())
+                        .into(categoryPosterImage)
+                }
+                else
+                    categoryImageCard.isVisible = false
+
+            }
+        }
+
+        private fun getImageUrl(url: String?): String? {
+            var finalUrl = ""
+            if (url != null) {
+                if (url.contains("media"))
+                    finalUrl = ISTE_BASE_URL + url
+                else
+                    finalUrl = ISTE_BASE_URL + "/media" + url
+                return finalUrl
+            } else
+                return null
         }
     }
 
@@ -42,8 +88,8 @@ class EventCategoryDataAdapter(private val listener:onCategoryItemClickListener)
     }
 
     //interface to handle onClicks
-    interface onCategoryItemClickListener{
-        fun onItemClick(id:Int)
+    interface onCategoryItemClickListener {
+        fun onItemClick(id: Int)
     }
 }
 

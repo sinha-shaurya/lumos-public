@@ -19,11 +19,25 @@
             android:fontFamily="@font/montserrat"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.119"
             tools:text="Username" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/points"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintVertical_bias="0.119"
+            tools:text="0 Points"
+            android:textSize="24sp"
+            />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout_buton"
             android:layout_width="0dp"
@@ -31,12 +45,13 @@
             android:background="@color/colorPrimaryDark"
             android:fontFamily="@font/montserrat_medium"
             android:text="Logout"
+            app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_name_text"
-            app:cornerRadius="6dp"
+            app:layout_constraintVertical_bias="0.837"
             app:layout_constraintWidth_percent="0.6" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
