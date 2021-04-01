@@ -12,55 +12,92 @@
         android:layout_height="match_parent"
         tools:context=".screens.registration.RegistrationFragmentSecond">
 
-        <EditText
-            android:id="@+id/reg_username"
+        <!--Input layout for Username-->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:autofillHints="username"
-            android:fontFamily="@font/montserrat"
-            android:hint="username"
-            app:layout_constraintBottom_toTopOf="@id/reg_password"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/reg_password_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            app:layout_constraintWidth_percent="0.8">
 
-        <EditText
-            android:id="@+id/reg_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="70dp"
+                android:autofillHints="username"
+                android:fontFamily="@font/montserrat"
+                android:hint="username" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--Input layout for Password-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_password_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:autofillHints="password"
-            android:fontFamily="@font/montserrat"
-            android:hint="password"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@id/reg_password_confirm"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/reg_password_confirm_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            app:layout_constraintWidth_percent="0.8">
 
-        <EditText
-            android:id="@+id/reg_password_confirm"
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="70dp"
+                android:autofillHints="password"
+                android:fontFamily="@font/montserrat"
+                android:hint="password"
+                android:inputType="textPassword"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--Input layout for password confirmation field-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_password_confirm_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:fontFamily="@font/montserrat"
-            android:hint="confirm password"
-            android:inputType="textPassword"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/reg_button_second"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            app:layout_constraintWidth_percent="0.8">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="70dp"
+                android:fontFamily="@font/montserrat"
+                android:hint="confirm password"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toTopOf="@id/reg_button_second"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/reg_button_second"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:text="Next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            android:layout_marginBottom="?attr/actionBarSize"/>
+            app:layout_constraintWidth_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

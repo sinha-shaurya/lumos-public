@@ -39,13 +39,15 @@ class AccountFragment : Fragment() {
             )
         )
     }
-    private lateinit var binding: FragmentAccountBinding
+    private var _binding: FragmentAccountBinding?=null
+    val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate<FragmentAccountBinding>(
+        _binding = DataBindingUtil.inflate<FragmentAccountBinding>(
             inflater,
             R.layout.fragment_account,
             container,
@@ -103,6 +105,11 @@ class AccountFragment : Fragment() {
             viewModel.logoutUser()
             navController.navigate(R.id.loginFragment)//change to login fragment
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
