@@ -14,39 +14,64 @@
         tools:context=".screens.LoginFragment">
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username_input"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:autofillHints="username"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/password_input"
+            android:layout_height="wrap_content"
+            android:hint="username"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:layout_constraintBottom_toTopOf="@id/password_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            tools:visibility="visible" />
+            app:layout_constraintWidth_percent="0.8"
+            android:id="@+id/username_input_layout">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_input"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="username"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:contentDescription="Password"
-            android:inputType="textPassword"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            tools:visibility="visible" />
+            app:layout_constraintWidth_percent="0.8">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:contentDescription="Password"
+                android:inputType="textPassword"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginBottom="?attr/actionBarSize"
             android:text="Login"
             android:visibility="gone"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toTopOf="@id/register_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,12 +92,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.6" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/register_button"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginBottom="50dp"
             android:text="Register"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@id/login_ui_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

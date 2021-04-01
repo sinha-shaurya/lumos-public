@@ -62,9 +62,11 @@ class LoginFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.loginUiButton.setOnClickListener {
+        binding.loginUiButton.setOnClickListener {0
             binding.apply {
                 usernameInput.visibility = View.VISIBLE
+                usernameInputLayout.visibility=View.VISIBLE
+                passwordInputLayout.visibility=View.VISIBLE
                 passwordInput.visibility = View.VISIBLE
                 loginButton.visibility = View.VISIBLE
                 loginUiButton.visibility = View.GONE
@@ -79,7 +81,9 @@ class LoginFragment : Fragment() {
                     if (binding.usernameInput.isVisible) {
                         binding.apply {
                             usernameInput.visibility = View.GONE
+                            usernameInputLayout.visibility=View.GONE
                             passwordInput.visibility = View.GONE
+                            passwordInputLayout.visibility=View.GONE
                             loginButton.visibility = View.GONE
                             loginUiButton.visibility = View.VISIBLE
                             registerButton.visibility = View.VISIBLE

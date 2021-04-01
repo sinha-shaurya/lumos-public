@@ -26,7 +26,7 @@
         <action
             android:id="@+id/action_eventFragment_to_categoryEventFragment"
             app:destination="@id/categoryEventFragment"
-            app:enterAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@anim/fragment_fade_enter" />
     </fragment>
     <fragment
         android:id="@+id/blogFragment"
