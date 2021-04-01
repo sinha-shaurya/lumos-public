@@ -15,7 +15,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="username"
@@ -32,7 +32,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_input"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="70dp"
                 android:autofillHints="username"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -56,7 +57,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="70dp"
                 android:contentDescription="Password"
                 android:inputType="textPassword"
                 android:visibility="gone"
