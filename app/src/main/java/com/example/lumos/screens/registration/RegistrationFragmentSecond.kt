@@ -46,7 +46,7 @@ class RegistrationFragmentSecond : Fragment() {
             val username = binding.regUsername.text.toString()
             val password = binding.regPassword.text.toString()
             val passwordConfirm = binding.regPasswordConfirm.text.toString()
-            Log.i(TAG, username + '\n' + password + '\n' + passwordConfirm)
+            Log.i(TAG, "$username\n$password\n$passwordConfirm")
             if (checkInputs(password, passwordConfirm)) {
                 viewModel.registerSecond(username, password, passwordConfirm)
                 //finally call register function in viewmodel to send request to server
@@ -55,6 +55,7 @@ class RegistrationFragmentSecond : Fragment() {
                 viewModel.level.observe(viewLifecycleOwner, { registerLevel ->
                     if (registerLevel == 1) {
                         //successful
+                        Toast.makeText(requireActivity(), "Registration Successful", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(action)
                         viewModel.level.value = 0
                     } else if (registerLevel == -1) {
