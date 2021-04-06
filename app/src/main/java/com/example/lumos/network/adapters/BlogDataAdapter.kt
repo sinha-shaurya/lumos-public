@@ -8,12 +8,16 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.lumos.R
 import com.example.lumos.databinding.BlogPostItemBinding
 import com.example.lumos.network.dataclasses.blog.BlogPost
 import com.example.lumos.utils.GlideApp
-import com.squareup.picasso.Picasso
+
+private const val IMAGE_CORNER_RADIUS = 10
 
 class BlogDataAdapter(private val listener: onItemClickListener) :
     PagingDataAdapter<BlogPost, BlogDataAdapter.BlogItemViewHolder>(
@@ -40,11 +44,11 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
         }
 
         fun bind(item: BlogPost) {
-            val circularProgressDrawable=CircularProgressDrawable(context)
+            val circularProgressDrawable = CircularProgressDrawable(context)
             circularProgressDrawable.apply {
-                centerRadius=30f
-                strokeWidth=5f
-                setColorSchemeColors(ContextCompat.getColor(context,R.color.colorAccent))
+                centerRadius = 30f
+                strokeWidth = 5f
+                setColorSchemeColors(ContextCompat.getColor(context, R.color.colorAccent))
             }
             circularProgressDrawable.start()
 
@@ -61,7 +65,13 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
                  */
                 GlideApp.with(itemView)
                     .load(generateImageUrl(item.imageUrl))
-                    .centerCrop()
+                    .transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            RoundedCorners(IMAGE_CORNER_RADIUS)
+                        )
+                    )
+                    //.centerCrop()
                     .placeholder(circularProgressDrawable)
                     .error(R.drawable.blog_image_error)
                     .transition(DrawableTransitionOptions().crossFade())
