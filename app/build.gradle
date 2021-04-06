@@ -5,6 +5,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
 
+    signingConfigs {
+        dev {
+            storeFile file('E:\\lumos_key.jks')
+            storePassword 'iste@board$2016'
+            keyAlias 'lumosupload'
+            keyPassword 'iste@board$2016'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
@@ -12,10 +20,10 @@ android {
         applicationId "com.istemanipal.lumos"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 3
+        versionCode 4
         versionName "1.02"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.dev
     }
 
     buildTypes {
@@ -105,9 +113,6 @@ dependencies {
 
     //moshi codegen annotation processor
     kapt"com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
-
-    //asynchronous loading of layouts
-    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
