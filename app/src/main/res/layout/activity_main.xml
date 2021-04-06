@@ -31,6 +31,7 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:theme="@style/BottomNavigationTheme"
+            app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav" />
 
     </LinearLayout>
