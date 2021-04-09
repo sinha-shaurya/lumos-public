@@ -44,7 +44,7 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                tools:src="@color/design_default_color_primary" />
+                tools:src="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/category_item_description"
