@@ -2,6 +2,7 @@ package com.example.lumos.network.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -9,7 +10,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.TransitionOptions
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.lumos.R
 import com.example.lumos.databinding.CategoryItemBinding
@@ -37,34 +41,42 @@ class EventCategoryDataAdapter(private val listener: onCategoryItemClickListener
         }
 
         fun bind(item: Category) {
-            val circularProgressDrawable= CircularProgressDrawable(itemView.context)
+            val circularProgressDrawable = CircularProgressDrawable(itemView.context)
             circularProgressDrawable.apply {
-                centerRadius=30f
-                strokeWidth=5f
+                centerRadius = 30f
+                strokeWidth = 5f
                 setColorSchemeColors(ContextCompat.getColor(itemView.context, R.color.colorAccent))
             }
             circularProgressDrawable.start()
             binding.apply {
                 categoryItemName.text = item.name
+                categoryItemDescription.apply {
+                    if (item.description != null)
+                        this.text = item.description
+                    else
+                        this.isVisible = false
+                }
                 Log.i("EventCategoryDataAdapter", ISTE_BASE_URL + item.posterSlug)
                 val url = getImageUrl(item.posterSlug)
+                if(item.posterSlug==null)
+                    categoryPosterImage.isVisible=false
                 if (url != null) {
                     GlideApp.with(itemView)
                         .load(url)
-                        .centerCrop()
+                        .transform(MultiTransformation(CenterCrop(),RoundedCorners(4)))
                         .placeholder(circularProgressDrawable)
                         .error(R.drawable.blog_image_error)
                         .transition(DrawableTransitionOptions().crossFade())
                         .into(categoryPosterImage)
-                }
-                else
-                    categoryImageCard.isVisible = false
+                    categoryPosterImage.isVisible=true
+                } else
+                    categoryPosterImage.isVisible=false
 
             }
         }
 
         private fun getImageUrl(url: String?): String? {
-            var finalUrl = ""
+            var finalUrl: String
             if (url != null) {
                 if (url.contains("media"))
                     finalUrl = ISTE_BASE_URL + url
