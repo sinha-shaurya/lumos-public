@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/practice"
+    app:startDestination="@id/questionFragment">
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.example.lumos.screens.QuestionFragment"
+        android:label="QuestionFragment" >
+        <action
+            android:id="@+id/action_questionFragment_to_answerFragment"
+            app:destination="@id/answerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerFragment"
+        android:name="com.example.lumos.screens.AnswerFragment"
+        android:label="AnswerFragment" >
+        <argument
+            android:name="questionItem"
+            app:argType="com.example.lumos.network.dataclasses.practice.Question" />
+    </fragment>
+</navigation>

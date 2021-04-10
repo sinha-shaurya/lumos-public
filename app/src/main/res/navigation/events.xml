@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/events"
+    app:startDestination="@id/eventFragment">
+
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.lumos.screens.EventFragment"
+        android:label="EventFragment" >
+        <action
+            android:id="@+id/action_eventFragment_to_categoryEventFragment"
+            app:destination="@id/categoryEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryEventFragment"
+        android:name="com.example.lumos.screens.CategoryEventFragment"
+        android:label="CategoryEventFragment" >
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
+    </fragment>
+</navigation>
