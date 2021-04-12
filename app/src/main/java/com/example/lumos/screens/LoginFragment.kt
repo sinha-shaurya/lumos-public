@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.loginUiButton.setOnClickListener {0
+        binding.loginUiButton.setOnClickListener {
             binding.apply {
                 usernameInput.visibility = View.VISIBLE
                 usernameInputLayout.visibility=View.VISIBLE
@@ -110,7 +110,7 @@ class LoginFragment : Fragment() {
                     savedStateHandle.set(LOGIN_SUCCESSFUL, true)
                     val navController = findNavController()
                     println(navController)
-                    navController.popBackStack(R.id.accountFragment, false)
+                    navController.popBackStack(R.id.accountFragment,false)
                 }
 
                 LoginStatus.FAILURE -> {
@@ -132,11 +132,14 @@ class LoginFragment : Fragment() {
 
                 LoginStatus.LOADING -> {
                     //prevent user clicks when network request is being performed
-                    binding.loginButton.isClickable = false
+
                     binding.apply {
+                        loginButton.isClickable = false
                         usernameInput.isEnabled=false
                         passwordInput.isEnabled=false
                     }
+
+                    Toast.makeText(requireActivity(),"Loading",Toast.LENGTH_SHORT).show()
                 }
                 LoginStatus.NOT_LOGGED_IN->binding.apply {
                     //show toast for failed login
@@ -156,4 +159,25 @@ class LoginFragment : Fragment() {
     }
 
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        //so that it checks on loading as well
+        viewModel.loginStatus.observe(viewLifecycleOwner){
+            when(it){
+                LoginStatus.SUCCESS->findNavController().popBackStack()
+                LoginStatus.LOADING->toggleButtons(false)
+                else->{
+                    //do nothing
+                }
+            }
+        }
+
+    }
+
+    private fun toggleButtons(state:Boolean){
+        binding.apply {
+            loginUiButton.isEnabled=state
+            loginButton.isEnabled=state
+        }
+    }
 }

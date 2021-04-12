@@ -32,8 +32,8 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         )
     }
 
-    //var adapter:QuestionAdapter? = QuestionAdapter(this)
-    lateinit var adapter: QuestionAdapter
+    val adapter:QuestionAdapter = QuestionAdapter(this)
+    //lateinit var adapter: QuestionAdapter
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -48,7 +48,6 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             false
         )
         val view = binding.root
-        adapter = QuestionAdapter(this)
         return view
     }
 
@@ -106,6 +105,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         }
     }
 
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     private fun questionStatusObserver() {
         //val adapter:QuestionAdapter = QuestionAdapter(this)
         viewModel.questionStatus.observe(viewLifecycleOwner) { it ->
@@ -142,6 +142,11 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         }
     }
 
+
+
+    /* onClickHandler for every question clicked
+
+     */
     override fun onQuestionItemClick(item: Question, position: Int) {
         Log.i(
             "QuestionFragment",
