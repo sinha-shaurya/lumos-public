@@ -1,5 +1,6 @@
 package com.example.lumos.screens
 
+import android.accounts.Account
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ import com.example.lumos.viewmodel.QuestionViewModel
 
 class AccountFragment : Fragment() {
 
-    private val viewModel: LoginViewModel by activityViewModels<LoginViewModel> {
+    private val viewModel: LoginViewModel by activityViewModels {
         LoginViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
@@ -32,7 +33,7 @@ class AccountFragment : Fragment() {
         )
     }
 
-    private val questionViewModel: QuestionViewModel by activityViewModels<QuestionViewModel> {
+    private val questionViewModel: QuestionViewModel by activityViewModels {
         QuestionViewModelFactory(
             NetworkRepository(
                 UserDatabase.getDatabase(requireActivity()).userDao()
@@ -75,7 +76,9 @@ class AccountFragment : Fragment() {
             //setup new login logic
 
         }*/
+        //login logic
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
+            @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when (status) {
                 //check for login status
                 //success
@@ -88,22 +91,27 @@ class AccountFragment : Fragment() {
                     retrieveQuestions()
                 }
                 LoginStatus.NOT_LOGGED_IN -> {
-                    navController.navigate(R.id.loginFragment)
+                    val action=AccountFragmentDirections.actionAccountFragmentToLoginFragment()
+                    navController.navigate(action)
                 }
-                LoginStatus.LOADING -> binding.logoutButon.isVisible = false
+                LoginStatus.LOADING -> {
+                    binding.logoutButon.isVisible = false
+                }
                 LoginStatus.FAILURE -> {
                     Toast.makeText(
                         requireActivity(),
                         "An error occurred",
                         Toast.LENGTH_SHORT
                     ).show()
-                    navController.navigate(R.id.loginFragment)
+                    val action=AccountFragmentDirections.actionAccountFragmentToLoginFragment()
+                    navController.navigate(action)
                 }
             }
         }
         binding.logoutButon.setOnClickListener {
             viewModel.logoutUser()
-            navController.navigate(R.id.loginFragment)//change to login fragment
+            navController.popBackStack(R.id.loginFragment,false)
+            //navController.navigate(R.id.loginFragment)//change to login fragment
         }
     }
 
@@ -116,6 +124,7 @@ class AccountFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val navController = findNavController()
         val currentBackStackEntry = navController.currentBackStackEntry!!
+        println(currentBackStackEntry)
         val savedStateHandle = currentBackStackEntry.savedStateHandle
         savedStateHandle.getLiveData<Boolean>(LoginFragment.LOGIN_SUCCESSFUL)
             .observe(currentBackStackEntry, { success ->
@@ -131,7 +140,7 @@ class AccountFragment : Fragment() {
     fun retrieveQuestions() {
         questionViewModel.getSubmittedAnswer()
         questionViewModel.points.observe(viewLifecycleOwner){currentPoints->
-            var pointText="${currentPoints} Points"
+            val pointText="${currentPoints} Points"
             binding.points.text=pointText
         }
     }

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/login"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
     app:startDestination="@id/accountFragment">
 
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lumos.screens.AccountFragment"
-        android:label="AccountFragment" />
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.lumos.screens.LoginFragment"
@@ -29,6 +35,8 @@
         android:label="RegistrationFragmentSecond" >
         <action
             android:id="@+id/action_registrationFragmentSecond_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
