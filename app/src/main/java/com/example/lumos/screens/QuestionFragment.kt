@@ -53,6 +53,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.questionList.adapter=null
         _binding = null
     }
 
@@ -65,6 +66,9 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             questionList.adapter = adapter
         }
 
+        /*
+        Setup observer for loginStatus
+         */
 
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
             when (status) {
@@ -94,11 +98,13 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                 }
             }
         }
+        //setup retry button to fetch questions in case of any error
         binding.retryButtonQuestion.setOnClickListener {
             viewModel.getQuestions()
             viewModel.questionStatus.value = LoadingStatus.LOADING
         }
 
+        //enable swipe to refresh
         binding.questionRefresh.setOnRefreshListener {
             Log.i(TAG, "SwipeRefresh called")
             viewModel.refreshQuestionList()

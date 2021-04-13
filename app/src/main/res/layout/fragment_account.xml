@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.AccountFragment">
+        tools:context=".screens.AccountFragment"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/user_name_text"
@@ -19,7 +20,6 @@
             android:fontFamily="@font/montserrat"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="10dp"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,20 +39,38 @@
             tools:text="0 Points"
             android:textSize="24sp"
             />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/logout_buton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/logout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:fontFamily="@font/montserrat_medium"
+            android:src="@drawable/logout_icon"
             android:text="Logout"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.91"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_name_text"
-            app:layout_constraintVertical_bias="0.837"
+            app:layout_constraintVertical_bias="0.90999997"
             app:layout_constraintWidth_percent="0.6" />
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:text="View Answered Questions"
+            android:id="@+id/answered_questions_button"
+            android:textColor="@color/colorAccent"
+            app:iconTint="@color/colorAccent"
+            android:textSize="16sp"
+            android:padding="0dp"
+            app:icon="@drawable/navigate_next"
+            app:iconGravity="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name_text"
+            android:textAllCaps="false"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

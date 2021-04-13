@@ -1,5 +1,6 @@
 package com.example.lumos.utils
 
+//utility class to convert timestamp to date
 class DateTimeConverter(private val timestamp:String) {
     //"2020-04-16T17:45:00+05:30"
     private var separator:Int=0
