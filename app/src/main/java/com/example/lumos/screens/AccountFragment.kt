@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
+import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
@@ -146,8 +147,19 @@ class AccountFragment : Fragment() {
     fun retrieveQuestions() {
         questionViewModel.getSubmittedAnswer()
         questionViewModel.points.observe(viewLifecycleOwner){currentPoints->
-            val pointText="${currentPoints} Points"
+            val pointText="${currentPoints} Points Scored"
             binding.points.text=pointText
+        }
+        questionViewModel.submittedAnswers.observe(viewLifecycleOwner){
+            binding.apply{
+                answeredQuestionsButton.isVisible = it != emptyList<AnsweredQuestion>()
+                answerDisclaimerText.isVisible=it!= emptyList<AnsweredQuestion>()
+
+                val questionsAnsweredText="${it.size} Questions Answered"
+                questionsAnswered.text=questionsAnsweredText
+
+
+            }
         }
     }
 }

@@ -168,6 +168,7 @@ class LoginFragment : Fragment() {
                 LoginStatus.LOADING->toggleButtons(false)
                 else->{
                     //do nothing
+                    toggleButtons(state = true)
                 }
             }
         }
