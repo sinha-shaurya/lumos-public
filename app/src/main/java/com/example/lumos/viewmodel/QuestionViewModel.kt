@@ -14,17 +14,20 @@ import kotlinx.coroutines.withContext
 class QuestionViewModel(private val repository: NetworkRepository) : ViewModel() {
 
 
-    private val _submittedAnswer = MutableLiveData<List<AnsweredQuestion>>()
-    val submittedAnswer: LiveData<List<AnsweredQuestion>> get() = _submittedAnswer
+    private val _submittedAnswers = MutableLiveData<List<AnsweredQuestion>>()
+    val submittedAnswers: LiveData<List<AnsweredQuestion>> get() = _submittedAnswers
 
     private val _points = MutableLiveData<Int>()
     val points: LiveData<Int> get() = _points
 
     init {
-        _submittedAnswer.value = emptyList()
+        _submittedAnswers.value = emptyList()
         _points.value = 0
     }
 
+    /*
+        Function to get list of submitted answers and update observable variables accordingly
+     */
     fun getSubmittedAnswer() {
         viewModelScope.launch {
             val token = repository.getAuthToken()
@@ -39,12 +42,7 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
                     null
                 }
                 if (response != null) {
-                    _submittedAnswer.postValue(response.answeredQuestionsList)
-                    var points = 0
-                    for (i in response.answeredQuestionsList ?: emptyList()) {
-                        val receivedPoints = i.points ?: 0
-                        points += receivedPoints
-                    }
+                    _submittedAnswers.postValue(response.answeredQuestionsList)
                     calculatePoints(response)
                     //_points.postValue(points)
                 }
@@ -52,6 +50,10 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
         }
     }
 
+    /*
+        Calculate points based on the list of questions and update observable points variable
+        All calculation takes place on the Default Dispatcher
+     */
     suspend fun calculatePoints(response: AnsweredQuestionResponse) =
         //run coroutine on default dispatcher to ensure max level of parallelism
         withContext(Dispatchers.Default) {

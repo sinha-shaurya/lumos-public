@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
+import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
@@ -48,7 +49,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate<FragmentAccountBinding>(
+        _binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_account,
             container,
@@ -84,7 +85,7 @@ class AccountFragment : Fragment() {
                 //success
                 LoginStatus.SUCCESS -> {
                     viewModel.getUserData()
-                    binding.logoutButon.isVisible = true
+                    binding.logoutButton.isVisible = true
                     viewModel.localData.observe(viewLifecycleOwner) {
                         binding.userNameText.text = it.userName
                     }
@@ -95,7 +96,7 @@ class AccountFragment : Fragment() {
                     navController.navigate(action)
                 }
                 LoginStatus.LOADING -> {
-                    binding.logoutButon.isVisible = false
+                    binding.logoutButton.isVisible = false
                 }
                 LoginStatus.FAILURE -> {
                     Toast.makeText(
@@ -108,11 +109,17 @@ class AccountFragment : Fragment() {
                 }
             }
         }
-        binding.logoutButon.setOnClickListener {
+        binding.logoutButton.setOnClickListener {
             viewModel.logoutUser()
             navController.popBackStack(R.id.loginFragment,false)
             //navController.navigate(R.id.loginFragment)//change to login fragment
         }
+
+        binding.answeredQuestionsButton.setOnClickListener {
+            val action=AccountFragmentDirections.actionAccountFragmentToAccountQuestions()
+            findNavController().navigate(action)
+        }
+
     }
 
     override fun onDestroy() {
@@ -140,8 +147,19 @@ class AccountFragment : Fragment() {
     fun retrieveQuestions() {
         questionViewModel.getSubmittedAnswer()
         questionViewModel.points.observe(viewLifecycleOwner){currentPoints->
-            val pointText="${currentPoints} Points"
+            val pointText="${currentPoints} Points Scored"
             binding.points.text=pointText
+        }
+        questionViewModel.submittedAnswers.observe(viewLifecycleOwner){
+            binding.apply{
+                answeredQuestionsButton.isVisible = it != emptyList<AnsweredQuestion>()
+                answerDisclaimerText.isVisible=it!= emptyList<AnsweredQuestion>()
+
+                val questionsAnsweredText="${it.size} Questions Answered"
+                questionsAnswered.text=questionsAnsweredText
+
+
+            }
         }
     }
 }
