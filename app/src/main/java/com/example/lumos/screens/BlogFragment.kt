@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -15,8 +16,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentBlogBinding
+import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.BlogDataAdapter
 import com.example.lumos.network.adapters.BlogLoadStateAdapter
+import com.example.lumos.network.dataclasses.blog.BlogPost
 import com.example.lumos.repository.BlogRepository
 import com.example.lumos.utils.viewmodelfactory.BlogViewModelFactory
 import com.example.lumos.viewmodel.BlogViewModel
@@ -29,7 +32,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
 
 
     private val viewModel:BlogViewModel by activityViewModels<BlogViewModel>{
-        BlogViewModelFactory(BlogRepository())
+        BlogViewModelFactory(BlogRepository(UserDatabase.getDatabase(requireActivity()).userDao()))
     }
 
     override fun onCreateView(
@@ -80,16 +83,27 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             binding.retryButtonBlog.setOnClickListener {
                 adapter.refresh()
             }
+
+            viewModel.savedPost.observe(viewLifecycleOwner){
+                println("${it.size} items")
+            }
         }
 
     }
 
-    override fun onItemClick(id: String) {
+    override fun onItemClick(item:BlogPost) {
+        val id=item.id
         val url = BLOG_BASE_URL + id
         val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
 
         customTabsIntent.launchUrl(requireActivity(), Uri.parse(url))
+
+
+    }
+
+    override fun onMenuItemClick() {
+        Toast.makeText(requireActivity(),"Menu  Clicked",Toast.LENGTH_SHORT).show()
     }
 
     companion object {

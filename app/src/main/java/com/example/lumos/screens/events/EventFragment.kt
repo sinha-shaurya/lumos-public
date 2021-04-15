@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.events
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,8 @@ import com.example.lumos.databinding.FragmentEventBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.EventCategoryDataAdapter
 import com.example.lumos.repository.NetworkRepository
-import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.utils.LoadingStatus
+import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
 
 class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickListener {
@@ -68,7 +68,7 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                         eventLoadingProgress.isVisible = false
                         retryButtonEvents.isVisible = false
                         categoryList.isVisible = true
-                        categoryRefresh.isRefreshing=false
+                        categoryRefresh.isRefreshing = false
                     }
                 }
                 //when request has failed, show the retry button
@@ -109,11 +109,11 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding=null
+        _binding = null
     }
 
     override fun onItemClick(id: Int) {
-        val action=EventFragmentDirections.actionEventFragmentToCategoryEventFragment(id)
+        val action = EventFragmentDirections.actionEventFragmentToCategoryEventFragment(id)
         findNavController().navigate(action)
     }
 

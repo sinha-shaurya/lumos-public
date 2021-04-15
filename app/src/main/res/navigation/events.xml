@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.lumos.screens.EventFragment"
+        android:name="com.example.lumos.screens.events.EventFragment"
         android:label="EventFragment" >
         <action
             android:id="@+id/action_eventFragment_to_categoryEventFragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryEventFragment"
-        android:name="com.example.lumos.screens.CategoryEventFragment"
+        android:name="com.example.lumos.screens.events.CategoryEventFragment"
         android:label="CategoryEventFragment" >
         <argument
             android:name="categoryId"

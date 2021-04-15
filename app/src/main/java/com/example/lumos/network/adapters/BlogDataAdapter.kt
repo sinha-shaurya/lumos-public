@@ -3,11 +3,9 @@ package com.example.lumos.network.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -32,26 +30,28 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
 
         //setup itemclicks on the entire card
         init {
-            binding.root.setOnClickListener {
+            binding.blogPostName.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        listener.onItemClick(item.id)
+                        listener.onItemClick(item)
+                    }
+                }
+            }
+
+            binding.moreMenu.setOnClickListener{
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onMenuItemClick()
                     }
                 }
             }
         }
 
         fun bind(item: BlogPost) {
-            val circularProgressDrawable = CircularProgressDrawable(context)
-            circularProgressDrawable.apply {
-                centerRadius = 30f
-                strokeWidth = 5f
-                setColorSchemeColors(ContextCompat.getColor(context, R.color.colorAccent))
-            }
-            circularProgressDrawable.start()
-
             binding.apply {
                 blogPostName.text = item.title
                 blogPostAuthor.text = item.author
@@ -71,8 +71,6 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
                             RoundedCorners(IMAGE_CORNER_RADIUS)
                         )
                     )
-                    //.centerCrop()
-                    .placeholder(circularProgressDrawable)
                     .error(R.drawable.blog_image_error)
                     .transition(DrawableTransitionOptions().crossFade())
                     .into(blogPostImage)
@@ -115,6 +113,8 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
 
     //interface to handle on clicks
     interface onItemClickListener {
-        fun onItemClick(id: String)
+        fun onItemClick(item: BlogPost)
+
+        fun onMenuItemClick()
     }
 }
