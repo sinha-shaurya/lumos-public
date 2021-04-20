@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.account
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountQuestionsBinding
 import com.example.lumos.local.UserDatabase
@@ -31,7 +30,7 @@ class AccountQuestions : Fragment() {
     private var _binding: FragmentAccountQuestionsBinding? = null
     private val binding get() = _binding!!
 
-    val adapter=AnswerListAdapter()
+    val adapter = AnswerListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +48,18 @@ class AccountQuestions : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.answerList.adapter=null
-        _binding=null
+        binding.answerList.adapter = null
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //setup recyclerview
-        binding.answerList.adapter=adapter
+        binding.answerList.adapter = adapter
 
 
-        viewModel.submittedAnswers.observe(viewLifecycleOwner){
+        viewModel.submittedAnswers.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 

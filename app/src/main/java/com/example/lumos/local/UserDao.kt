@@ -1,7 +1,6 @@
 package com.example.lumos.local
 
 import androidx.room.*
-import com.example.lumos.network.dataclasses.blog.BlogPost
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,11 +22,14 @@ interface UserDao {
     suspend fun getAuthToken(): String?
 
     @Query("SELECT * from blog_data")
-    fun getSavedPosts():Flow<List<SavedPost>>
+    fun getSavedPosts(): Flow<List<SavedPost>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun savePost(post: SavedPost)
 
     @Delete
-    suspend fun deleteSavePost(post:SavedPost)
+    suspend fun deleteSavePost(post: SavedPost)
+
+    @Query("SELECT EXISTS(SELECT 1 from blog_data where id LIKE :postId)")
+    suspend fun checkPost(postId: String): Boolean
 }

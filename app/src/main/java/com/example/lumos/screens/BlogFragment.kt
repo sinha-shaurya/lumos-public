@@ -11,8 +11,8 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentBlogBinding
@@ -30,8 +30,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
     private val binding get() = _binding!!
 
 
-
-    private val viewModel:BlogViewModel by activityViewModels<BlogViewModel>{
+    private val viewModel: BlogViewModel by activityViewModels {
         BlogViewModelFactory(BlogRepository(UserDatabase.getDatabase(requireActivity()).userDao()))
     }
 
@@ -40,11 +39,12 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate<FragmentBlogBinding>(
+        _binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_blog,
             container,
-            false)
+            false
+        )
         return binding.root
     }
 
@@ -57,11 +57,10 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         val adapter = BlogDataAdapter(this)
 
-        //val dividerItemDecoration=DividerItemDecoration(binding.blogList.context,)
         binding.blogList.apply {
             this.adapter =
                 adapter.withLoadStateFooter(footer = BlogLoadStateAdapter { adapter.retry() })
-            val layoutManager=LinearLayoutManager(this.context)
+            val layoutManager = LinearLayoutManager(this.context)
             this.layoutManager = layoutManager
         }
         viewModel.blogPost.observe(viewLifecycleOwner) {
@@ -83,16 +82,12 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
             binding.retryButtonBlog.setOnClickListener {
                 adapter.refresh()
             }
-
-            viewModel.savedPost.observe(viewLifecycleOwner){
-                println("${it.size} items")
-            }
         }
 
     }
 
-    override fun onItemClick(item:BlogPost) {
-        val id=item.id
+    override fun onItemClick(item: BlogPost) {
+        val id = item.id
         val url = BLOG_BASE_URL + id
         val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
@@ -102,8 +97,10 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
 
     }
 
-    override fun onMenuItemClick() {
-        Toast.makeText(requireActivity(),"Menu  Clicked",Toast.LENGTH_SHORT).show()
+    override fun onMenuItemClick(item:BlogPost) {
+        val args=item
+        val action = BlogFragmentDirections.actionBlogFragmentToBlogBottomSheetFragment(args)
+        findNavController().navigate(action)
     }
 
     companion object {

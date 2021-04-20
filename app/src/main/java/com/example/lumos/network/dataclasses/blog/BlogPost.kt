@@ -1,9 +1,12 @@
 package com.example.lumos.network.dataclasses.blog
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class BlogPost(
     //store JSON field
     @Json(name = "tags")
@@ -31,4 +34,4 @@ data class BlogPost(
     val timeStamp: String,
     @Json(name = "__v")
     val v: Int
-)
+):Parcelable

@@ -45,7 +45,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     if (item != null) {
-                        listener.onMenuItemClick()
+                        listener.onMenuItemClick(item)
                     }
                 }
             }
@@ -55,14 +55,8 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
             binding.apply {
                 blogPostName.text = item.title
                 blogPostAuthor.text = item.author
-                /*
-                Picasso.get().load(generateImageUrl(item.imageUrl))
-                    .placeholder(circularProgressDrawable)
-                    .error(R.drawable.blog_image_error)
-                    .fit()
-                    .centerCrop()
-                    .into(blogPostImage)
-                 */
+
+
                 GlideApp.with(itemView)
                     .load(generateImageUrl(item.imageUrl))
                     .transform(
@@ -115,6 +109,6 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
     interface onItemClickListener {
         fun onItemClick(item: BlogPost)
 
-        fun onMenuItemClick()
+        fun onMenuItemClick(item:BlogPost)
     }
 }
