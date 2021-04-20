@@ -7,5 +7,20 @@
     <fragment
         android:id="@+id/blogFragment"
         android:name="com.example.lumos.screens.BlogFragment"
-        android:label="BlogFragment" />
+        android:label="BlogFragment" >
+        <action
+            android:id="@+id/action_blogFragment_to_blogBottomSheetFragment"
+            app:destination="@id/blogBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/blogBottomSheetFragment"
+        android:name="com.example.lumos.screens.BlogBottomSheetFragment"
+        android:label="BlogBottomSheetFragment" >
+        <action
+            android:id="@+id/action_blogBottomSheetFragment_to_blogFragment"
+            app:destination="@id/blogFragment" />
+        <argument
+            android:name="post"
+            app:argType="com.example.lumos.network.dataclasses.blog.BlogPost" />
+    </dialog>
 </navigation>
