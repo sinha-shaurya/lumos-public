@@ -8,7 +8,7 @@
     <string name="sample_question_text">What is the purpose of this app? You have to tell me all about it</string>
     <string name="top_stories_dec">Image for top stories</string>
     <string name="placeholder_text">lorem ipsum</string>
-    <string name="sample_blog_title">This is the name which boring</string>
+    <string name="sample_blog_title">This is the name which is boring</string>
     <string name="sample_blog_image">Sample Blog Image</string>
     <string name="sample_author">Shaurya Sinha</string>
     <string name="sample_readtime">5 min</string>
@@ -18,4 +18,5 @@
     <string name="events">Events</string>
     <string name="practice">Practice</string>
     <string name="account">Account</string>
+    <string name="answer_disclaimer_text">Points for submitted answers will be updated soon</string>
 </resources>

@@ -150,6 +150,7 @@ class LoginViewModel(private val repository: NetworkRepository) : ViewModel() {
             async {
                 repository.logoutUser(localUser)
             }.await()
+            repository.deleteAllPosts()
             loginStatus.postValue(LoginStatus.NOT_LOGGED_IN)
             _questionResponse.postValue(null)
             questionStatus.postValue(LoadingStatus.LOADING)

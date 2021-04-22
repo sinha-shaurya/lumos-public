@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
 import com.example.lumos.local.UserDatabase
+import com.example.lumos.network.adapters.BookmarkItemAdapter
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
@@ -43,6 +44,8 @@ class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
     val binding get() = _binding!!
 
+    val adapter = BookmarkItemAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,23 +63,10 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
-        /*viewModel.loginState.observe(viewLifecycleOwner) {
-            //user has/is logged in
-            if (it == true) {
-                viewModel.getUserData()
-                viewModel.localData.observe(viewLifecycleOwner, Observer { localUser ->
-                    binding.userNameText.text = localUser.userName.toString()
-                })
 
-            }
-            //user has not logged in
-            else {
-                navController.navigate(R.id.loginFragment)//change to login fragment
-            }
-            //setup new login logic
 
-        }*/
-        //login logic
+        binding.bookmarkList.adapter = adapter
+
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when (status) {
@@ -89,6 +79,11 @@ class AccountFragment : Fragment() {
                         binding.userNameText.text = it.userName
                     }
                     retrieveQuestions()
+
+                    questionViewModel.savedPosts.observe(viewLifecycleOwner) {
+                        adapter.submitList(it)
+                    }
+
                 }
                 LoginStatus.NOT_LOGGED_IN -> {
                     val action = AccountFragmentDirections.actionAccountFragmentToLoginFragment()
@@ -122,8 +117,10 @@ class AccountFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        binding.bookmarkList.adapter = null
         _binding = null
+        super.onDestroy()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
