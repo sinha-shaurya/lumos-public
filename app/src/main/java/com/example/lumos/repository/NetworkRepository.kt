@@ -1,6 +1,7 @@
 package com.example.lumos.repository
 
 import com.example.lumos.local.LocalUser
+import com.example.lumos.local.SavedPost
 import com.example.lumos.local.UserDao
 import com.example.lumos.network.IsteNetworkInstance
 import com.example.lumos.network.dataclasses.RegistrationResponseData
@@ -9,6 +10,9 @@ import com.example.lumos.network.dataclasses.practice.Answer
 import com.example.lumos.network.dataclasses.registration.RegistrationData
 
 class NetworkRepository(private val userDao: UserDao) {
+
+    val savedPosts=userDao.getSavedPosts()
+
     suspend fun loginUser(loginUserData: LoginUserData) =
         IsteNetworkInstance.api.loginUser(loginUserData)
 
@@ -23,6 +27,10 @@ class NetworkRepository(private val userDao: UserDao) {
 
     suspend fun addUser(localUser: LocalUser) = userDao.addUser(localUser)
 
+    suspend fun deleteAllPosts() = userDao.deleteAll()
+
+    suspend fun deleteSavedPost(post: SavedPost) = userDao.deleteSavePost(post)
+
     //get category
     suspend fun getCategory() = IsteNetworkInstance.api.getCategory()
 
@@ -32,11 +40,15 @@ class NetworkRepository(private val userDao: UserDao) {
         IsteNetworkInstance.api.getQuestions(headers)
 
     suspend fun submitAnswer(headers: MutableMap<String, String>, answer: Answer) =
-        IsteNetworkInstance.api.submitAnswer(headers,answer = answer)
+        IsteNetworkInstance.api.submitAnswer(headers, answer = answer)
 
     //suspend fun submitAnswer(headers: MutableMap<String, String>, answer: Answer) =IsteNetworkInstance.api.submitAnswer(headers,answer.answer,answer.primaryKey)
 
-    suspend fun getSubmittedAnswer(headers:Map<String,String>)=IsteNetworkInstance.api.getSubmittedAnswer(headers)
+    suspend fun getSubmittedAnswer(headers: Map<String, String>) =
+        IsteNetworkInstance.api.getSubmittedAnswer(headers)
 
-    suspend fun getEvents(categoryNameSlug:String) =IsteNetworkInstance.api.getEvent(categoryNameSlug)
+    suspend fun getEvents(categoryNameSlug: String) =
+        IsteNetworkInstance.api.getEvent(categoryNameSlug)
+
+
 }

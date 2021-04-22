@@ -1,9 +1,6 @@
 package com.example.lumos.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestionResponse
 import com.example.lumos.repository.NetworkRepository
@@ -19,6 +16,9 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
 
     private val _points = MutableLiveData<Int>()
     val points: LiveData<Int> get() = _points
+
+
+    val savedPosts=repository.savedPosts.asLiveData()
 
     init {
         _submittedAnswers.value = emptyList()

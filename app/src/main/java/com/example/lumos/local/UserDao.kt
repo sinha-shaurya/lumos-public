@@ -32,4 +32,7 @@ interface UserDao {
 
     @Query("SELECT EXISTS(SELECT 1 from blog_data where id LIKE :postId)")
     suspend fun checkPost(postId: String): Boolean
+
+    @Query("DELETE FROM blog_data ")
+    suspend fun deleteAll()
 }
