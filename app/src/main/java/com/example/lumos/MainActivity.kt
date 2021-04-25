@@ -2,8 +2,11 @@ package com.example.lumos
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
@@ -39,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
          */
 
-        supportActionBar?.hide()
         if(savedInstanceState==null){
             setupBottomNavigationBar()
         }
@@ -80,8 +82,14 @@ class MainActivity : AppCompatActivity() {
         currentNavController=controller
     }
 
-    /*
+
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp()?:false
-    }*/
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater=MenuInflater(this)
+        inflater.inflate(R.menu.toolbar_menu,menu)
+        return true
+    }
 }

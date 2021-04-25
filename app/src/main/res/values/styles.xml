@@ -5,13 +5,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
-<style name="BottomNavigationTheme" parent="Theme.MaterialComponents.DayNight">
-    <item name="colorPrimary">@color/nav_bar_selected</item>
-    <item name="android:textColorSecondary">@color/nav_bar_unselected</item>
-</style>
+
+    <style name="BottomNavigationTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/nav_bar_selected</item>
+        <item name="android:textColorSecondary">@color/nav_bar_unselected</item>
+    </style>
 
     <style name="ToolbarTextAppearance" parent="Theme.MaterialComponents.DayNight">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="materialCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:shadowColor">@color/surfaceColorDark</item>
+    </style>
+
+
+    <style name="bottomSheetTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:background">@color/white</item>
+    </style>
+
 </resources>

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lumos.screens.account.AccountFragment"
-        android:label="AccountFragment" >
+        android:label="Profile" >
         <action
             android:id="@+id/action_accountFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.lumos.screens.account.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="Login" >
         <action
             android:id="@+id/action_loginFragment_to_registrationFragmentFirst"
             app:destination="@id/registrationFragmentFirst" />
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/registrationFragmentFirst"
         android:name="com.example.lumos.screens.registration.RegistrationFragmentFirst"
-        android:label="RegistrationFragmentFirst" >
+        android:label="Sign Up" >
         <action
             android:id="@+id/action_registrationFragmentFirst_to_registrationFragmentSecond"
             app:destination="@id/registrationFragmentSecond" />
@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/registrationFragmentSecond"
         android:name="com.example.lumos.screens.registration.RegistrationFragmentSecond"
-        android:label="RegistrationFragmentSecond" >
+        android:label="Sign up" >
         <action
             android:id="@+id/action_registrationFragmentSecond_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -46,5 +46,5 @@
     <fragment
         android:id="@+id/accountQuestions"
         android:name="com.example.lumos.screens.account.AccountQuestions"
-        android:label="AccountQuestions" />
+        android:label="Answered Questions" />
 </navigation>
