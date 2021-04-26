@@ -117,4 +117,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+
+    //for storing user preferences
+    //Preferences Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
+
 }
