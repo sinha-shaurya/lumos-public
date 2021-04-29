@@ -2,6 +2,7 @@ package com.example.lumos
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.lumos.databinding.ActivityMainBinding
 import com.example.lumos.repository.UserPreferencesRepository
+import com.example.lumos.screens.ThemeBottomSheetFragment
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
 import com.example.lumos.viewmodel.UserPreferencesViewModel
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         userPreferencesViewModel.userPreferences.observe(this) {
+            Log.d(TAG,it.toString())
             AppCompatDelegate.setDefaultNightMode(it)
         }
 
@@ -93,8 +96,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> userPreferencesViewModel.changeTheme(AppCompatDelegate.MODE_NIGHT_YES)
+            R.id.settings -> {
+                val fragment = ThemeBottomSheetFragment.newInstance(Bundle())
+                fragment.show(supportFragmentManager, FRAGMENT_TAG_THEME)
+
+            }
         }
         return true
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
+        const val FRAGMENT_TAG_THEME = "ThemeBottomSheetDialogFragment"
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            android:textSize="24sp"/>
+        <RadioGroup
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/light_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Light" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/night_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Night" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/follow_system"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Follow System" />
+        </RadioGroup>
+    </LinearLayout>
+</layout>
