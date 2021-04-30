@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.lumos.R
@@ -32,7 +33,7 @@ class ThemeBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(
             inflater,
@@ -40,8 +41,6 @@ class ThemeBottomSheetFragment : BottomSheetDialogFragment() {
             container,
             false
         )
-
-
 
         return binding.root
     }
@@ -52,11 +51,17 @@ class ThemeBottomSheetFragment : BottomSheetDialogFragment() {
         //check radio buttons appropriately
 
         val themeValue = viewModel.userPreferences.value
-        if (themeValue == AppCompatDelegate.MODE_NIGHT_NO) binding.lightButton.isChecked = true
-        else if (themeValue == AppCompatDelegate.MODE_NIGHT_YES) binding.nightButton.isChecked =
-            true
-        else if (themeValue == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) binding.followSystem.isChecked =
-            true
+
+        when (themeValue) {
+            AppCompatDelegate.MODE_NIGHT_NO -> binding.lightButton.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_YES -> binding.nightButton.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> binding.followSystem.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> binding.batterySaverButton.isChecked = true
+        }
+
+        /*
+        Set onChecked listeners for radio buttons
+         */
 
         binding.lightButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) viewModel.changeTheme(AppCompatDelegate.MODE_NIGHT_NO)
@@ -67,6 +72,20 @@ class ThemeBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.followSystem.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) viewModel.changeTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+
+        binding.batterySaverButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.changeTheme(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+        }
+        /*
+        * Only show the follow system button on SDK Level 29 and above
+        * Show disclaimer text on devices lower than SDK Level 29
+         */
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            binding.followSystem.isVisible = true
+        } else {
+            binding.themeDisclaimerText.isVisible = true
+            binding.batterySaverButton.isVisible = true
         }
     }
 

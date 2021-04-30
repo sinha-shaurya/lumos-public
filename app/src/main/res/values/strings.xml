@@ -19,4 +19,10 @@
     <string name="practice">Practice</string>
     <string name="account">Account</string>
     <string name="answer_disclaimer_text">Points for submitted answers will be updated soon</string>
+    <string name="light_mode_string">Light</string>
+    <string name="dark_mode_string">Dark</string>
+    <string name="follow_system_theme_string">Follow System Theme</string>
+    <string name="battery_saver_string">Set By Battery Saver</string>
+    <string name="theme_disclaimer_string">May not work on all devices</string>
+    <string name="theme_title_string">Theme</string>
 </resources>
