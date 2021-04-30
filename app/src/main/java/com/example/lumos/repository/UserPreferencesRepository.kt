@@ -30,7 +30,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
                 throw exception
         }
         .map { value ->
-            val preference = value[PreferencesKeys.theme] ?: AppCompatDelegate.MODE_NIGHT_NO
+            val preference = value[PreferencesKeys.theme] ?: AppCompatDelegate.MODE_NIGHT_YES
             preference
         }
 
