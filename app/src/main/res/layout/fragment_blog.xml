@@ -18,26 +18,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="112dp">
-
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:collapsedTitleTextAppearance="@style/ToolbarTextAppearance"
-                    app:expandedTitleTextAppearance="@style/ToolbarTextAppearance"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                    <androidx.appcompat.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="?android:attr/actionBarSize"
-                        app:layout_collapseMode="pin"
-                        app:title="Blog" />
-
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
-            </com.google.android.material.appbar.AppBarLayout>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/blog_list"
                 android:layout_width="match_parent"

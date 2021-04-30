@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        style="@style/bottomSheetTheme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_title_string"
+            android:textSize="24sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/light_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/light_mode_string" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/night_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dark_mode_string" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/follow_system"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/follow_system_theme_string"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/battery_saver_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_saver_string"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/theme_disclaimer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_disclaimer_string"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+</layout>

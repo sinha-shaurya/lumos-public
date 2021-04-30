@@ -1,6 +1,7 @@
 package com.example.lumos.screens.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,7 @@ class AccountFragment : Fragment() {
         val navController = findNavController()
 
 
+
         binding.bookmarkList.adapter = adapter
 
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
@@ -117,9 +119,14 @@ class AccountFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        binding.bookmarkList.adapter = null
-        _binding = null
+
         super.onDestroy()
+
+        if (_binding != null) {
+            Log.i(TAG, "onDestroy() called ,${binding}")
+            _binding!!.bookmarkList.adapter = null
+            _binding = null
+        }
 
     }
 
@@ -157,5 +164,9 @@ class AccountFragment : Fragment() {
 
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "AccountFragment"
     }
 }

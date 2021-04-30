@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/blogFragment"
         android:name="com.example.lumos.screens.BlogFragment"
-        android:label="BlogFragment" >
+        android:label="Blog" >
         <action
             android:id="@+id/action_blogFragment_to_blogBottomSheetFragment"
             app:destination="@id/blogBottomSheetFragment" />
