@@ -51,12 +51,6 @@ class CategoryViewModel(private val repository: NetworkRepository) : ViewModel()
         loadingStatus.postValue(LoadingStatus.LOADING)
     }
 
-    fun getEventList(nameSlug:String){
-        viewModelScope.launch(Dispatchers.IO) {
-
-        }
-    }
-
     companion object {
         const val TAG = "CategoryViewModel created"
     }
