@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
+import com.example.lumos.MainActivity
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentLoginBinding
 import com.example.lumos.local.UserDatabase
@@ -38,6 +40,14 @@ class LoginFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+
+        //hide/disable the back button in toolbar
+
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowHomeEnabled(false)
+        }
+
         return binding.root
     }
 
