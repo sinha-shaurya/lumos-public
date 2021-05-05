@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/questionFragment"
         android:name="com.example.lumos.screens.QuestionFragment"
-        android:label="QuestionFragment" >
+        android:label="Practice" >
         <action
             android:id="@+id/action_questionFragment_to_answerFragment"
             app:destination="@id/answerFragment" />
@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/answerFragment"
         android:name="com.example.lumos.screens.AnswerFragment"
-        android:label="AnswerFragment" >
+        android:label="Answer Submission" >
         <argument
             android:name="questionItem"
             app:argType="com.example.lumos.network.dataclasses.practice.Question" />

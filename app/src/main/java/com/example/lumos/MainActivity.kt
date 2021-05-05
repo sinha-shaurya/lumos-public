@@ -46,10 +46,13 @@ class MainActivity : AppCompatActivity() {
             setupBottomNavigationBar()
         }
 
+
         userPreferencesViewModel.userPreferences.observe(this) {
-            Log.d(TAG,it.toString())
+            Log.d(TAG, it.toString())
             AppCompatDelegate.setDefaultNightMode(it)
         }
+
+
 
     }
 
@@ -87,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         return currentNavController?.value?.navigateUp() ?: false
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = MenuInflater(this)
         inflater.inflate(R.menu.toolbar_menu, menu)
@@ -94,16 +98,29 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> {
                 val fragment = ThemeBottomSheetFragment.newInstance(Bundle())
                 fragment.show(supportFragmentManager, FRAGMENT_TAG_THEME)
-
+                return true
             }
+            else->return super.onOptionsItemSelected(item)
         }
-        return true
+
     }
+
+
+
+    /*
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
+
+     */
 
     companion object {
         const val TAG = "MainActivity"

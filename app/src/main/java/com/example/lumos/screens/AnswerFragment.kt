@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.lumos.MainActivity
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAnswerBinding
 import com.example.lumos.local.UserDatabase
@@ -56,8 +57,10 @@ class AnswerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val question = args.questionItem
+        val authorDetailsText = "By ${question.mentor.name}, in ${question.mentor.company}"
         binding.apply {
             questionText.text = question.question
+            questionAuthorName.text = authorDetailsText
         }
 
         binding.submitButton.setOnClickListener {
@@ -88,14 +91,17 @@ class AnswerFragment : Fragment() {
                 }
                 LoadingStatus.FAILURE -> {
                     viewModel.answerResponse.observe(viewLifecycleOwner) {
-                        if(it.errors.equals("Cannot submit again",ignoreCase = true)){
+                        if (it.errors.equals("Cannot submit again", ignoreCase = true)) {
                             //user has already submitted
                             viewModel.removeItem(args.questionItem)
-                            findNavController().popBackStack(R.id.questionFragment,false)
-                            Toast.makeText(requireActivity(),"You have already submitted this answer",Toast.LENGTH_SHORT).show()
-                        }
-                        else
-                            Toast.makeText(requireActivity(),it.errors,Toast.LENGTH_SHORT).show()
+                            findNavController().popBackStack(R.id.questionFragment, false)
+                            Toast.makeText(
+                                requireActivity(),
+                                "You have already submitted this answer",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else
+                            Toast.makeText(requireActivity(), it.errors, Toast.LENGTH_SHORT).show()
                     }
 
                 }

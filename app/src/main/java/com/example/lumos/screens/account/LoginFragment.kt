@@ -43,10 +43,13 @@ class LoginFragment : Fragment() {
 
         //hide/disable the back button in toolbar
 
+
         (activity as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)
             setDisplayShowHomeEnabled(false)
         }
+
+
 
         return binding.root
     }

@@ -7,52 +7,77 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".screens.AnswerFragment">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/questionText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeMaxTextSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Sample text" />
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            tools:context=".screens.AnswerFragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/answer_text_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/questionText"
-            >
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/answer_text"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/questionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="gravity"
-                android:gravity="top"
-                tools:text="This is a sample answer"
-                android:inputType="textMultiLine"
-                android:layout_marginTop="20dp"
-                android:minHeight="50dp"
-                android:maxHeight="300dp"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:fontFamily="@font/montserrat"
+                android:textSize="18sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Sample text" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:text="submit"
-            app:cornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/answer_text_layout"
-            android:id="@+id/submit_button"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/question_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/questionText"
+                tools:text="John Smith" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/answer_text_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="300"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/question_author_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/answer_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Type Answer Here"
+                    android:inputType="textMultiLine"
+                    android:minHeight="100dp"
+                    android:textAlignment="gravity" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/submit_string"
+                app:cornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/answer_text_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </layout>
