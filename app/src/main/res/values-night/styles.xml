@@ -30,4 +30,9 @@
         <item name="android:background">@color/surfaceColorDark</item>
     </style>
 
+    <style name="textCallToActionTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColor">@color/nightColorPrimary</item>
+    </style>
+
+
 </resources>

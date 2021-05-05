@@ -27,4 +27,8 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="textCallToActionTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

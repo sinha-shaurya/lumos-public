@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -32,7 +31,8 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
         )
     }
 
-    val adapter:QuestionAdapter = QuestionAdapter(this)
+    val adapter: QuestionAdapter = QuestionAdapter(this)
+
     //lateinit var adapter: QuestionAdapter
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +53,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.questionList.adapter=null
+        binding.questionList.adapter = null
         _binding = null
     }
 
@@ -66,6 +66,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             questionList.adapter = adapter
         }
 
+
         /*
         Setup observer for loginStatus
          */
@@ -76,6 +77,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                 LoginStatus.SUCCESS -> {
                     viewModel.getQuestions()
                     binding.questionRefresh.isEnabled = true
+                    binding.notLoggedInText.isVisible = false
                     //observe for changes in question status
                     questionStatusObserver()
                 }
@@ -84,6 +86,7 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                     questionLoadingProgress.isVisible = true
                     binding.retryButtonQuestion.isVisible = false
                     binding.questionList.isVisible = false
+                    binding.notLoggedInText.isVisible = false
                 }
 
                 else -> {
@@ -92,8 +95,8 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                         questionLoadingProgress.isVisible = false
                         retryButtonQuestion.isVisible = false
                         questionList.isVisible = false
-                        Toast.makeText(requireActivity(), "try loggin in", Toast.LENGTH_SHORT)
-                            .show()
+                        binding.notLoggedInText.isVisible = true
+
                     }
                 }
             }
@@ -118,9 +121,11 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             when (it) {
                 LoadingStatus.SUCCESS -> {
                     //binding.questionList.adapter=adapter
+
                     viewModel.questionList.observe(viewLifecycleOwner) {
                         Log.i("QuestionFragment", "Size of list received ${it.size}")
                         adapter.submitList(it)
+                        binding.noQuestionsText.isVisible = it.isEmpty()
                     }
 
                     binding.apply {
@@ -133,12 +138,14 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
                 }
                 LoadingStatus.LOADING -> binding.apply {
                     questionLoadingProgress.isVisible = true
+                    noQuestionsText.isVisible = false
                     retryButtonQuestion.isVisible = false
                 }
                 LoadingStatus.FAILURE -> binding.apply {
                     Log.i("QuestionFragment", "Exception occurred")
                     retryButtonQuestion.isVisible = true
                     questionLoadingProgress.isVisible = false
+                    noQuestionsText.isVisible = false
                     questionRefresh.isRefreshing = false
                     val error = viewModel.questionError.value
                     if (error != null)
@@ -147,7 +154,6 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             }
         }
     }
-
 
 
     /* onClickHandler for every question clicked

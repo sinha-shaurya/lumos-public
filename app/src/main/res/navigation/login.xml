@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login"
     app:startDestination="@id/accountFragment">
 
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.lumos.screens.account.AccountFragment"
-        android:label="Profile" >
+        android:label="Profile">
         <action
             android:id="@+id/action_accountFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -20,7 +19,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.lumos.screens.account.LoginFragment"
-        android:label="Login" >
+        android:label="Login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragmentFirst"
             app:destination="@id/registrationFragmentFirst" />
@@ -28,7 +27,7 @@
     <fragment
         android:id="@+id/registrationFragmentFirst"
         android:name="com.example.lumos.screens.registration.RegistrationFragmentFirst"
-        android:label="Sign Up" >
+        android:label="Sign Up">
         <action
             android:id="@+id/action_registrationFragmentFirst_to_registrationFragmentSecond"
             app:destination="@id/registrationFragmentSecond" />
@@ -36,7 +35,7 @@
     <fragment
         android:id="@+id/registrationFragmentSecond"
         android:name="com.example.lumos.screens.registration.RegistrationFragmentSecond"
-        android:label="Sign up" >
+        android:label="Sign up">
         <action
             android:id="@+id/action_registrationFragmentSecond_to_loginFragment"
             app:destination="@id/loginFragment"
