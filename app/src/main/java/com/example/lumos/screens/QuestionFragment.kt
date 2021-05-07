@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
@@ -21,6 +22,7 @@ import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener {
     private val viewModel: LoginViewModel by activityViewModels {
@@ -36,6 +38,10 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
     //lateinit var adapter: QuestionAdapter
     private var _binding: FragmentQuestionBinding? = null
     private val binding get() = _binding!!
+
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -112,6 +118,12 @@ class QuestionFragment : Fragment(), QuestionAdapter.onQuestionItemClickListener
             Log.i(TAG, "SwipeRefresh called")
             viewModel.refreshQuestionList()
         }
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Practice .")
     }
 
     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")

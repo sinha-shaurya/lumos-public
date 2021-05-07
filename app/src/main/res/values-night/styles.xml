@@ -1,12 +1,13 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/nightColorPrimary</item>
         <item name="colorPrimaryDark">@color/nightColorPrimaryDark</item>
         <item name="colorAccent">@color/nightColorPrimaryLight</item>
         <item name="android:windowBackground">@color/surfaceColorDark</item>
         <item name="android:statusBarColor">@color/black</item>
+        <item name="appBarLayoutStyle">@style/appbarLayoutTheme</item>
     </style>
 
     <style name="BottomNavigationTheme" parent="Theme.MaterialComponents.DayNight">
@@ -35,4 +36,16 @@
     </style>
 
 
+    <!--App Bar theme -->
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+    </style>
+
+    <style name="appbarLayoutTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:background">@color/black</item>
+    </style>
 </resources>

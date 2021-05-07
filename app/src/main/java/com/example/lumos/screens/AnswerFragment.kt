@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.lumos.MainActivity
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAnswerBinding
 import com.example.lumos.local.UserDatabase
@@ -21,6 +21,7 @@ import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
 class AnswerFragment : Fragment() {
@@ -29,6 +30,8 @@ class AnswerFragment : Fragment() {
     val binding get() = _binding!!
 
     val args: AnswerFragmentArgs by navArgs()
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
 
     //initialise viewmodel
     val viewModel by activityViewModels<LoginViewModel> {
@@ -77,6 +80,11 @@ class AnswerFragment : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Answer Submission.")
+    }
+
     private fun observeAnswerStatus() {
         viewModel.answerStatus.observe(viewLifecycleOwner) { status ->
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
@@ -113,4 +121,5 @@ class AnswerFragment : Fragment() {
             }
         }
     }
+
 }

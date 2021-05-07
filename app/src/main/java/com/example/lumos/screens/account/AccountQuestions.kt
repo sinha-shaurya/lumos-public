@@ -14,6 +14,7 @@ import com.example.lumos.network.adapters.AnswerListAdapter
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.viewmodelfactory.QuestionViewModelFactory
 import com.example.lumos.viewmodel.QuestionViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
 class AccountQuestions : Fragment() {
@@ -26,15 +27,13 @@ class AccountQuestions : Fragment() {
         )
     }
 
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
+
     //data binding variables
     private var _binding: FragmentAccountQuestionsBinding? = null
     private val binding get() = _binding!!
 
     val adapter = AnswerListAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +61,10 @@ class AccountQuestions : Fragment() {
         viewModel.submittedAnswers.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Submissions .")
     }
 }

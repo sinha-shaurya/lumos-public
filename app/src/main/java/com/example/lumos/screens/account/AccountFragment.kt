@@ -23,6 +23,7 @@ import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.utils.viewmodelfactory.QuestionViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
 import com.example.lumos.viewmodel.QuestionViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
 class AccountFragment : Fragment() {
@@ -42,6 +43,9 @@ class AccountFragment : Fragment() {
             )
         )
     }
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
+
     private var _binding: FragmentAccountBinding? = null
     val binding get() = _binding!!
 
@@ -145,6 +149,11 @@ class AccountFragment : Fragment() {
                     navController.navigate(startDestination, null, navOptions)
                 }
             })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Profile .")
     }
 
     fun retrieveQuestions() {

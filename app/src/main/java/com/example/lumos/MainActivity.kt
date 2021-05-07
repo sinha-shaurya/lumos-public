@@ -19,6 +19,7 @@ import com.example.lumos.repository.UserPreferencesRepository
 import com.example.lumos.screens.ThemeBottomSheetFragment
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 import com.example.lumos.viewmodel.UserPreferencesViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -36,11 +37,14 @@ class MainActivity : AppCompatActivity() {
         UserPreferencesViewModelFactory(UserPreferencesRepository(datastore))
     }
 
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        setSupportActionBar(binding.appBar)
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -52,7 +56,21 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(it)
         }
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
+
+        //observe value of title in ToolbarTitleViewModel
+        toolbarTitleViewModel.title.observe(this) {
+            //for initialisation condition
+            Log.i(TAG, it)
+            val splitSpaceTransform = it.split(" ");//split by whitespace
+            Log.i(TAG, splitSpaceTransform.toString())
+            if (splitSpaceTransform.size > 1) {
+                binding.appBarTitle1.text = splitSpaceTransform[0]
+                binding.appBarTitle2.text = splitSpaceTransform[1]
+            } else
+                binding.appBarTitle1.text = it
+        }
 
     }
 
@@ -69,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             R.navigation.login
         )
 
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
@@ -81,7 +100,12 @@ class MainActivity : AppCompatActivity() {
 
         controller.observe(this) { navController ->
             setupActionBarWithNavController(navController)
+            val id = navController.currentDestination?.id
+            Log.d(TAG, R.id.blogFragment.toString())
+            Log.d(TAG, id.toString())
+
         }
+
         currentNavController = controller
     }
 
@@ -98,9 +122,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> {
@@ -108,11 +129,10 @@ class MainActivity : AppCompatActivity() {
                 fragment.show(supportFragmentManager, FRAGMENT_TAG_THEME)
                 return true
             }
-            else->return super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item)
         }
 
     }
-
 
 
     /*
