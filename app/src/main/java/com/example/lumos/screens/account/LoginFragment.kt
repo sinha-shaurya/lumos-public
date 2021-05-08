@@ -11,9 +11,9 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
-import com.example.lumos.MainActivity
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentLoginBinding
 import com.example.lumos.local.UserDatabase
@@ -21,6 +21,7 @@ import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
 class LoginFragment : Fragment() {
@@ -34,6 +35,9 @@ class LoginFragment : Fragment() {
         )
     }
     private lateinit var savedStateHandle: SavedStateHandle
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -190,7 +194,11 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Login .")
     }
 
     private fun toggleButtons(state: Boolean) {

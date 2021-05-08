@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
@@ -19,6 +20,7 @@ import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.LoadingStatus
 import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickListener {
 
@@ -31,6 +33,8 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
             )
         )
     }
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,6 +109,11 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
         binding.categoryRefresh.setOnRefreshListener {
             viewModel.getList()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Event Categories.")
     }
 
     override fun onDestroyView() {

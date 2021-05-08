@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
@@ -16,6 +17,7 @@ import com.example.lumos.network.adapters.EventListAdapter
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 class CategoryEventFragment : Fragment() {
 
@@ -34,6 +36,9 @@ class CategoryEventFragment : Fragment() {
             )
         )
     }
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,4 +69,9 @@ class CategoryEventFragment : Fragment() {
         adapter.submitList(list)
     }
 
+    override fun onStart() {
+        super.onStart()
+        val categoryName=viewModel.categoryList.value!!.activeCategory[args.categoryId].name
+        toolbarTitleViewModel.changeTitle("$categoryName .")
+    }
 }

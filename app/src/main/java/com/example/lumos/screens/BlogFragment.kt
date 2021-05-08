@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -23,6 +22,7 @@ import com.example.lumos.network.dataclasses.blog.BlogPost
 import com.example.lumos.repository.BlogRepository
 import com.example.lumos.utils.viewmodelfactory.BlogViewModelFactory
 import com.example.lumos.viewmodel.BlogViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
 
@@ -34,6 +34,7 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
         BlogViewModelFactory(BlogRepository(UserDatabase.getDatabase(requireActivity()).userDao()))
     }
 
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,10 +98,15 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
 
     }
 
-    override fun onMenuItemClick(item:BlogPost) {
-        val args=item
+    override fun onMenuItemClick(item: BlogPost) {
+        val args = item
         val action = BlogFragmentDirections.actionBlogFragmentToBlogBottomSheetFragment(args)
         findNavController().navigate(action)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Technical Prophet.")
     }
 
     companion object {
