@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.blog
 
 import android.content.Intent
 import android.os.Bundle

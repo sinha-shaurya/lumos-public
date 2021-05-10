@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/blogFragment"
-        android:name="com.example.lumos.screens.BlogFragment"
+        android:name="com.example.lumos.screens.blog.BlogFragment"
         android:label="Blog" >
         <action
             android:id="@+id/action_blogFragment_to_blogBottomSheetFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <dialog
         android:id="@+id/blogBottomSheetFragment"
-        android:name="com.example.lumos.screens.BlogBottomSheetFragment"
+        android:name="com.example.lumos.screens.blog.BlogBottomSheetFragment"
         android:label="BlogBottomSheetFragment" >
         <action
             android:id="@+id/action_blogBottomSheetFragment_to_blogFragment"

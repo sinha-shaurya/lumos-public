@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
         userPreferencesViewModel.userPreferences.observe(this) {
             Log.d(TAG, it.toString())
             AppCompatDelegate.setDefaultNightMode(it)
