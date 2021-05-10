@@ -1,11 +1,11 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.blog
 
-import android.net.Uri
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -87,15 +87,24 @@ class BlogFragment : Fragment(), BlogDataAdapter.onItemClickListener {
 
     }
 
+    /**
+     * Handle ItemClick for each item in recyclerview
+     * Launch Intent, and send item received
+     */
     override fun onItemClick(item: BlogPost) {
         val id = item.id
+        /*
         val url = BLOG_BASE_URL + id
         val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
 
         customTabsIntent.launchUrl(requireActivity(), Uri.parse(url))
 
+         */
 
+        val intent = Intent(requireActivity(), BlogArticleViewActivity::class.java)
+        intent.putExtra("postItem", item)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
     }
 
     override fun onMenuItemClick(item: BlogPost) {

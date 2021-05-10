@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/default_scale"
+        android:icon="@drawable/text_icon"
+        android:title="Reset to default"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/scale_up"
+        android:icon="@drawable/arrow_up_icon"
+        android:title="Scale Text Up"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/scale_down"
+        android:icon="@drawable/arrow_down_icon"
+        android:title="Scale Text Down"
+        app:showAsAction="always" />
+
+</menu>
