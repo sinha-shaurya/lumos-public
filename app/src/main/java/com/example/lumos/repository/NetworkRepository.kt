@@ -11,7 +11,7 @@ import com.example.lumos.network.dataclasses.registration.RegistrationData
 
 class NetworkRepository(private val userDao: UserDao) {
 
-    val savedPosts=userDao.getSavedPosts()
+    val savedPosts = userDao.getSavedPosts()
 
     suspend fun loginUser(loginUserData: LoginUserData) =
         IsteNetworkInstance.api.loginUser(loginUserData)
@@ -50,5 +50,6 @@ class NetworkRepository(private val userDao: UserDao) {
     suspend fun getEvents(categoryNameSlug: String) =
         IsteNetworkInstance.api.getEvent(categoryNameSlug)
 
-
+    //Get authentication token as flow
+    fun getAuthenticationToken() = userDao.getAuthenticationToken()
 }

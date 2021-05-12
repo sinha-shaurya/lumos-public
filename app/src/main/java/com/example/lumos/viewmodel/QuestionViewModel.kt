@@ -1,6 +1,7 @@
 package com.example.lumos.viewmodel
 
 import androidx.lifecycle.*
+import com.example.lumos.local.SavedPost
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestionResponse
 import com.example.lumos.repository.NetworkRepository
@@ -18,7 +19,7 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
     val points: LiveData<Int> get() = _points
 
 
-    val savedPosts=repository.savedPosts.asLiveData()
+    val savedPosts = repository.savedPosts.asLiveData()
 
     init {
         _submittedAnswers.value = emptyList()
@@ -54,7 +55,7 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
         Calculate points based on the list of questions and update observable points variable
         All calculation takes place on the Default Dispatcher
      */
-    suspend fun calculatePoints(response: AnsweredQuestionResponse) =
+    private suspend fun calculatePoints(response: AnsweredQuestionResponse) =
         //run coroutine on default dispatcher to ensure max level of parallelism
         withContext(Dispatchers.Default) {
             var points = 0
@@ -66,6 +67,9 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
         }
 
 
+    fun deletePost(item: SavedPost) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteSavedPost(item)
+    }
 
     companion object {
         private const val TAG = "QuestionViewModel"

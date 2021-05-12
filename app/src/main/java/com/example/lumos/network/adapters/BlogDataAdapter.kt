@@ -1,6 +1,5 @@
 package com.example.lumos.network.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -23,14 +22,13 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
     ) {
 
     inner class BlogItemViewHolder(
-        private val binding: BlogPostItemBinding,
-        private val context: Context
+        private val binding: BlogPostItemBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         //setup itemclicks on the entire card
         init {
-            binding.blogPostName.setOnClickListener {
+            binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
@@ -40,7 +38,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
                 }
             }
 
-            binding.moreMenu.setOnClickListener{
+            binding.moreMenu.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
@@ -91,7 +89,7 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
         val binding =
             BlogPostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         //asynchronously try to inflate the view
-        return BlogItemViewHolder(binding, parent.context)
+        return BlogItemViewHolder(binding)
     }
 
     companion object {
@@ -109,6 +107,6 @@ class BlogDataAdapter(private val listener: onItemClickListener) :
     interface onItemClickListener {
         fun onItemClick(item: BlogPost)
 
-        fun onMenuItemClick(item:BlogPost)
+        fun onMenuItemClick(item: BlogPost)
     }
 }

@@ -3,12 +3,13 @@ package com.example.lumos.network.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lumos.databinding.BookmarkItemBinding
 import com.example.lumos.local.SavedPost
 
-class BookmarkItemAdapter :
-    androidx.recyclerview.widget.ListAdapter<SavedPost, BookmarkItemAdapter.BookmarkItemViewHolder>(
+class BookmarkItemAdapter(private val listener: onBookmarkItemClickListener) :
+    ListAdapter<SavedPost, BookmarkItemAdapter.BookmarkItemViewHolder>(
         BookmarkDiffUtilCallback()
     ) {
 
@@ -18,8 +19,29 @@ class BookmarkItemAdapter :
         fun bind(item: SavedPost) {
             binding.apply {
                 blogTitle.text = item.title
-                postDescription.text = item.descriptionShort
+                //remove trailing newlines,spaces,tabs ,or carriage returns
+                postDescription.text = item.descriptionShort.trimEnd('\n', ' ', '\t', '\r')
                 authorName.text = item.author
+            }
+
+            //set onClick for entire card
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val bookmarkItem = getItem(position)
+                    if (bookmarkItem != null)
+                        listener.onBookmarkItemClick(bookmarkItem)
+                }
+            }
+
+            //set on Click for delete icon
+            binding.deletePostIcon.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val bookmarkItem = getItem(position)
+                    if (bookmarkItem != null)
+                        listener.onDeleteClick(bookmarkItem)
+                }
             }
         }
 
@@ -34,6 +56,16 @@ class BookmarkItemAdapter :
         val binding =
             BookmarkItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookmarkItemViewHolder(binding)
+    }
+
+    interface onBookmarkItemClickListener {
+        fun onBookmarkItemClick(item: SavedPost)
+
+        fun onDeleteClick(item: SavedPost)
+    }
+
+    companion object {
+        private const val TAG = "BookmarkItemAdapter"
     }
 }
 

@@ -14,4 +14,5 @@
     <color name="nightColorPrimaryDark">#00a895</color>
     <color name="nightColorPrimaryLight">#66fff8</color>
     <color name="appBarTextSecondary">#FCD168</color>
+    <color name="red">#F44336</color>
 </resources>

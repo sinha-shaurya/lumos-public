@@ -1,5 +1,7 @@
 package com.example.lumos.screens.account
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +16,13 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountBinding
+import com.example.lumos.local.SavedPost
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.BookmarkItemAdapter
+import com.example.lumos.network.dataclasses.blog.BlogPost
 import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.repository.NetworkRepository
+import com.example.lumos.screens.blog.BlogArticleViewActivity
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.utils.viewmodelfactory.QuestionViewModelFactory
@@ -26,7 +31,7 @@ import com.example.lumos.viewmodel.QuestionViewModel
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
-class AccountFragment : Fragment() {
+class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListener {
 
     private val viewModel: LoginViewModel by activityViewModels {
         LoginViewModelFactory(
@@ -47,9 +52,9 @@ class AccountFragment : Fragment() {
     private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
 
     private var _binding: FragmentAccountBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-    val adapter = BookmarkItemAdapter()
+    val adapter = BookmarkItemAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,12 +87,14 @@ class AccountFragment : Fragment() {
                     viewModel.getUserData()
                     binding.logoutButton.isVisible = true
                     viewModel.localData.observe(viewLifecycleOwner) {
-                        binding.userNameText.text = it.userName
+                        val userNameText = "${it.firstName} ${it.lastName}"
+                        binding.userNameText.text = userNameText
                     }
                     retrieveQuestions()
 
                     questionViewModel.savedPosts.observe(viewLifecycleOwner) {
                         adapter.submitList(it)
+                        binding.noBookmarkText.isVisible = it.isEmpty()
                     }
 
                 }
@@ -124,13 +131,14 @@ class AccountFragment : Fragment() {
 
     override fun onDestroy() {
 
-        super.onDestroy()
-
         if (_binding != null) {
             Log.i(TAG, "onDestroy() called ,${binding}")
             _binding!!.bookmarkList.adapter = null
             _binding = null
         }
+        super.onDestroy()
+
+
 
     }
 
@@ -156,10 +164,10 @@ class AccountFragment : Fragment() {
         toolbarTitleViewModel.changeTitle("Profile .")
     }
 
-    fun retrieveQuestions() {
+    private fun retrieveQuestions() {
         questionViewModel.getSubmittedAnswer()
         questionViewModel.points.observe(viewLifecycleOwner) { currentPoints ->
-            val pointText = "${currentPoints} Points Scored"
+            val pointText = "$currentPoints Points Scored"
             binding.points.text = pointText
         }
         questionViewModel.submittedAnswers.observe(viewLifecycleOwner) {
@@ -177,5 +185,29 @@ class AccountFragment : Fragment() {
 
     companion object {
         private const val TAG = "AccountFragment"
+    }
+
+    override fun onBookmarkItemClick(item: SavedPost) {
+        val postItem = BlogPost(
+            tags = emptyList(),
+            item.views,
+            item.id,
+            item.title,
+            item.readTime,
+            item.category,
+            item.author,
+            item.aboutAuthor,
+            item.descriptionShort,
+            item.imageUrl,
+            item.timestamp,
+            item.v
+        )
+        val intent = Intent(requireActivity(), BlogArticleViewActivity::class.java)
+        intent.putExtra("postItem", postItem)
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+    }
+
+    override fun onDeleteClick(item: SavedPost) {
+        questionViewModel.deletePost(item)
     }
 }
