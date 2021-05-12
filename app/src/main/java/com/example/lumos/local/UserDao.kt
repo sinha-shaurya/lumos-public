@@ -35,4 +35,7 @@ interface UserDao {
 
     @Query("DELETE FROM blog_data ")
     suspend fun deleteAll()
+
+    @Query("SELECT token from user_data ORDER BY id LIMIT 1")
+    fun getAuthenticationToken(): Flow<String>
 }

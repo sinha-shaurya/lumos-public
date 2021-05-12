@@ -69,8 +69,10 @@ class BlogBottomSheetFragment : BottomSheetDialogFragment() {
             createShareIntent()
         }
 
+        //set onClick for about button
         val authorDetails = "Written by ${post.author},${post.aboutAuthor}"
-        val description = post.descriptionShort
+        //remove spaces,newlines,carriage returns and tabs
+        val description = post.descriptionShort.trimEnd(' ', '\n', '\r', '\t')
         binding.authorName.text = authorDetails
         binding.postDescription.text = description
         binding.aboutButton.setOnClickListener {
