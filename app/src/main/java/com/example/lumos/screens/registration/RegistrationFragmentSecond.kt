@@ -16,6 +16,7 @@ import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.viewmodelfactory.RegistrationViewModelFactory
 import com.example.lumos.viewmodel.RegistrationViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 class RegistrationFragmentSecond : Fragment() {
     private lateinit var binding: FragmentRegistrationSecondBinding
@@ -28,6 +29,8 @@ class RegistrationFragmentSecond : Fragment() {
             )
         )
     }
+
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +58,11 @@ class RegistrationFragmentSecond : Fragment() {
                 viewModel.level.observe(viewLifecycleOwner, { registerLevel ->
                     if (registerLevel == 1) {
                         //successful
-                        Toast.makeText(requireActivity(), "Registration Successful", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireActivity(),
+                            "Registration Successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         findNavController().navigate(action)
                         viewModel.level.value = 0
                     } else if (registerLevel == -1) {
@@ -79,6 +86,11 @@ class RegistrationFragmentSecond : Fragment() {
 
         }
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Sign Up.")
     }
 
     fun checkInputs(password: String, passwordConfirm: String): Boolean {

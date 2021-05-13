@@ -12,11 +12,41 @@
         android:layout_height="match_parent"
         tools:context=".screens.registration.RegistrationFragmentSecond">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/create_password_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Create Password"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/reg_username_layout"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.89" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Step 2/2 "
+            android:textColor="?attr/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/reg_username_layout"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            app:layout_constraintTop_toBottomOf="@id/create_password_text"
+            app:layout_constraintVertical_bias="0.5"
+            android:layout_marginBottom="10dp"/>
         <!--Input layout for Username-->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_username_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_password_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -27,10 +57,11 @@
                 android:id="@+id/reg_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
                 android:autofillHints="username"
-                android:fontFamily="@font/montserrat"
-                android:hint="username" />
+                android:fontFamily="@font/open_sans"
+                android:hint="username"
+                
+                android:maxHeight="70dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -40,6 +71,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_password_confirm_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -51,12 +86,11 @@
                 android:id="@+id/reg_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
                 android:autofillHints="password"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:hint="password"
                 android:inputType="textPassword"
-                 />
+                android:maxHeight="70dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -66,8 +100,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_button_second"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.8">
@@ -77,27 +116,44 @@
                 android:id="@+id/reg_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:hint="confirm password"
                 android:inputType="textPassword"
+                android:maxHeight="70dp"
                 app:layout_constraintBottom_toTopOf="@id/reg_button_second"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                 />
+                app:layout_constraintStart_toStartOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/reg_button_second"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="Confirm Registration Button"
+            android:src="@drawable/done_icon"
             android:text="Next"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="reg_username_layout" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password must be atleast 8 characters"
+            android:fontFamily="@font/open_sans"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reg_password_confirm_input_layout"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

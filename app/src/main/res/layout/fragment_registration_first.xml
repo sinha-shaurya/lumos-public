@@ -12,10 +12,41 @@
         android:layout_height="match_parent"
         tools:context=".screens.registration.RegistrationFragmentFirst">
 
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/personal_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Personal Info"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/reg_first_name_layout"
+            app:layout_constraintStart_toEndOf="@id/barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.89" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Step 1/2"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/reg_first_name_layout"
+            app:layout_constraintStart_toStartOf="@id/barrier"
+            app:layout_constraintTop_toBottomOf="@id/personal_info_text" />
+
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_first_name_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_last_name_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +56,10 @@
                 android:id="@+id/reg_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
                 android:autofillHints="First Name"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:hint="first name"
+                android:maxHeight="70dp"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -39,6 +70,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_email_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -50,13 +85,16 @@
                 android:id="@+id/reg_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:hint="last name"
+                android:maxHeight="70dp"
                 android:maxLines="1"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                 />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +104,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toTopOf="@id/reg_button_first"
+            android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,27 +119,35 @@
                 android:id="@+id/reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:hint="email"
+                android:maxHeight="70dp"
                 android:maxLines="1"
+                android:scrollHorizontally="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:scrollHorizontally="true"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/reg_button_first"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:text="Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="Navigate to next screen"
+            android:src="@drawable/navigate_next"
+            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.6" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="reg_first_name_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -15,6 +15,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,15 +27,14 @@
             app:layout_constraintBottom_toTopOf="@id/password_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.8"
-            android:id="@+id/username_input_layout">
+            app:layout_constraintWidth_percent="0.8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
                 android:autofillHints="username"
+                android:maxHeight="70dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,9 +58,10 @@
                 android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="70dp"
                 android:contentDescription="Password"
                 android:inputType="textPassword"
+
+                android:maxHeight="70dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginBottom="50dp"
-            android:text="Register"
+            android:text="Sign Up"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@id/login_ui_button"
             app:layout_constraintEnd_toEndOf="parent"

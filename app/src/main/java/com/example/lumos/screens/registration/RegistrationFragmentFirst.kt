@@ -15,6 +15,7 @@ import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.viewmodelfactory.RegistrationViewModelFactory
 import com.example.lumos.viewmodel.RegistrationViewModel
+import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
 class RegistrationFragmentFirst : Fragment() {
@@ -31,6 +32,7 @@ class RegistrationFragmentFirst : Fragment() {
         )
     }
 
+    private val toolbarTitleViewModel: ToolbarTitleViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,6 +61,11 @@ class RegistrationFragmentFirst : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toolbarTitleViewModel.changeTitle("Sign Up.")
     }
 
     //check inputs

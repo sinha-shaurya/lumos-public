@@ -10,6 +10,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="surfaceColorDark">#121212</color>
+    <color name="surfaceColorLight">#F5F5F5</color>
     <color name="nightColorPrimary">#03DAC5</color>
     <color name="nightColorPrimaryDark">#00a895</color>
     <color name="nightColorPrimaryLight">#66fff8</color>

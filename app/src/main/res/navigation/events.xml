@@ -9,7 +9,11 @@
         android:label="Event Categories" >
         <action
             android:id="@+id/action_eventFragment_to_categoryEventFragment"
-            app:destination="@id/categoryEventFragment" />
+            app:destination="@id/categoryEventFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/categoryEventFragment"
