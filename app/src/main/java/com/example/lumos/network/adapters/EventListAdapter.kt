@@ -44,55 +44,56 @@ class EventListAdapter :
                 getDates(item)
                 getLocations(item)
 
-                if(item.registrationLink!=null)
+                if (item.registrationLink != null)
                     openRegistration(item.registrationLink)
                 else
-                    registrationLinkButton.isVisible=false
+                    registrationLinkButton.isVisible = false
             }
         }
 
-        fun getDates(item: Events) {
-            var dateList=""
-            CoroutineScope(Dispatchers.Default).launch{
-                for(i in item.eventDates?: emptyList()){
-                    val date=DateTimeConverter(i.startDate!!)
-                    dateList= "$dateList${date.getDay()} ${date.getMonth()},"
+        private fun getDates(item: Events) {
+            var dateList = ""
+            CoroutineScope(Dispatchers.Default).launch {
+                for (i in item.eventDates ?: emptyList()) {
+                    val date = DateTimeConverter(i.startDate!!)
+                    dateList = "$dateList${date.getDay()} ${date.getMonth()},"
                 }
-                val length=dateList.length
-                if(dateList[length-1]==',')
-                {
-                    withContext(Dispatchers.Main){
-                        binding.eventDate.text=dateList.dropLast(1)
-                    }
+                val length = dateList.length
+                if (dateList.length > 1) {
+                    if (dateList[length - 1] == ',') {
+                        withContext(Dispatchers.Main) {
+                            binding.eventDate.text = dateList.dropLast(1)
+                        }
 
+                    } else
+                        withContext(Dispatchers.Main) {
+                            binding.eventDate.text = dateList
+                        }
                 }
-                else
-                    withContext(Dispatchers.Main){
-                        binding.eventDate.text=dateList
-                    }
 
             }
-
         }
 
-        fun getLocations(item:Events)=
-            CoroutineScope(Dispatchers.Default).launch{
-                var locationList=""
-                for(i in item.eventDates?: emptyList()){
-                    locationList=locationList+i.venue+","
+        fun getLocations(item: Events) =
+            CoroutineScope(Dispatchers.Default).launch {
+                var locationList = ""
+                for (i in item.eventDates ?: emptyList()) {
+                    locationList = locationList + i.venue + ","
                 }
-                if(locationList[locationList.length-1]==',')
-                    locationList=locationList.dropLast(1)
-                withContext(Dispatchers.Main){
-                    binding.eventLocation.text=locationList
+                if (locationList.length > 1) {
+                    if (locationList[locationList.length - 1] == ',')
+                        locationList = locationList.dropLast(1)
+                    withContext(Dispatchers.Main) {
+                        binding.eventLocation.text = locationList
+                    }
                 }
             }
 
 
-        fun openRegistration(url:String)=binding.registrationLinkButton.setOnClickListener {
-            val uri= Uri.parse(url)
-            val intent= Intent(Intent.ACTION_VIEW,uri)
-            startActivity(itemView.context,intent,null)
+        fun openRegistration(url: String) = binding.registrationLinkButton.setOnClickListener {
+            val uri = Uri.parse(url)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(itemView.context, intent, null)
         }
     }
 

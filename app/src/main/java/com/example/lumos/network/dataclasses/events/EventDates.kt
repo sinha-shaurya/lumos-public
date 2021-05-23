@@ -7,5 +7,6 @@ import com.squareup.moshi.JsonClass
 data class EventDates(
     @Json(name = "venue") val venue: String?,
     @Json(name = "start_date") val startDate: String?,
-    @Json(name = "end_date") val endDate: String?
+    @Json(name = "end_date") val endDate: String?,
+    @Json(name = "title") val title: String? = ""
 )

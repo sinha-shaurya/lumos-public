@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
@@ -68,6 +66,9 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                 //When request is successful display the category list
                 LoadingStatus.SUCCESS -> {
                     adapter.submitList(viewModel.categoryList.value?.activeCategory ?: emptyList())
+                    binding.errorText.text = "No events found, check back later for more"
+                    binding.errorText.isVisible =
+                        viewModel.categoryList.value?.activeCategory?.isEmpty() ?: true
                     binding.apply {
                         eventLoadingProgress.isVisible = false
                         retryButtonEvents.isVisible = false
@@ -78,16 +79,12 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                 //when request has failed, show the retry button
                 LoadingStatus.FAILURE -> {
                     //handle failure
-                    Toast.makeText(
-                        requireActivity(),
-                        viewModel.error.value ?: "Error",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    binding.errorText.text = "An error occurred"
                     binding.apply {
                         eventLoadingProgress.isVisible = false
                         retryButtonEvents.isVisible = true
                         categoryList.isVisible = false
+                        errorText.isVisible = true
                     }
                 }
                 //when request is being processed , display the progress bar
@@ -96,6 +93,7 @@ class EventFragment : Fragment(), EventCategoryDataAdapter.onCategoryItemClickLi
                         eventLoadingProgress.isVisible = true
                         categoryList.isVisible = false
                         retryButtonEvents.isVisible = false
+                        errorText.isVisible = false
                     }
                 }
             }

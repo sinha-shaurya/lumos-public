@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="56dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Log in to get access to interview prep questions"
+            android:text="Member exclusive feature"
             android:textSize="26sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +76,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.8"
             tools:visibility="visible" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -93,7 +92,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.6"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

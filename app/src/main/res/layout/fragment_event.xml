@@ -53,5 +53,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/error_text"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="No events found,check back later for more"
+            android:textColor="?attr/colorAccent"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/retry_button_events"
+            android:layout_marginBottom="10dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
