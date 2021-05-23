@@ -16,6 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Adapter for List of Events
+ */
 class EventListAdapter :
     androidx.recyclerview.widget.ListAdapter<Events, EventListAdapter.EventViewHolder>(
         EventDiffUtilCallback()
@@ -25,22 +28,9 @@ class EventListAdapter :
         //setup all elements inside the item
 
         fun bind(item: Events) {
-            //val date = DateTimeConverter(item.eventDates?.get(0)?.startDate!!)
-            //val dateText = date.getDay() + " " + date.getMonth()
-            //val timeText = date.getTime()
             binding.apply {
                 eventName.text = item.eventName
                 eventDescription.text = item.description
-
-
-                /*
-                val dates=getDates(item)
-                if(dates.isEmpty())
-                    eventDate.isVisible=false
-                else
-                    eventDate.text=dates
-
-                 */
                 getDates(item)
                 getLocations(item)
 
@@ -51,6 +41,12 @@ class EventListAdapter :
             }
         }
 
+        /**
+         * Attempts to get the data from List of [Events]
+         * Filters EventDates and puts into an empty string
+         * Runs a Coroutine on [Dispatchers.Default] for maximum parallelism
+         * Finally swtich context to Main dispatcher to signal UI changes to Main thread
+         */
         private fun getDates(item: Events) {
             var dateList = ""
             CoroutineScope(Dispatchers.Default).launch {
@@ -74,6 +70,10 @@ class EventListAdapter :
             }
         }
 
+        /**
+         * Runs a Coroutine to filter venues from [Events] on the Default Dispatcher
+         * Finally switch to Main Dispatcher to perform UI Changes
+         */
         fun getLocations(item: Events) =
             CoroutineScope(Dispatchers.Default).launch {
                 var locationList = ""

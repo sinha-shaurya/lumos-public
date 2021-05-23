@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lumos.R
@@ -19,6 +18,10 @@ import com.example.lumos.utils.viewmodelfactory.CategoryViewModelFactory
 import com.example.lumos.viewmodel.CategoryViewModel
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
+/**
+ * Fragment for displaying the events of each category
+ * The JSON response for category is filtered on basis of the categoryId passed to this fragment
+ */
 class CategoryEventFragment : Fragment() {
 
 
@@ -69,9 +72,10 @@ class CategoryEventFragment : Fragment() {
         adapter.submitList(list)
     }
 
+    //to setup the toolbar to reflect the name of the category
     override fun onStart() {
         super.onStart()
-        val categoryName=viewModel.categoryList.value!!.activeCategory[args.categoryId].name
+        val categoryName = viewModel.categoryList.value!!.activeCategory[args.categoryId].name
         toolbarTitleViewModel.changeTitle("$categoryName .")
     }
 }
