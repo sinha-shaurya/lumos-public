@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/frameLayout"
+                style="@style/bottomSheetTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                tools:context=".screens.account.AnswerDetails">
+
+                <ImageView
+                    android:id="@+id/close_fragment_icon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/close_icon" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QUESTION" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/question_text"
+                    style="@style/focusTextTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    tools:text="@string/answer_disclaimer_text" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="YOUR ANSWER" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/answer_text"
+                    style="@style/focusTextTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    tools:text="@string/answer_disclaimer_text" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="EXPECTED ANSWER" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/expected_answer_text"
+                    style="@style/focusTextTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    tools:text="@string/answer_disclaimer_text" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    tools:text="@string/sample_author" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="ABOUT AUTHOR" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/about_author"
+                    style="@style/focusTextTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    tools:maxLength="100"
+                    tools:text="@string/placeholder_text_long" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/read_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="MORE"
+                    android:textColor="?attr/colorPrimary" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+</layout>

@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
 import com.example.lumos.databinding.FragmentAccountQuestionsBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.network.adapters.AnswerListAdapter
+import com.example.lumos.network.dataclasses.practice.AnsweredQuestion
 import com.example.lumos.repository.NetworkRepository
 import com.example.lumos.utils.viewmodelfactory.QuestionViewModelFactory
 import com.example.lumos.viewmodel.QuestionViewModel
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
 
 
-class AccountQuestions : Fragment() {
+class AccountQuestions : Fragment(), AnswerListAdapter.onAnsweredQuestionClickListener {
 
     private val viewModel: QuestionViewModel by activityViewModels {
         QuestionViewModelFactory(
@@ -33,7 +35,6 @@ class AccountQuestions : Fragment() {
     private var _binding: FragmentAccountQuestionsBinding? = null
     private val binding get() = _binding!!
 
-    val adapter = AnswerListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +54,7 @@ class AccountQuestions : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val adapter = AnswerListAdapter(this)
         //setup recyclerview
         binding.answerList.adapter = adapter
 
@@ -66,5 +67,10 @@ class AccountQuestions : Fragment() {
     override fun onStart() {
         super.onStart()
         toolbarTitleViewModel.changeTitle("Submissions .")
+    }
+
+    override fun buttonItemClick(item: AnsweredQuestion) {
+        val action = AccountQuestionsDirections.actionAccountQuestionsToAnswerDetails(item)
+        findNavController().navigate(action)
     }
 }

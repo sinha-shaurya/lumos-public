@@ -8,6 +8,7 @@
     <string name="sample_question_text">What is the purpose of this app? You have to tell me all about it</string>
     <string name="top_stories_dec">Image for top stories</string>
     <string name="placeholder_text">lorem ipsum</string>
+    <string name="placeholder_text_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel feugiat ex. Aliquam erat volutpat. Pellentesque iaculis quis nisi sed volutpat. Pellentesque pretium sit amet risus id ullamcorper. Nulla finibus a nisl nec sagittis. Integer venenatis iaculis ipsum, vitae lobortis diam suscipit ut. Pellentesque ut purus non erat porttitor cursus a a enim. Cras nec mauris nisl.</string>
     <string name="sample_blog_title">This is the name which is boring</string>
     <string name="sample_blog_image">Sample Blog Image</string>
     <string name="sample_author">Shaurya Sinha</string>
