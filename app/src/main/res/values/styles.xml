@@ -33,6 +33,7 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
+    <!--App bar theme-->
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="android:background">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/white</item>
@@ -44,5 +45,9 @@
 
     <style name="appbarLayoutTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="focusTextTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

@@ -48,4 +48,10 @@
     <style name="appbarLayoutTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="android:background">@color/black</item>
     </style>
+
+
+
+    <style name="focusTextTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
