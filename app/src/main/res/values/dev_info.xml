@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--Put resources in order-->
+<!--Name(required)-->
+<!--Role(required)-->
+<!--GitHub-->
+<!--LinkedIn-->
+<!--Instagram-->
+<!--Personal Website Link-->
+<!--Twitter-->
+<!--Email-->
+
+<resources>
+    <string-array name="Developer1">
+        <item>Shaurya Sinha</item>
+        <item>Lead Developer</item>
+        <item>https://github.com/sinha-shaurya</item>
+        <item>https://www.linkedin.com/in/shaurya-sinha-66a026194/</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+    <string-array name="Developer2">
+        <item>Omkar Masur</item>
+        <item>API And Backend Management</item>
+        <item>https://github.com/oam-mit</item>
+        <item>https://in.linkedin.com/in/omkar-masur</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+    <string-array name="Developer3">
+        <item>Shubham Pathak</item>
+        <item>API and Backend Management</item>
+        <item>https://github.com/pathak107</item>
+        <item>https://www.linkedin.com/in/shubham-pathak-7093a11b9</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>shubhampathak1428@gmail.com</item>
+    </string-array>
+
+    <string-array name="Developer4">
+        <item>Tinku Choudhary</item>
+        <item>Contributor</item>
+        <item>https://github.com/tchtinku</item>
+        <item>http://linkedin.com/in/tinku-choudhary-2250a8190</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+    <string-array name="Developer5">
+        <item>Shravya Mallya</item>
+        <item>UI/UX Design</item>
+        <item>https://github.com/ShravyaMallya</item>
+        <item>www.linkedin.com/in/shravyasmallya</item>
+        <item>https://www.instagram.com/soullesssnowball/</item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+</resources>

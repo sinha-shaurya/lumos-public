@@ -16,6 +16,8 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.lumos.databinding.ActivityMainBinding
 import com.example.lumos.repository.UserPreferencesRepository
+import com.example.lumos.screens.AboutUsFragment
+import com.example.lumos.screens.DevelopersFragment
 import com.example.lumos.screens.ThemeBottomSheetFragment
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
@@ -130,6 +132,16 @@ class MainActivity : AppCompatActivity() {
                 fragment.show(supportFragmentManager, FRAGMENT_TAG_THEME)
                 return true
             }
+            R.id.about_us -> {
+                val fragment = AboutUsFragment.newInstance(Bundle())
+                fragment.show(supportFragmentManager, FRAGMENT_TAG_ABOUT_US)
+                return true
+            }
+            R.id.developer_info -> {
+                val fragment=DevelopersFragment.newInstance(Bundle())
+                fragment.show(supportFragmentManager, FRAGMENT_DEVELOPERS)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
 
@@ -146,5 +158,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
         const val FRAGMENT_TAG_THEME = "ThemeBottomSheetDialogFragment"
+        const val FRAGMENT_TAG_ABOUT_US = "AboutUsFragment"
+        const val FRAGMENT_DEVELOPERS = "DevelopersFragment"
     }
 }
