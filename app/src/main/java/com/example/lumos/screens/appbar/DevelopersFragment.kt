@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.appbar
 
 import android.app.Dialog
 import android.content.Intent
@@ -24,6 +24,7 @@ class DevelopersFragment : BottomSheetDialogFragment(), DeveloperListAdapter.onL
 
     val adapter = DeveloperListAdapter(this)
 
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
 
@@ -42,6 +43,7 @@ class DevelopersFragment : BottomSheetDialogFragment(), DeveloperListAdapter.onL
 
     }
 
+    //setup height of Bottom Sheet to be full screen on start
     private fun setupFullHeight(bottomSheet: View) {
         val layoutParams = bottomSheet.layoutParams
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
@@ -71,6 +73,10 @@ class DevelopersFragment : BottomSheetDialogFragment(), DeveloperListAdapter.onL
         super.onDestroy()
     }
 
+    /**
+     * Get Developer Info from values folder , file dev_info.xml
+     * Hard coded values
+     */
     private fun getDeveloperInfo() {
         //5 developers
 
@@ -84,6 +90,9 @@ class DevelopersFragment : BottomSheetDialogFragment(), DeveloperListAdapter.onL
         adapter.submitList(developerList)
     }
 
+    /**
+     * Utility function to convert String array of each developer info extracted and return object of [Developer].
+     */
     private fun convertToDeveloperObject(list: Array<String>): Developer {
         val name = list[0]
         val role = list[1]
@@ -116,20 +125,32 @@ class DevelopersFragment : BottomSheetDialogFragment(), DeveloperListAdapter.onL
         }
     }
 
+    /**
+     * Handle onClick Events for each item clicked
+     * Default value passed for linkType parameter is "website"
+     * For function signature refer to [DeveloperListAdapter.onLinkClickListener]
+     */
     override fun onLinkClick(link: String, linkType: String) {
-        val intent = if (link.equals("email", ignoreCase = true)) {
-                Intent(Intent.ACTION_SEND).apply {
-                    type = "*/*"
-                    putExtra(Intent.EXTRA_EMAIL, link)
-                }
-            } else {
-                val uri = Uri.parse(link)
-                Intent(Intent.ACTION_VIEW, uri)
+        val intent = if (linkType.equals("email", ignoreCase = true)) {
+            val linkArray = arrayOf(link)
+            println(linkArray.contentToString())
+            Intent().apply {
+                action=Intent.ACTION_SEND
+                data=Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL,linkArray)
+                putExtra(Intent.EXTRA_SUBJECT,"subject")
+                //putExtra(Intent.EXTRA_TEXT,"content")
+                type="text/plain"
             }
-        try{
-            startActivity(intent)
+        } else {
+            val uri = Uri.parse(link)
+            Intent(Intent.ACTION_VIEW, uri)
         }
-        catch (e:Exception){}
+        try {
+            startActivity(Intent.createChooser(intent,"Open $linkType"))
+        } catch (e: Exception) {
+            println(e.message)
+        }
 
     }
 }

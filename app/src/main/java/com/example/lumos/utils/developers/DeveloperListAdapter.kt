@@ -29,7 +29,7 @@ class DeveloperListAdapter(private val listener: onLinkClickListener) :
                 instagramLinkIcon.isVisible = item.instagram.isNotEmpty()
                 personalWebsiteLinkIcon.isVisible = item.personalWebsite.isNotEmpty()
                 twitterLinkIcon.isVisible = item.twitter.isNotEmpty()
-                emailLinkIcon.isVisible = item.personalWebsite.isNotEmpty()
+                emailLinkIcon.isVisible = item.email.isNotEmpty()
                 loadImage(item.name)
                 onLinkClickListener()
             }

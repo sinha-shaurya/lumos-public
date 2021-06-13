@@ -16,9 +16,9 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.lumos.databinding.ActivityMainBinding
 import com.example.lumos.repository.UserPreferencesRepository
-import com.example.lumos.screens.AboutUsFragment
-import com.example.lumos.screens.DevelopersFragment
-import com.example.lumos.screens.ThemeBottomSheetFragment
+import com.example.lumos.screens.appbar.AboutUsFragment
+import com.example.lumos.screens.appbar.DevelopersFragment
+import com.example.lumos.screens.appbar.ThemeBottomSheetFragment
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.developer_info -> {
-                val fragment=DevelopersFragment.newInstance(Bundle())
+                val fragment= DevelopersFragment.newInstance(Bundle())
                 fragment.show(supportFragmentManager, FRAGMENT_DEVELOPERS)
                 return true
             }

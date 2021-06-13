@@ -12,7 +12,7 @@
         style="@style/bottomSheetTheme"
         android:layout_height="match_parent"
         tools:layout_height="wrap_content"
-        tools:context=".screens.DevelopersFragment">
+        tools:context=".screens.appbar.DevelopersFragment">
 
         <TextView
             android:id="@+id/developers_text"

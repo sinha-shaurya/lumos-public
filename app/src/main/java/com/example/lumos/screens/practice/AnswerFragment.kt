@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.practice
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
