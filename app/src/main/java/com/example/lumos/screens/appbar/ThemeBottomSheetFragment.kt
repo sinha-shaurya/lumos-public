@@ -1,4 +1,4 @@
-package com.example.lumos.screens
+package com.example.lumos.screens.appbar
 
 import android.os.Bundle
 import android.view.LayoutInflater

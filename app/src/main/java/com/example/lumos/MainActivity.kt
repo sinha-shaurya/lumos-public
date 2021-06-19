@@ -16,13 +16,18 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.lumos.databinding.ActivityMainBinding
 import com.example.lumos.repository.UserPreferencesRepository
-import com.example.lumos.screens.ThemeBottomSheetFragment
+import com.example.lumos.screens.appbar.AboutUsFragment
+import com.example.lumos.screens.appbar.DevelopersFragment
+import com.example.lumos.screens.appbar.ThemeBottomSheetFragment
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
 import com.example.lumos.viewmodel.UserPreferencesViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+/**
+ *[MainActivity] is the host activity containing all the fragments
+ */
 private const val PREFERENCE_NAME = "user_preferences"
 val Context.datastore by preferencesDataStore(
     name = PREFERENCE_NAME
@@ -64,13 +69,26 @@ class MainActivity : AppCompatActivity() {
         toolbarTitleViewModel.title.observe(this) {
             //for initialisation condition
             Log.i(TAG, it)
-            val splitSpaceTransform = it.split(" ");//split by whitespace
+            val splitSpaceTransform = it.split(" ") //split by whitespace
             Log.i(TAG, splitSpaceTransform.toString())
-            if (splitSpaceTransform.size > 1) {
-                binding.appBarTitle1.text = splitSpaceTransform[0]
-                binding.appBarTitle2.text = splitSpaceTransform[1]
-            } else
+
+            //wrap everything around a try-catch block to prevent crashes
+            try {
+                if (splitSpaceTransform.size > 1) {
+                    binding.appBarTitle1.text = splitSpaceTransform[0]
+                    var i = 1;
+                    var text = ""
+                    while (i < splitSpaceTransform.size) {
+                        text += splitSpaceTransform[i]
+                        i++
+                    }
+                    binding.appBarTitle2.text = text
+                } else
+                    binding.appBarTitle1.text = it
+            } catch (e: Exception) {
                 binding.appBarTitle1.text = it
+            }
+
         }
 
     }
@@ -130,6 +148,16 @@ class MainActivity : AppCompatActivity() {
                 fragment.show(supportFragmentManager, FRAGMENT_TAG_THEME)
                 return true
             }
+            R.id.about_us -> {
+                val fragment = AboutUsFragment.newInstance(Bundle())
+                fragment.show(supportFragmentManager, FRAGMENT_TAG_ABOUT_US)
+                return true
+            }
+            R.id.developer_info -> {
+                val fragment = DevelopersFragment.newInstance(Bundle())
+                fragment.show(supportFragmentManager, FRAGMENT_DEVELOPERS)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
 
@@ -146,5 +174,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
         const val FRAGMENT_TAG_THEME = "ThemeBottomSheetDialogFragment"
+        const val FRAGMENT_TAG_ABOUT_US = "AboutUsFragment"
+        const val FRAGMENT_DEVELOPERS = "DevelopersFragment"
     }
 }

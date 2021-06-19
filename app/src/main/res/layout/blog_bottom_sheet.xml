@@ -10,10 +10,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/bottomSheetTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="200dp"
-        style="@style/bottomSheetTheme"
         android:padding="10dp">
 
         <TextView

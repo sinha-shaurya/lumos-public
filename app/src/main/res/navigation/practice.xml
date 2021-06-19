@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.example.lumos.screens.QuestionFragment"
+        android:name="com.example.lumos.screens.practice.QuestionFragment"
         android:label="Practice" >
         <action
             android:id="@+id/action_questionFragment_to_answerFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/answerFragment"
-        android:name="com.example.lumos.screens.AnswerFragment"
+        android:name="com.example.lumos.screens.practice.AnswerFragment"
         android:label="Answer Submission" >
         <argument
             android:name="questionItem"

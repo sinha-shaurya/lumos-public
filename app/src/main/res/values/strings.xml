@@ -27,4 +27,6 @@
     <string name="theme_disclaimer_string">May not work on all devices</string>
     <string name="theme_title_string">Theme</string>
     <string name="submit_string">submit</string>
+    <string name="iste_manipal_logo_text">ISTE Manipal Logo</string>
+    <string name="developer_profile_image_string">Developer Profile Image</string>
 </resources>

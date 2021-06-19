@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/materialCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/developer_image"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/developer_profile_image_string"
+                android:src="@drawable/user_account"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/developer_name"
+                style="@style/focusTextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/developer_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Shaurya Sinha" />
+
+            <TextView
+                android:id="@+id/developer_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/developer_image"
+                app:layout_constraintTop_toBottomOf="@id/developer_name"
+                tools:text="@string/sample_blog_title" />
+
+            <ImageView
+                android:id="@+id/github_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="GitHub Profile Link"
+                android:src="@drawable/github_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/developer_image"
+                app:layout_constraintTop_toBottomOf="@id/developer_role" />
+
+            <ImageView
+                android:id="@+id/linkedin_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/linkedin_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/github_link_icon"
+                app:layout_constraintTop_toBottomOf="@id/developer_role" />
+
+
+            <ImageView
+                android:id="@+id/instagram_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/instagram_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/linkedin_link_icon"
+                app:layout_constraintTop_toBottomOf="@id/developer_role" />
+
+            <ImageView
+                android:id="@+id/personal_website_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/link_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/instagram_link_icon"
+                app:layout_constraintTop_toBottomOf="@id/developer_role"
+                app:tint="?attr/colorOnSurface" />
+
+            <ImageView
+                android:id="@+id/twitter_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/twitter_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/personal_website_link_icon"
+                app:layout_constraintTop_toBottomOf="@id/developer_role" />
+
+            <ImageView
+                android:id="@+id/email_link_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/email_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toEndOf="@id/twitter_link_icon"
+                app:layout_constraintTop_toBottomOf="@id/developer_role"
+                app:tint="?attr/colorOnSurface" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
