@@ -25,6 +25,9 @@ import com.example.lumos.viewmodel.ToolbarTitleViewModel
 import com.example.lumos.viewmodel.UserPreferencesViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+/**
+ *[MainActivity] is the host activity containing all the fragments
+ */
 private const val PREFERENCE_NAME = "user_preferences"
 val Context.datastore by preferencesDataStore(
     name = PREFERENCE_NAME
@@ -66,13 +69,26 @@ class MainActivity : AppCompatActivity() {
         toolbarTitleViewModel.title.observe(this) {
             //for initialisation condition
             Log.i(TAG, it)
-            val splitSpaceTransform = it.split(" ");//split by whitespace
+            val splitSpaceTransform = it.split(" ") //split by whitespace
             Log.i(TAG, splitSpaceTransform.toString())
-            if (splitSpaceTransform.size > 1) {
-                binding.appBarTitle1.text = splitSpaceTransform[0]
-                binding.appBarTitle2.text = splitSpaceTransform[1]
-            } else
+
+            //wrap everything around a try-catch block to prevent crashes
+            try {
+                if (splitSpaceTransform.size > 1) {
+                    binding.appBarTitle1.text = splitSpaceTransform[0]
+                    var i = 1;
+                    var text = ""
+                    while (i < splitSpaceTransform.size) {
+                        text += splitSpaceTransform[i]
+                        i++
+                    }
+                    binding.appBarTitle2.text = text
+                } else
+                    binding.appBarTitle1.text = it
+            } catch (e: Exception) {
                 binding.appBarTitle1.text = it
+            }
+
         }
 
     }
@@ -138,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.developer_info -> {
-                val fragment= DevelopersFragment.newInstance(Bundle())
+                val fragment = DevelopersFragment.newInstance(Bundle())
                 fragment.show(supportFragmentManager, FRAGMENT_DEVELOPERS)
                 return true
             }
