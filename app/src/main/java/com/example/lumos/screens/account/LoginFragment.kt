@@ -1,5 +1,7 @@
 package com.example.lumos.screens.account
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import com.example.lumos.R
 import com.example.lumos.databinding.FragmentLoginBinding
 import com.example.lumos.local.UserDatabase
 import com.example.lumos.repository.NetworkRepository
+import com.example.lumos.utils.Constants
 import com.example.lumos.utils.LoginStatus
 import com.example.lumos.utils.viewmodelfactory.LoginViewModelFactory
 import com.example.lumos.viewmodel.LoginViewModel
@@ -86,10 +89,18 @@ class LoginFragment : Fragment() {
                 passwordInputLayout.visibility = View.VISIBLE
                 passwordInput.visibility = View.VISIBLE
                 loginButton.visibility = View.VISIBLE
+                passwordResetText.visibility=View.VISIBLE
                 loginUiButton.visibility = View.GONE
                 registerButton.visibility = View.GONE
 
             }
+        }
+
+        binding.passwordResetText.setOnClickListener {
+            val intent= Intent(Intent.ACTION_VIEW).also {
+                it.setData(Uri.parse(Constants.PASSWORD_RESET_URL))
+            }
+            startActivity(intent)
         }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner,
@@ -102,6 +113,7 @@ class LoginFragment : Fragment() {
                             passwordInput.visibility = View.GONE
                             passwordInputLayout.visibility = View.GONE
                             loginButton.visibility = View.GONE
+                            passwordResetText.visibility=View.GONE
                             loginUiButton.visibility = View.VISIBLE
                             registerButton.visibility = View.VISIBLE
                         }
