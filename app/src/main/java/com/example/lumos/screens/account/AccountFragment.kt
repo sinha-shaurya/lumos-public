@@ -78,6 +78,9 @@ class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListe
 
         binding.bookmarkList.adapter = adapter
 
+        /**
+         * Login status observer
+         */
         viewModel.loginStatus.observe(viewLifecycleOwner) { status ->
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when (status) {
@@ -139,7 +142,6 @@ class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListe
         super.onDestroy()
 
 
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,7 +169,7 @@ class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListe
     private fun retrieveQuestions() {
         questionViewModel.getSubmittedAnswer()
         questionViewModel.points.observe(viewLifecycleOwner) { currentPoints ->
-            val pointText = "$currentPoints Points Scored"
+            val pointText = "$currentPoints Points scored"
             binding.points.text = pointText
         }
         questionViewModel.submittedAnswers.observe(viewLifecycleOwner) {
@@ -175,9 +177,8 @@ class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListe
                 answeredQuestionsButton.isVisible = it != emptyList<AnsweredQuestion>()
                 answerDisclaimerText.isVisible = it != emptyList<AnsweredQuestion>()
 
-                val questionsAnsweredText = "${it.size} Questions Answered"
+                val questionsAnsweredText = "${it.size} Points scored"
                 questionsAnswered.text = questionsAnsweredText
-
 
             }
         }
