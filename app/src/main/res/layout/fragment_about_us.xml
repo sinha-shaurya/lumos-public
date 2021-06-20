@@ -7,81 +7,87 @@
 
     </data>
 
-    <LinearLayout
-        style="@style/bottomSheetTheme"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".screens.appbar.AboutUsFragment"
-        tools:ignore="UseCompoundDrawables"
-        tools:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/iste_manipal_logo_text"
-            android:src="@drawable/iste_logo" />
-
-        <TextView
-            style="@style/focusTextTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_medium"
-            android:padding="10dp"
-            android:text="@string/about_us" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            style="@style/bottomSheetTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".screens.appbar.AboutUsFragment"
+            tools:ignore="UseCompoundDrawables"
+            tools:layout_height="wrap_content">
 
 
             <ImageView
-                android:id="@+id/instagram_link_icon"
-                android:layout_width="36sp"
-                android:layout_height="0dp"
-                android:src="@drawable/instagram_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintEnd_toStartOf="@+id/website_link_icon"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/iste_manipal_logo_text"
+                android:src="@drawable/iste_logo" />
 
-            <ImageView
-                android:id="@+id/facebook_link_icon"
-                android:layout_width="36sp"
-                android:layout_height="0dp"
-                app:tint="?attr/colorOnSurface"
-                android:src="@drawable/facebook_logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/website_link_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                style="@style/focusTextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:padding="10dp"
+                android:text="@string/about_us" />
 
-            <ImageView
-                android:id="@+id/website_link_icon"
-                android:layout_width="36sp"
-                android:layout_height="0dp"
-                android:src="@drawable/web_link_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintEnd_toStartOf="@+id/facebook_link_icon"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/instagram_link_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorOnSurface" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:id="@+id/instagram_link_icon"
+                    android:layout_width="36sp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/instagram_logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toStartOf="@+id/website_link_icon"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/facebook_link_icon"
+                    android:layout_width="36sp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/facebook_logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/website_link_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorOnSurface" />
+
+                <ImageView
+                    android:id="@+id/website_link_icon"
+                    android:layout_width="36sp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/web_link_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toStartOf="@+id/facebook_link_icon"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/instagram_link_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorOnSurface" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -7,34 +7,35 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+
+    <LinearLayout
         style="@style/bottomSheetTheme"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_height="wrap_content"
-        tools:context=".screens.appbar.DevelopersFragment">
+        android:orientation="vertical"
+        tools:context=".screens.appbar.DevelopersFragment"
+        tools:layout_height="wrap_content">
+
 
         <TextView
             android:id="@+id/developers_text"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="?attr/colorPrimary"
             android:text="Developers"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="?attr/colorPrimary"
+            android:textSize="26sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/developer_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:padding="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/developers_text"
-            tools:listitem="@layout/developer_item"
             tools:itemCount="5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:listitem="@layout/developer_item" />
+    </LinearLayout>
 </layout>
