@@ -40,11 +40,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/retry_button_blog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retry"
+            app:cornerRadius="20dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +57,10 @@
             android:id="@+id/error_text_blog_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="16sp"
+            android:textColor="?attr/colorPrimary"
+            tools:text="An error occurred"
             app:layout_constraintBottom_toTopOf="@id/retry_button_blog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
