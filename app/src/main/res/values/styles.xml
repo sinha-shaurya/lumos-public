@@ -7,9 +7,16 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/surfaceColorLight</item>
         <item name="appBarLayoutStyle">@style/appbarLayoutTheme</item>
-
     </style>
 
+    <!--Splash Screen Theme-->
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_image</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+
+    <!--Bottom Navigation Bar Theme-->
     <style name="BottomNavigationTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/nav_bar_selected</item>
         <item name="android:textColorSecondary">@color/nav_bar_unselected</item>
@@ -19,6 +26,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--Base Style for Cardview-->
     <style name="materialCardViewStyle" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/white</item>
         <item name="android:shadowColor">@color/surfaceColorDark</item>
@@ -50,4 +58,7 @@
     <style name="focusTextTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="android:textColor">@color/black</item>
     </style>
+
+
+
 </resources>
