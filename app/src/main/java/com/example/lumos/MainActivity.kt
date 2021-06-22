@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setSupportActionBar(binding.appBar)
+
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
