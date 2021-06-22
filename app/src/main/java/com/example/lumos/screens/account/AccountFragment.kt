@@ -177,7 +177,7 @@ class AccountFragment : Fragment(), BookmarkItemAdapter.onBookmarkItemClickListe
                 answeredQuestionsButton.isVisible = it != emptyList<AnsweredQuestion>()
                 answerDisclaimerText.isVisible = it != emptyList<AnsweredQuestion>()
 
-                val questionsAnsweredText = "${it.size} Points scored"
+                val questionsAnsweredText = "${it.size} Questions Answered"
                 questionsAnswered.text = questionsAnsweredText
 
             }
