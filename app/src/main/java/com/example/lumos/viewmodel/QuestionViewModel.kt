@@ -26,8 +26,10 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
         _points.value = 0
     }
 
-    /*
-        Function to get list of submitted answers and update observable variables accordingly
+    /**
+     * Function to get list of submitted answers and update observable variables accordingly
+     * On success sets the value of [_submittedAnswers] , observable through [submittedAnswers]
+     * The network request does not proceed if user is not logged in
      */
     fun getSubmittedAnswer() {
         viewModelScope.launch {
@@ -51,9 +53,10 @@ class QuestionViewModel(private val repository: NetworkRepository) : ViewModel()
         }
     }
 
-    /*
-        Calculate points based on the list of questions and update observable points variable
-        All calculation takes place on the Default Dispatcher
+    /**
+     *  Calculate points based on the list of questions
+     *  Updates value of [_points], observable through [points] [LiveData]
+     *  All calculations take place on the Default Dispatcher
      */
     private suspend fun calculatePoints(response: AnsweredQuestionResponse) =
         //run coroutine on default dispatcher to ensure max level of parallelism

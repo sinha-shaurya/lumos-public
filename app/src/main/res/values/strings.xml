@@ -29,4 +29,6 @@
     <string name="submit_string">submit</string>
     <string name="iste_manipal_logo_text">ISTE Manipal Logo</string>
     <string name="developer_profile_image_string">Developer Profile Image</string>
+    <string name="member_exclusive_feature_text">Member exclusive feature</string>
+    <string name="password_reset_text">Forgot password?</string>
 </resources>

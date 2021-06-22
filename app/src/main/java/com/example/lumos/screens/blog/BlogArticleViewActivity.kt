@@ -25,8 +25,7 @@ class BlogArticleViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBlogArticleViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
+        setTheme(R.style.AppTheme)
         //enable transitions for this activity
         with(window) {
             requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
