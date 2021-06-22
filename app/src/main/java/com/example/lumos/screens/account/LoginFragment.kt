@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
 import com.example.lumos.R
@@ -89,15 +88,17 @@ class LoginFragment : Fragment() {
                 passwordInputLayout.visibility = View.VISIBLE
                 passwordInput.visibility = View.VISIBLE
                 loginButton.visibility = View.VISIBLE
-                passwordResetText.visibility=View.VISIBLE
+                passwordResetText.visibility = View.VISIBLE
+                loginUiText.visibility = View.VISIBLE
+                loginUiSubtext.visibility = View.VISIBLE
                 loginUiButton.visibility = View.GONE
                 registerButton.visibility = View.GONE
-
+                loginScreenText.visibility = View.GONE
             }
         }
 
         binding.passwordResetText.setOnClickListener {
-            val intent= Intent(Intent.ACTION_VIEW).also {
+            val intent = Intent(Intent.ACTION_VIEW).also {
                 it.setData(Uri.parse(Constants.PASSWORD_RESET_URL))
             }
             startActivity(intent)
@@ -113,9 +114,13 @@ class LoginFragment : Fragment() {
                             passwordInput.visibility = View.GONE
                             passwordInputLayout.visibility = View.GONE
                             loginButton.visibility = View.GONE
-                            passwordResetText.visibility=View.GONE
+                            loginUiText.visibility = View.GONE
+                            loginUiSubtext.visibility = View.GONE
+                            passwordResetText.visibility = View.GONE
                             loginUiButton.visibility = View.VISIBLE
                             registerButton.visibility = View.VISIBLE
+                            loginScreenText.visibility = View.VISIBLE
+
                         }
                     } else {
                         isEnabled = false

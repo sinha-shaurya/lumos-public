@@ -13,6 +13,46 @@
         android:layout_height="match_parent"
         tools:context=".screens.account.LoginFragment">
 
+        <TextView
+            android:id="@+id/login_screen_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Discover tech like never before."
+            android:textColor="?attr/colorPrimary"
+            android:textSize="44sp"
+            app:layout_constraintBottom_toTopOf="@+id/register_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <TextView
+            android:id="@+id/login_ui_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Sign In"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/login_ui_subtext"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/login_ui_subtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Get access to exclusive features"
+            android:textColor="?attr/colorAccent"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/username_input_layout"
+
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_input_layout"
@@ -33,8 +73,8 @@
                 android:id="@+id/username_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:autofillHints="username"
+                android:inputType="number"
                 android:maxHeight="70dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -87,7 +127,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_marginBottom="60dp"
             android:text="Already have an account?Login."
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -100,27 +140,26 @@
             android:id="@+id/register_button"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="50dp"
             android:text="Sign Up"
             app:cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="@id/login_ui_button"
+            app:layout_constraintBottom_toTopOf="@id/login_ui_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.6" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/password_reset_text"
-            android:text="@string/password_reset_text"
-            android:textSize="14sp"
-            android:fontFamily="@font/montserrat"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:textColor="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/password_reset_text"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_button"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
