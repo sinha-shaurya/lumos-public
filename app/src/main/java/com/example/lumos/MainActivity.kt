@@ -1,6 +1,8 @@
 package com.example.lumos
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,7 +11,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
@@ -20,6 +21,7 @@ import com.example.lumos.repository.UserPreferencesRepository
 import com.example.lumos.screens.appbar.AboutUsFragment
 import com.example.lumos.screens.appbar.DevelopersFragment
 import com.example.lumos.screens.appbar.ThemeBottomSheetFragment
+import com.example.lumos.utils.Constants
 import com.example.lumos.utils.setupWithNavController
 import com.example.lumos.utils.viewmodelfactory.UserPreferencesViewModelFactory
 import com.example.lumos.viewmodel.ToolbarTitleViewModel
@@ -144,6 +146,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Setup methods for selecting toolbar options
+     * Options are defined in [R.menu.toolbar_menu]
+     *
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> {
@@ -159,6 +166,14 @@ class MainActivity : AppCompatActivity() {
             R.id.developer_info -> {
                 val fragment = DevelopersFragment.newInstance(Bundle())
                 fragment.show(supportFragmentManager, FRAGMENT_DEVELOPERS)
+                return true
+            }
+            R.id.feedback -> {
+                //open ISTE website to send feedback
+                val intent = Intent(Intent.ACTION_VIEW).also {
+                    it.setData(Uri.parse(Constants.FEEDBACK_URL))
+                }
+                startActivity(intent)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
