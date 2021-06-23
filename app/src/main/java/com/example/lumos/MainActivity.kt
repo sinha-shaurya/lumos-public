@@ -181,14 +181,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    /*
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
-     */
-
     companion object {
         const val TAG = "MainActivity"
         const val FRAGMENT_TAG_THEME = "ThemeBottomSheetDialogFragment"
