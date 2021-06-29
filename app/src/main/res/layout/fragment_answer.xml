@@ -62,7 +62,8 @@
                     android:hint="Type Answer Here"
                     android:inputType="textMultiLine"
                     android:minHeight="100dp"
-                    android:textAlignment="gravity" />
+                    android:textAlignment="gravity"
+                    android:maxLength="300"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -20,17 +20,24 @@
 
             <TextView
                 android:id="@+id/user_name_text"
+                style="@style/focusTextTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:textSize="30sp"
+                android:maxWidth="250dp"
+                android:textSize="36sp"
                 android:textStyle="bold"
+                app:autoSizeMinTextSize="20sp"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/logout_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                style="@style/focusTextTheme"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="Username" />
+                tools:text="Shaurya Sinha" />
 
             <TextView
                 android:id="@+id/points"
@@ -105,6 +112,8 @@
                     android:id="@+id/bookmark_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    tools:listitem="@layout/bookmark_item"
+
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/answer_disclaimer_text" />
 
