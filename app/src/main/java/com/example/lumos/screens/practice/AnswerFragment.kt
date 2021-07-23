@@ -81,7 +81,7 @@ class AnswerFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        toolbarTitleViewModel.changeTitle("Answer Submission.")
+        toolbarTitleViewModel.changeTitle("Submission .")
     }
 
     private fun observeAnswerStatus() {
