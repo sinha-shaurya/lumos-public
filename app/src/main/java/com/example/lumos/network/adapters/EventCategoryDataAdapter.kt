@@ -20,7 +20,7 @@ import com.example.lumos.databinding.CategoryItemBinding
 import com.example.lumos.network.dataclasses.events.Category
 import com.example.lumos.utils.GlideApp
 
-private const val ISTE_BASE_URL = "https://test.istemanipal.com"
+private const val ISTE_BASE_URL = "https://istemanipal.com"
 
 class EventCategoryDataAdapter(private val listener: onCategoryItemClickListener) :
     ListAdapter<Category, EventCategoryDataAdapter.EventCategoryViewHolder>(
@@ -58,6 +58,9 @@ class EventCategoryDataAdapter(private val listener: onCategoryItemClickListener
                 }
                 Log.i("EventCategoryDataAdapter", ISTE_BASE_URL + item.posterSlug)
                 val url = getImageUrl(item.posterSlug)
+                if (url != null) {
+                    Log.i("EventCategoryAdapter",url)
+                }
                 if(item.posterSlug==null)
                     categoryPosterImage.isVisible=false
                 if (url != null) {
